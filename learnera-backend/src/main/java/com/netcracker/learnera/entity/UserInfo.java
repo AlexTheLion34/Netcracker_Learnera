@@ -28,7 +28,7 @@ public class UserInfo {
     @Column(name = "city")
     private String city;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "avatar_id")
     private Image avatar;
 

@@ -3,6 +3,8 @@ package com.netcracker.learnera.entity;
 import com.netcracker.learnera.entity.enums.UserRole;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -26,6 +28,17 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private UserInfo info;
+
+    @OneToMany(mappedBy = "curator", cascade = CascadeType.ALL)
+    private List<Group> curatedGroups = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "group_users",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "group_id") }
+    )
+    private List<Group> studyGroups = new ArrayList<>();
 
     public User() {
     }
