@@ -35,6 +35,9 @@ public class Group {
     @OneToMany(mappedBy = "destinationGroup")
     private List<GroupMessage> messages = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "groups")
+    private List<Course> courses = new ArrayList<>();
+
     public Group() {
     }
 

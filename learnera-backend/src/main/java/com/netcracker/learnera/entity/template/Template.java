@@ -16,7 +16,7 @@ public class Template {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private User teacher;
 
@@ -33,7 +33,7 @@ public class Template {
     @JoinColumn(name = "avatar_id")
     private Image avatar;
 
-    @OneToMany(mappedBy = "template")
+    @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Week> weeks = new ArrayList<>();
 
 }
