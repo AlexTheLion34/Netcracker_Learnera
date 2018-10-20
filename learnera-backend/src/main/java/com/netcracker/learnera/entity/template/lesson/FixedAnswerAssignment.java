@@ -6,4 +6,6 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("FIXED")
 public class FixedAnswerAssignment extends Assignment {
+    public FixedAnswerAssignment() {
+    }
 }

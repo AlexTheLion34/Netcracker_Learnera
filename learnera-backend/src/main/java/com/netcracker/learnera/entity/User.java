@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -39,8 +39,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "group_users",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "group_id") }
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
     private List<Group> studyGroups = new ArrayList<>();
 
@@ -85,5 +85,29 @@ public class User {
 
     public void setInfo(UserInfo info) {
         this.info = info;
+    }
+
+    public List<Group> getCuratedGroups() {
+        return curatedGroups;
+    }
+
+    public void setCuratedGroups(List<Group> curatedGroups) {
+        this.curatedGroups = curatedGroups;
+    }
+
+    public List<Template> getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(List<Template> templates) {
+        this.templates = templates;
+    }
+
+    public List<Group> getStudyGroups() {
+        return studyGroups;
+    }
+
+    public void setStudyGroups(List<Group> studyGroups) {
+        this.studyGroups = studyGroups;
     }
 }

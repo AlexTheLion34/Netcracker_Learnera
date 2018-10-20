@@ -96,4 +96,12 @@ public class Group {
     public void setMessages(List<GroupMessage> messages) {
         this.messages = messages;
     }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 }

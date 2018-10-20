@@ -19,4 +19,38 @@ public class MultipleChoiceVariant {
 
     private Boolean isCorrect;
 
+    public MultipleChoiceVariant() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MultipleChoiceAssignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(MultipleChoiceAssignment assignment) {
+        this.assignment = assignment;
+    }
+
+    public String getChoiceText() {
+        return choiceText;
+    }
+
+    public void setChoiceText(String choiceText) {
+        this.choiceText = choiceText;
+    }
+
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
 }

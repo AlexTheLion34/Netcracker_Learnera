@@ -53,12 +53,110 @@ public class Course {
     @ManyToMany
     @JoinTable(
             name = "course_groups",
-            joinColumns = { @JoinColumn(name = "course_id") },
-            inverseJoinColumns = { @JoinColumn(name = "group_id") }
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
     private List<Group> groups = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CourseWeekDate> weekDates = new ArrayList<>();
 
+    public Course() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(Template template) {
+        this.template = template;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Image getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Image avatar) {
+        this.avatar = avatar;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getPassPercent() {
+        return passPercent;
+    }
+
+    public void setPassPercent(Integer passPercent) {
+        this.passPercent = passPercent;
+    }
+
+    public Integer getGoodPercent() {
+        return goodPercent;
+    }
+
+    public void setGoodPercent(Integer goodPercent) {
+        this.goodPercent = goodPercent;
+    }
+
+    public Integer getExcellentPercent() {
+        return excellentPercent;
+    }
+
+    public void setExcellentPercent(Integer excellentPercent) {
+        this.excellentPercent = excellentPercent;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<CourseWeekDate> getWeekDates() {
+        return weekDates;
+    }
+
+    public void setWeekDates(List<CourseWeekDate> weekDates) {
+        this.weekDates = weekDates;
+    }
 }

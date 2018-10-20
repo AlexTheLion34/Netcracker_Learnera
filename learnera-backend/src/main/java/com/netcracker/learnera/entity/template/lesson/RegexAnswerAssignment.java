@@ -6,4 +6,6 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("REGEX")
 public class RegexAnswerAssignment extends Assignment {
+    public RegexAnswerAssignment() {
+    }
 }

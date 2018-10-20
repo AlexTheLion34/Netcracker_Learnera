@@ -30,4 +30,46 @@ public class CourseWeekDate {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
+    public CourseWeekDate() {
+    }
+
+    public CourseWeekDateId getId() {
+        return id;
+    }
+
+    public void setId(CourseWeekDateId id) {
+        this.id = id;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Week getWeek() {
+        return week;
+    }
+
+    public void setWeek(Week week) {
+        this.week = week;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 }
