@@ -1,5 +1,5 @@
 package com.netcracker.learnera.entity.enums;
 
 public enum LessonType {
-    LECTURE, ASSIGNMENT
+    LECTURE, FIXED, REGEX, MC, CODE
 }

@@ -25,7 +25,7 @@ public class Group {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private Image image;
 

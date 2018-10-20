@@ -1,6 +1,7 @@
 package com.netcracker.learnera.entity;
 
 import com.netcracker.learnera.entity.enums.UserRole;
+import com.netcracker.learnera.entity.template.Template;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,14 +26,17 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn
     private UserInfo info;
 
-    @OneToMany(mappedBy = "curator", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "curator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Group> curatedGroups = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Template> templates = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "group_users",
             joinColumns = { @JoinColumn(name = "user_id") },
