@@ -9,28 +9,23 @@ import java.util.List;
 
 @Entity
 @Table(name = "lessons")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Lesson {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
-    protected Long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "week_id")
-    protected Week week;
+    private Week week;
 
-    @Column(name = "lesson_text")
-    protected String lessonText;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "file_id")
-    protected File file;
+    @Column(name = "ordering")
+    protected Integer ordering;
 
     @OneToMany(mappedBy = "destinationLesson", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected List<LessonMessage> messages = new ArrayList<>();
+    private List<LessonMessage> messages = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -46,22 +41,6 @@ public abstract class Lesson {
 
     public void setWeek(Week week) {
         this.week = week;
-    }
-
-    public String getLessonText() {
-        return lessonText;
-    }
-
-    public void setLessonText(String lessonText) {
-        this.lessonText = lessonText;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     public List<LessonMessage> getMessages() {

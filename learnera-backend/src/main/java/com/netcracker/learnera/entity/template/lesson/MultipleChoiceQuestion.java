@@ -1,20 +1,17 @@
 package com.netcracker.learnera.entity.template.lesson;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("MC")
-public class MultipleChoiceAssignment extends Assignment {
+@DiscriminatorValue(value = "MC")
+public class MultipleChoiceQuestion extends Question {
 
-    @OneToMany(mappedBy = "assignment", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<MultipleChoiceVariant> variants = new ArrayList<>();
 
-    public MultipleChoiceAssignment() {
+    public MultipleChoiceQuestion() {
     }
 
     public List<MultipleChoiceVariant> getVariants() {

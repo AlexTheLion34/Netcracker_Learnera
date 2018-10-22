@@ -3,7 +3,7 @@ package com.netcracker.learnera.entity.template.lesson;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "mc_assignment_variants")
+@Table(name = "mc_question_variants")
 public class MultipleChoiceVariant {
 
     @Id
@@ -12,11 +12,13 @@ public class MultipleChoiceVariant {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "lesson_id")
-    private MultipleChoiceAssignment assignment;
+    @JoinColumn(name = "question_id")
+    private MultipleChoiceQuestion question;
 
+    @Column(name = "choice_text")
     private String choiceText;
 
+    @Column(name = "is_correct")
     private Boolean isCorrect;
 
     public MultipleChoiceVariant() {
@@ -28,14 +30,6 @@ public class MultipleChoiceVariant {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public MultipleChoiceAssignment getAssignment() {
-        return assignment;
-    }
-
-    public void setAssignment(MultipleChoiceAssignment assignment) {
-        this.assignment = assignment;
     }
 
     public String getChoiceText() {
@@ -52,5 +46,13 @@ public class MultipleChoiceVariant {
 
     public void setCorrect(Boolean correct) {
         isCorrect = correct;
+    }
+
+    public MultipleChoiceQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(MultipleChoiceQuestion question) {
+        this.question = question;
     }
 }

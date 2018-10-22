@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_course_assignment_attempts")
-public class AssignmentAttempt {
+@Table(name = "question_attempts")
+public class QuestionAttempt {
 
     @Id
     @GeneratedValue
@@ -23,6 +23,10 @@ public class AssignmentAttempt {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
     @Column(name = "answer")
     private String answer;
 
@@ -33,11 +37,7 @@ public class AssignmentAttempt {
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private Assignment assignment;
-
-    public AssignmentAttempt() {
+    public QuestionAttempt() {
     }
 
     public Long getId() {
@@ -88,11 +88,11 @@ public class AssignmentAttempt {
         this.time = time;
     }
 
-    public Assignment getAssignment() {
-        return assignment;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setAssignment(Assignment assignment) {
-        this.assignment = assignment;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 }

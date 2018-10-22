@@ -7,50 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Embeddable
-public abstract class Assignment extends Lesson {
-
-    @Column(name = "answer")
-    protected String answer;
-
-    @Column(name = "points")
-    protected Float points;
-
-    @Column(name = "penalty")
-    protected Float penalty;
+@Table(name = "assignments")
+@PrimaryKeyJoinColumn(name = "lesson_id")
+public class Assignment extends Lesson {
 
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected List<AssignmentAttempt> attempts = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
-    public String getAnswer() {
-        return answer;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public Float getPoints() {
-        return points;
-    }
-
-    public void setPoints(Float points) {
-        this.points = points;
-    }
-
-    public Float getPenalty() {
-        return penalty;
-    }
-
-    public void setPenalty(Float penalty) {
-        this.penalty = penalty;
-    }
-
-    public List<AssignmentAttempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(List<AssignmentAttempt> attempts) {
-        this.attempts = attempts;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

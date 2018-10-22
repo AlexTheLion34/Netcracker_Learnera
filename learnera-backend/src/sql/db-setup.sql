@@ -8,8 +8,9 @@
 DROP VIEW IF EXISTS certificates;
 DROP VIEW IF EXISTS template_lessons;
 
-DROP TABLE IF EXISTS mc_assignment_variants;
-DROP TABLE IF EXISTS user_course_assignment_attempts;
+DROP TABLE IF EXISTS mc_question_variants;
+DROP TABLE IF EXISTS question_attempts;
+DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS lectures;
 DROP TABLE IF EXISTS lesson_messages;
@@ -32,12 +33,12 @@ DROP TABLE IF EXISTS files;
 DROP TABLE IF EXISTS images;
 
 DROP TYPE IF EXISTS user_role;
-DROP TYPE IF EXISTS lesson_type;
+DROP TYPE IF EXISTS question_type;
 --- // Clearing schema
 
 --- ENUMS ---
 CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'STUDENT');
-CREATE TYPE lesson_type AS ENUM ('LECTURE', 'FIXED', 'MC', 'REGEX', 'CODE');
+CREATE TYPE question_type AS ENUM ('FIXED', 'MC', 'REGEX', 'CODE');
 --- // ENUMS ---
 
 --- IMAGES AND FILES ---
@@ -121,14 +122,14 @@ CREATE TABLE courses (
   name              VARCHAR(30) NOT NULL,
   description       TEXT,
   avatar_id         BIGINT REFERENCES images (id) ON DELETE SET NULL,
-  start_date        DATE        NOT NULL                                       DEFAULT now(),
+  start_date        DATE        NOT NULL                                            DEFAULT now(),
   end_date          DATE        NOT NULL,
   pass_percent      INTEGER     NOT NULL
-    CHECK (pass_percent >= 0 AND pass_percent <= 100)                          DEFAULT 60,
+    CHECK (pass_percent >= 0 AND pass_percent <= 100)                               DEFAULT 60,
   good_percent      INTEGER     NOT NULL
-    CHECK (good_percent > pass_percent AND good_percent <= 100)                DEFAULT 75,
+    CHECK (good_percent > pass_percent AND good_percent <= 100)                     DEFAULT 75,
   excellent_percent INTEGER     NOT NULL
-    CHECK (excellent_percent > good_percent AND excellent_percent <= 100)      DEFAULT 90
+    CHECK (excellent_percent > good_percent AND excellent_percent <= 100)           DEFAULT 90
 );
 
 CREATE TABLE course_groups (
@@ -157,14 +158,30 @@ CREATE TABLE course_week_dates (
 
 --- LESSONS ---
 CREATE TABLE lessons (
-  id          BIGINT PRIMARY KEY,
-  week_id     BIGINT      NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
-  type        lesson_type NOT NULL,
-  lesson_text TEXT,
-  file_id     BIGINT REFERENCES files (id) ON DELETE SET NULL,
-  answer      TEXT,
-  points      REAL        NOT NULL DEFAULT 1.0 CHECK (points > 0.0),
-  penalty     REAL        NOT NULL DEFAULT 0.5 CHECK (penalty > 0.0 AND penalty <= points)
+  id       BIGINT PRIMARY KEY,
+  week_id  BIGINT  NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
+  ordering INTEGER NOT NULL
+);
+
+CREATE TABLE lectures (
+  lesson_id    BIGINT PRIMARY KEY REFERENCES lessons (id) ON DELETE CASCADE,
+  lecture_text TEXT,
+  file_id      BIGINT REFERENCES files (id) ON DELETE SET NULL
+);
+
+CREATE TABLE assignments (
+  lesson_id BIGINT PRIMARY KEY REFERENCES lessons (id) ON DELETE CASCADE
+);
+
+CREATE TABLE questions (
+  id            BIGINT PRIMARY KEY,
+  assignment_id BIGINT        NOT NULL REFERENCES assignments (lesson_id) ON DELETE CASCADE,
+  ordering      INTEGER       NOT NULL,
+  question_text TEXT          NOT NULL,
+  type          question_type NOT NULL,
+  answer        TEXT,
+  points        REAL          NOT NULL DEFAULT 1.0 CHECK (points > 0.0),
+  penalty       REAL          NOT NULL DEFAULT 1.0 CHECK (penalty > 0.0 AND penalty <= points)
 );
 
 CREATE TABLE lesson_messages (
@@ -177,45 +194,45 @@ CREATE TABLE lesson_messages (
 
 --- MULTIPLE CHOICE ---
 
-CREATE TABLE mc_assignment_variants (
+CREATE TABLE mc_question_variants (
   id          BIGINT PRIMARY KEY,
-  lesson_id   BIGINT  NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+  question_id BIGINT  NOT NULL REFERENCES questions (id) ON DELETE CASCADE,
   choice_text TEXT    NOT NULL,
   is_correct  BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 --- // MULTIPLE CHOICE ---
 
-CREATE TABLE user_course_assignment_attempts (
-  id        BIGINT PRIMARY KEY,
-  user_id   BIGINT    NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-  course_id BIGINT    NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-  lesson_id BIGINT    NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
-  answer    TEXT      NOT NULL,
-  score     REAL      NOT NULL DEFAULT 0,
-  time      TIMESTAMP NOT NULL DEFAULT now()
+CREATE TABLE question_attempts (
+  id          BIGINT PRIMARY KEY,
+  user_id     BIGINT    NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  course_id   BIGINT    NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+  question_id BIGINT    NOT NULL REFERENCES questions (id) ON DELETE CASCADE,
+  answer      TEXT      NOT NULL,
+  score       REAL      NOT NULL DEFAULT 0,
+  time        TIMESTAMP NOT NULL DEFAULT now()
 );
 --- // LESSONS ---
 
 --- VIEWS ---
-CREATE VIEW template_lessons AS
-  SELECT l.id, l.week_id, w.template_id, l.lesson_text, l.file_id
-  FROM lessons l
-         INNER JOIN weeks w ON l.week_id = w.id;
-
-
-CREATE VIEW certificates AS
-  SELECT ucaa_m.user_id, cg.group_id, ucaa_m.course_id, sum(ucaa_m.max_score) AS total_score
-  FROM group_users gu,
-       course_groups cg,
-       courses c,
-       (SELECT ucaa1.user_id, ucaa1.course_id, ucaa1.lesson_id, max(ucaa1.score) AS max_score
-        FROM user_course_assignment_attempts ucaa1
-        GROUP BY (ucaa1.user_id, ucaa1.course_id, ucaa1.lesson_id)) ucaa_m
-  WHERE gu.group_id = cg.group_id
-    AND c.id = cg.course_id
-    AND c.end_date < now()
-    AND ucaa_m.user_id = gu.user_id
-    AND ucaa_m.course_id = cg.course_id
-  GROUP BY (ucaa_m.user_id, cg.group_id, ucaa_m.course_id);
---- // VIEWS ---
+-- CREATE VIEW template_lessons AS
+--   SELECT l.id, l.week_id, w.template_id, l.lesson_text, l.file_id
+--   FROM lessons l
+--          INNER JOIN weeks w ON l.week_id = w.id;
+--
+--
+-- CREATE VIEW certificates AS
+--   SELECT ucaa_m.user_id, cg.group_id, ucaa_m.course_id, sum(ucaa_m.max_score) AS total_score
+--   FROM group_users gu,
+--        course_groups cg,
+--        courses c,
+--        (SELECT ucaa1.user_id, ucaa1.course_id, ucaa1.lesson_id, max(ucaa1.score) AS max_score
+--         FROM user_course_assignment_attempts ucaa1
+--         GROUP BY (ucaa1.user_id, ucaa1.course_id, ucaa1.lesson_id)) ucaa_m
+--   WHERE gu.group_id = cg.group_id
+--     AND c.id = cg.course_id
+--     AND c.end_date < now()
+--     AND ucaa_m.user_id = gu.user_id
+--     AND ucaa_m.course_id = cg.course_id
+--   GROUP BY (ucaa_m.user_id, cg.group_id, ucaa_m.course_id);
+-- --- // VIEWS ---
