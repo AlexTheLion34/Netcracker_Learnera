@@ -45,6 +45,12 @@ public class User {
     private List<Group> studyGroups = new ArrayList<>();
 
     public User() {
+
+    }
+
+    public User(String email, String passwordHash) {
+        this.email = email;
+        this.passwordHash = passwordHash;
     }
 
     public Long getId() {
