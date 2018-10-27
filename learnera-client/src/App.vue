@@ -45,17 +45,17 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        appTitle: 'ОБУЧАЛОЧКА',
-        sidebar: false,
-        menuItems: [
-          { title: 'Profile', path: '/profile', icon: 'face' },
-          { title: 'Registration', path: '/register', icon: 'account_circle' },
-          { title: 'Login', path: '/login', icon: 'lock_open' }
-        ]
-      }
-    }
+export default {
+  data() {
+    return {
+      appTitle: "ОБУЧАЛОЧКА",
+      sidebar: false,
+      menuItems: [
+        { title: "Profile", path: "/profile", icon: "face" },
+        { title: "Registration", path: "/register", icon: "account_circle" },
+        { title: "Login", path: "/login", icon: "lock_open" }
+      ]
+    };
   }
+};
 </script>
