@@ -1,5 +1,9 @@
+/lib/
 /target/
-/src/main/resources/public/
+/learnera-backend/target/
+/learnera-client/node_modules/
+/learnera-client/target/
+/learnera-client/test/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -24,3 +28,4 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+

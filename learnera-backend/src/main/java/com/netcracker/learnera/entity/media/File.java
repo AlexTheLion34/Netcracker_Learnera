@@ -9,7 +9,7 @@ import java.net.URL;
 public class File {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
