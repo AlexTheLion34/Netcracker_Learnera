@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -20,13 +20,13 @@ public class User {
     private String email;
 
     @Column(name = "password_hash")
-    private String passwordHash;
+    private String password;
 
     @Column(name = "role")
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserInfo info;
 
@@ -48,9 +48,9 @@ public class User {
 
     }
 
-    public User(String email, String passwordHash) {
+    public User(String email, String password) {
         this.email = email;
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     public Long getId() {
@@ -69,12 +69,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserRole getRole() {

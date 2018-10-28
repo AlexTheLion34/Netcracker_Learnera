@@ -32,15 +32,6 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS files;
 DROP TABLE IF EXISTS images;
 
-DROP TYPE IF EXISTS user_role;
-DROP TYPE IF EXISTS question_type;
---- // Clearing schema
-
---- ENUMS ---
-CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'STUDENT');
-CREATE TYPE question_type AS ENUM ('FIXED', 'MC', 'REGEX', 'CODE');
---- // ENUMS ---
-
 --- IMAGES AND FILES ---
 CREATE TABLE images (
   id        BIGINT PRIMARY KEY,
@@ -64,7 +55,7 @@ CREATE TABLE users (
   id            BIGINT PRIMARY KEY,
   email         VARCHAR(50) UNIQUE NOT NULL,
   password_hash TEXT               NOT NULL,
-  role          user_role          NOT NULL
+  role          VARCHAR(10)          NOT NULL
 );
 
 -- FOREIGN KEY (b, c) REFERENCES other_table (c1, c2)
@@ -178,7 +169,7 @@ CREATE TABLE questions (
   assignment_id BIGINT        NOT NULL REFERENCES assignments (lesson_id) ON DELETE CASCADE,
   ordering      INTEGER       NOT NULL,
   question_text TEXT          NOT NULL,
-  type          question_type NOT NULL,
+  type          VARCHAR(10)   NOT NULL,
   answer        TEXT,
   points        REAL          NOT NULL DEFAULT 1.0 CHECK (points > 0.0),
   penalty       REAL          NOT NULL DEFAULT 1.0 CHECK (penalty > 0.0 AND penalty <= points)

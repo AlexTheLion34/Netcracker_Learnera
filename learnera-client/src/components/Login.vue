@@ -36,6 +36,8 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
+
   export default {
     name: 'Login',
     data () {
@@ -44,10 +46,18 @@
         password: ''
       }
     },
+    created () {
+        // reset login status
+        this.logout();
+    },
     methods: {
-      onLogin () {
-        console.log({email: this.email, password: this.password})
-      }
+        ...mapActions('account', ['login', 'logout']),
+        onLogin (e) {
+            const { email, password } = this;
+            if (email && password) {
+                this.login({email, password});
+            }
+        }
     }
   }
 </script>

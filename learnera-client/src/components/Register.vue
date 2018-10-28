@@ -63,7 +63,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'Register',
@@ -82,18 +82,18 @@
       }
     },
     methods: {
+      ...mapActions('account', ['register']),
       onSignup () {
-        axios.post('http://localhost:9090/signup', {email: this.email, password: this.password}, {
-          headers: {
-            'Content-Type': 'application/json'
+        const user = {
+          email: this.email,
+          password: this.password,
+          role: 'TEACHER',
+          info: {
+            lastName: this.surname,
+            firstName: this.name
           }
-        })
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+        }
+        this.register(user);
       }
     }
   }

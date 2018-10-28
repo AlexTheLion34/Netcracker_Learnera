@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -54,7 +56,17 @@ export default {
         { title: "Profile", path: "/profile", icon: "face" },
         { title: "Registration", path: "/register", icon: "account_circle" },
         { title: "Login", path: "/login", icon: "lock_open" }
-      ]
+      ],
+      computed: {
+        ...mapState({
+            alert: state => state.alert
+        })
+      },
+      methods: {
+          ...mapActions({
+              clearAlert: 'alert/clear' 
+          })
+      },
     };
   }
 };

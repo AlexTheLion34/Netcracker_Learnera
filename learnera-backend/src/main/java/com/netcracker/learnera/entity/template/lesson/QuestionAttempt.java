@@ -11,7 +11,7 @@ import java.util.Date;
 public class QuestionAttempt {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 

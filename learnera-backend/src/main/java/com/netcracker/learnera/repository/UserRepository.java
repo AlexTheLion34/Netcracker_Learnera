@@ -1,4 +1,4 @@
-package com.netcracker.learnera.repos;
+package com.netcracker.learnera.repository;
 
 import com.netcracker.learnera.entity.User;
 import org.springframework.data.repository.CrudRepository;
