@@ -12,13 +12,11 @@ export const userService = {
 };
 
 function login(email, password) {
-    var user = {email, password};
-
     return axios.get(`/api/auth`, {
         headers: { 'Authorization': 'Basic ' + btoa(email + ':' + password) }
       }).then(handleResponse)
         .then(data => {
-            localStorage.setItem('user', data);
+            localStorage.setItem('user', JSON.stringify(data));
             return data;
         })
         .catch(error => {

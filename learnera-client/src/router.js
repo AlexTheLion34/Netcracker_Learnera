@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { store } from './store/index.js'
 
 const routerOptions = [
-  { path: '/', component: 'Landing' },
-  { path: '/login', component: 'Login' },
-  { path: '/register', component: 'Register' },
-  { path: '/profile', component: 'Profile' }
+  { path: '/login', component: 'Login', meta: { isPublic: true } },
+  { path: '/register', component: 'Register', meta: { isPublic: true } },
+  { path: '/profile', component: 'Profile', alias: '/' },
 ]
 
 const routes = routerOptions.map(route => {
@@ -22,15 +22,26 @@ export const router = new Router({
   routes
 })
 
+
+
+
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login', '/register'];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = store.state.account.status.loggedIn;
 
-  if (authRequired && !loggedIn) {
-    return next('/login');
+  if (to.matched.some(record => !record.meta.isPublic)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!loggedIn) {
+      const query = to.fullPath === '/' ? {} : { redirect: to.fullPath };
+      next({
+        path: '/login',
+        query
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
   }
-
-  next();
 })

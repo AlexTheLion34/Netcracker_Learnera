@@ -1,7 +1,12 @@
 import { userService } from '../services';
 import { router } from '../router';
 
-const user = JSON.parse(localStorage.getItem('user'));
+let user = null;
+try {
+    user = JSON.parse(localStorage.getItem('user'));
+} catch (e) {
+    user = null;
+}
 const state = user
     ? { status: { loggedIn: true }, user }
     : { status: {}, user: null };
