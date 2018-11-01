@@ -28,6 +28,7 @@
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
           flat
+          v-if="!loggedIn && item.isPublic || loggedIn && !item.isPublic"
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path">
@@ -54,20 +55,22 @@ export default {
       sidebar: false,
       menuItems: [
         { title: "Profile", path: "/profile", icon: "face" },
-        { title: "Registration", path: "/register", icon: "account_circle" },
-        { title: "Login", path: "/login", icon: "lock_open" }
-      ],
-      computed: {
-        ...mapState({
-            alert: state => state.alert
-        })
-      },
-      methods: {
-          ...mapActions({
-              clearAlert: 'alert/clear' 
-          })
-      },
+        { title: "Logout", path: "/logout", icon: 'accessible_forward' },
+        { title: "Registration", path: "/register", icon: "account_circle", isPublic: true },
+        { title: "Login", path: "/login", icon: "lock_open", isPublic: true }
+      ]
     };
-  }
+  },
+  computed: {
+    ...mapState({
+        alert: state => state.alert,
+        loggedIn: state => state.account.status.loggedIn
+    })
+  },
+  methods: {
+      ...mapActions({
+          clearAlert: 'alert/clear' 
+      })
+  },
 };
 </script>
