@@ -1,9 +1,16 @@
 package com.netcracker.learnera.entity.template;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "weeks")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Week {
 
     @Id

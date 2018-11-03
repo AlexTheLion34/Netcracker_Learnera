@@ -1,5 +1,7 @@
 package com.netcracker.learnera.entity.template;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.Course;
 
 import javax.persistence.*;
@@ -7,6 +9,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "course_week_dates")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class CourseWeekDate {
 
     @EmbeddedId

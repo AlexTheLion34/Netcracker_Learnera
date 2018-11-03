@@ -1,5 +1,8 @@
 package com.netcracker.learnera.entity.template.lesson;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,10 @@ import java.util.List;
 @Table(name = "questions")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public abstract class Question {
 
     @Id

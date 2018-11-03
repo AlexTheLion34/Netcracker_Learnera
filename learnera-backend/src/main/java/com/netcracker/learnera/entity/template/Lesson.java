@@ -1,5 +1,7 @@
 package com.netcracker.learnera.entity.template;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.File;
 import com.netcracker.learnera.entity.template.lesson.LessonMessage;
 
@@ -7,6 +9,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Entity
 @Table(name = "lessons")
 @Inheritance(strategy = InheritanceType.JOINED)

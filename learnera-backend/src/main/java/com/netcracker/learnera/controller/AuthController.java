@@ -3,6 +3,8 @@ package com.netcracker.learnera.controller;
 
 import java.util.Base64;
 import com.netcracker.learnera.entity.User;
+import com.netcracker.learnera.exception.EntityAlreadyExistsException;
+import com.netcracker.learnera.exception.EntityNotFoundException;
 import com.netcracker.learnera.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ public class AuthController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<User> login(@RequestHeader String authorization)
+    public ResponseEntity<User> login(@RequestHeader String authorization) throws EntityNotFoundException
     {
         String decoded = new String(Base64.getDecoder().decode(authorization.split(" ")[1]));
         String[] info = decoded.split(":");
@@ -28,11 +30,8 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User userFromDb = userService.findByEmail(user.getEmail());
-        if (userFromDb != null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        userService.saveUser(user);
+    public ResponseEntity<User> register(@RequestBody User user) throws EntityAlreadyExistsException {
+        userService.createUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

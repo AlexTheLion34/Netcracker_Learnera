@@ -1,5 +1,7 @@
 package com.netcracker.learnera.entity.template.lesson;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.User;
 import com.netcracker.learnera.entity.template.Lesson;
 
@@ -8,6 +10,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "lesson_messages")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class LessonMessage {
 
     @Id

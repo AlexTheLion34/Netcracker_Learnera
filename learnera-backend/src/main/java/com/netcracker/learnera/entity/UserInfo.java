@@ -1,12 +1,18 @@
 package com.netcracker.learnera.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.Image;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Entity
 @Table(name = "user_infos")
 public class UserInfo implements Serializable {
@@ -38,7 +44,6 @@ public class UserInfo implements Serializable {
     @MapsId
     @OneToOne(mappedBy = "info")
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     public UserInfo() {
@@ -100,5 +105,13 @@ public class UserInfo implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

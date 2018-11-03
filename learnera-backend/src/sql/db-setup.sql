@@ -227,3 +227,11 @@ CREATE TABLE question_attempts (
 --     AND ucaa_m.course_id = cg.course_id
 --   GROUP BY (ucaa_m.user_id, cg.group_id, ucaa_m.course_id);
 -- --- // VIEWS ---
+
+SELECT * FROM users;
+
+INSERT INTO templates (id, teacher_id, name, description) VALUES (1, 5, 'A template', 'A teplates description');
+INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
+VALUES (0, 1, 'A course', 'A courses decription', NULL, '02/11/2018');
+
+SELECT * FROM courses;

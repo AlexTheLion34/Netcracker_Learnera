@@ -1,6 +1,8 @@
 package com.netcracker.learnera.controller;
 
 import com.netcracker.learnera.entity.User;
+import com.netcracker.learnera.exception.EntityAlreadyExistsException;
+import com.netcracker.learnera.repository.UserRepository;
 import com.netcracker.learnera.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +15,12 @@ public class MainController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        User userFromDb = userService.findByEmail(user.getEmail());
-        if (userFromDb != null)
-            return new ResponseEntity<>("User exists", HttpStatus.BAD_REQUEST);
-        userService.saveUser(user);
-        return new ResponseEntity<>("Saved", HttpStatus.OK);
+    public ResponseEntity<User> register(@RequestBody User user) throws EntityAlreadyExistsException {
+        userService.createUser(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

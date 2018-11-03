@@ -1,11 +1,17 @@
 package com.netcracker.learnera.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.Image;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Entity
 @Table(name = "groups")
 public class Group {

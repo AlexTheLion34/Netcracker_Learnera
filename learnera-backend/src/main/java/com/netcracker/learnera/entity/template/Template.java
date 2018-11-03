@@ -1,5 +1,7 @@
 package com.netcracker.learnera.entity.template;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.User;
 import com.netcracker.learnera.entity.media.Image;
 
@@ -9,6 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "templates")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Template {
 
     @Id

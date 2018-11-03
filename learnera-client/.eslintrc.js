@@ -21,7 +21,7 @@ module.exports = {
         "camelcase": ["error", {"properties": "never"}],
         "flowtype/define-flow-type": 1,
         "flowtype/use-flow-type": 1,
-        "indent": ["error", 4, {"SwitchCase": 1}],
+        "indent": ["error", 2, {"SwitchCase": 1}],
         "object-curly-spacing": ["error", "never"],
         "space-before-function-paren": ["error", "never"],
         "space-before-blocks": ["error", "always"],
@@ -30,7 +30,10 @@ module.exports = {
         "no-dupe-args": "error",
         "no-duplicate-case": "error",
         "no-duplicate-imports": "error",
-        "no-empty": "error"
+        "no-empty": "error",
+        "no-console": "off",
+        "no-unused-vars": "off",
+        "vue/max-attributes-per-line": "off"
     },
     "env": {
         "browser": true,

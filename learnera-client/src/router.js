@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { store } from './store/index.js'
+import {store} from './store/index.js'
 
 const logoutComponent = {
   functional: true,
@@ -12,13 +12,14 @@ const logoutComponent = {
 }
 
 const routerOptions = [
-  { path: '/login', component: 'Login', meta: { isPublic: true } },
-  { path: '/register', component: 'Register', meta: { isPublic: true } },
-  { path: '/profile', component: 'Profile', alias: '/' },
+  {path: '/login', component: 'Login', meta: {isPublic: true}},
+  {path: '/register', component: 'Register', meta: {isPublic: true}},
+  {path: '/profile', component: 'Profile', alias: '/'},
+  {path: '/course_list', component: 'CourseList'}
 ]
 
 const routes = [ 
-  { path: '/logout', component: logoutComponent },
+  {path: '/logout', component: logoutComponent},
   ...routerOptions.map(route => {
     return {
       ...route,
@@ -42,7 +43,7 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!loggedIn) {
-      const query = to.fullPath === '/' ? {} : { redirect: to.fullPath };
+      const query = to.fullPath === '/' ? {} : {redirect: to.fullPath};
       next({
         path: '/login',
         query
