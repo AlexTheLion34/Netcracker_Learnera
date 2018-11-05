@@ -33,7 +33,7 @@
                   <v-btn :to="`/template/${course.template.id}`" color="secondary">
                     {{ course.template.name ? course.template.name : '' }}
                   </v-btn>
-                  <v-btn :to="`/user/${teacher.id}`" color="primary">
+                  <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
                     {{ teacherName }}
                   </v-btn>
                 </v-layout>
@@ -76,8 +76,8 @@
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex xs12>
         <v-btn :to="`/course/${courseId}/week/${course.template.weeks[0].id}`" block color="primary" dark>
-          <strong v-if="teacher.id !== user.id">Continue studying!</strong>
-          <strong v-else-if="teacher.id === user.id">Take a look at the course!</strong>
+          <strong v-if="teacher && teacher.id !== user.id">Continue studying!</strong>
+          <strong v-else-if="!teacher || teacher.id === user.id">Take a look at the course!</strong>
         </v-btn>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
@@ -110,14 +110,17 @@ export default {
       }
     }),
     ...mapState('account', ['user']),
+    ...mapState('users', {
+      teacher: function(state) {
+        if (!this.course) {
+          return undefined;
+        }
+        const ret = state.items.find(i => i.id === this.course.template.teacher);
+        return ret;
+      }
+    }),
     courseId: function() {
       return parseInt(this.courseIdStr);
-    },
-    teacher: function() {
-      if (!this.course || !this.course.template) {
-        return {};
-      }
-      return this.course.template.teacher;
     },
     teacherName: function() {
       if (!this.teacher) { return ''; }
@@ -131,7 +134,7 @@ export default {
         return [];
       }
       const ret = this.course.weekDates.map(wd => {
-        const week = this.course.template.weeks.find(w => w.id === wd.week);
+        const week = wd.week;
         return {
           weekName: week.name || ('Week ' + week.weekNumber),
           startDate: wd.startDate,
@@ -144,6 +147,11 @@ export default {
   watch: {
     courseId: function(val) {
       this.getCourse(val);
+    },
+    course: function(val) {
+      if (val) {
+        this.getUser(val.template.teacher);
+      }
     }
   },
   beforeMount() {
@@ -152,6 +160,9 @@ export default {
   methods: {
     ...mapActions('courses', {
       getCourse: 'get'
+    }),
+    ...mapActions('users', {
+      getUser: 'get'
     })
   },
 }

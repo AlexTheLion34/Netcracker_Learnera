@@ -35,15 +35,15 @@
           <v-card-title><h3 class="headline mb-0">Deadlines</h3></v-card-title>
           <v-responsive>
             <v-layout column>
-              <template v-for="(weekDate, index) in weekDates">
-                <v-layout :key="weekDate.week.id" row>
+              <template v-for="weekDateElem in weekDateElems">
+                <v-layout :key="weekDateElem.week.id" row>
                   <v-flex d-flex justify-center align-center xs2 style="margin: 0 0 0 0.5em">
-                    <v-chip>{{ weekDate.week.name || 'Week ' + weekDate.week.weekNumber }}</v-chip>
+                    <v-chip>{{ weekDateElem.week.name || 'Week ' + weekDateElem.week.weekNumber }}</v-chip>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                     <v-menu
                       :close-on-content-click="false"
-                      v-model="startMenus[index]"
+                      v-model="weekDateElem.startMenu"
                       :nudge-right="40"
                       lazy
                       transition="scale-transition"
@@ -52,16 +52,16 @@
                     >
                       <v-text-field
                         slot="activator"
-                        v-model="weekDate.startDate"
+                        v-model="weekDateElem.startDate"
                         label="Start date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.startDate" @input="startMenus[index] = false"/>
+                      <v-date-picker v-model="weekDateElem.startDate" @input="weekDateElem.startMenu = false"/>
                     </v-menu>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                     <v-menu
                       :close-on-content-click="false"
-                      v-model="endMenus[index]"
+                      v-model="weekDateElem.endMenu"
                       :nudge-right="40"
                       lazy
                       transition="scale-transition"
@@ -70,10 +70,10 @@
                     >
                       <v-text-field
                         slot="activator"
-                        v-model="weekDate.endDate"
+                        v-model="weekDateElem.endDate"
                         label="End date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.endDate" @input="endMenus[index] = false"/>
+                      <v-date-picker v-model="weekDateElem.endDate" @input="weekDateElem.endMenu = false"/>
                     </v-menu>
                   </v-flex>
                 </v-layout>
@@ -144,16 +144,13 @@ export default {
       selectedTemplate: {},
       courseName: '',
       courseDescription: '',
-      weekDates: [],
-      startMenus: [],
-      endMenus: []
+      weekDateElems: [],
     };
   },
   computed: {
     ...mapState('account', ['user']),
-    ...mapGetters('templates', ['templatesByTeacherId']),
     userTemplates: function() {
-      return this.templatesByTeacherId(this.user.id);
+      return this.user.templates;
     },
     userTemplatesSelection: function() {
       return this.userTemplates.map(t => {return {text: t.name, value: t.id}; })
@@ -177,37 +174,25 @@ export default {
     },
     weeks: function(val) {
       if (!val) {
-        this.weekDates = [];
+        this.weekDateElems = [];
         return;
       }
 
-      this.weekDates = val.map(w => { return {
+      this.weekDateElems = val.map(w => { return {
         week: w,
         startDate: new Date().toISOString().substr(0, 10), 
-        endDate:new Date().toISOString().substr(0, 10)
-      };})
-
-      this.startMenus = new Array(val.length);
-      for(let i = 0; i < this.startMenus.length; ++i) {
-        this.startMenus = false;
-      }
-
-      this.endMenus = new Array(val.length);
-      for(let i = 0; i < this.endMenus.length; ++i) {
-        this.endMenus = false;
-      }
+        endDate: new Date().toISOString().substr(0, 10),
+        startMenu: false,
+        endMenu: false
+      };});
     }
   },
   beforeMount() {
-    if (this.user && this.user.id) {
-      this.getByTeacherId(this.user.id);
-    }
   },
   methods: {
     ...mapActions('courses', {
       createCourse: 'create'
     }),
-    ...mapActions('templates', ['getByTeacherId'])
   },
 }
 </script>
