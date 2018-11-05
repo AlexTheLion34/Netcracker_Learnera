@@ -1,10 +1,8 @@
 import {courseService} from '../services'
-import generalMutations from '../helpers/store-mutations'
 import Vue from 'vue';
 
-const state = {
-  items: []
-}
+import crudModule from './crud.module'
+const {state, actions: crudActions, mutations: crudMutations} = crudModule(courseService);
 
 const getters = {
   coursesByTeacherId: (state) => (teacherId) => {
@@ -13,36 +11,7 @@ const getters = {
 }
 
 const actions = {
-  create({commit}, course) {
-    return new Promise((resolve, reject) => {
-      commit('createRequest', course);
-
-      courseService.create(course)
-        .then(c => {
-          commit('createSuccess', c);
-          resolve(c);
-        })
-        .catch(e => {
-          commit('createFailure', e);
-          reject(e);
-        });
-    });
-  },
-  get({commit}, id) {
-    return new Promise((resolve, reject) => {
-      commit('getRequest', id);
-
-      courseService.getById(id)
-        .then(c => {
-          commit('getSuccess', c);
-          resolve(c);
-        })
-        .catch(e => {
-          commit('getFailure', {id, error: e.toString()});
-          reject(e);
-        });
-    });
-  },
+  ...crudActions,
   getByTeacherId({commit}, id) {
     return new Promise((resolve, reject) => {
       commit('getByTeacherIdRequest');
@@ -58,25 +27,10 @@ const actions = {
         });
     });
   },
-  delete({commit}, id) {
-    return new Promise((resolve, reject) => {
-      commit('deleteRequest', id);
-
-      courseService.delete(id)
-        .then(() => {
-          commit('deleteSuccess', id);
-          resolve();
-        })
-        .catch(e => {
-          commit('deleteFailure', {id, error: e.toString()});
-          reject(e);
-        });
-    });
-  }
 }
 
 const mutations = {
-  ...generalMutations,
+  ...crudMutations,
   getByTeacherIdRequest(state) {
   },
   getByTeacherIdSuccess(state, {teacherId, courses}) {
@@ -91,7 +45,6 @@ const mutations = {
   },
   getByTeacherIdFailure(state, id) {
   }
-
 }
 
 export const courses = {

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="user">
     <v-layout column>
       <v-flex>
         <v-layout row justify-start>
