@@ -2,25 +2,24 @@ package com.netcracker.learnera.controller;
 
 import com.netcracker.learnera.entity.Course;
 import com.netcracker.learnera.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/courses")
-public class CourseController {
+public class CourseController extends BasicController<Course, Long> {
 
-    @Autowired
-    CourseService courseService;
+    private CourseService courseService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<Course>> getAllCourses() {
-        return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
+    public CourseController(CourseService courseService) {
+        super(courseService);
+        this.courseService = courseService;
     }
 
-
+    @GetMapping("/teacher/{id}")
+    public ResponseEntity<Iterable<Course>> findAllByTeacherId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(courseService.findAllByTeacherId(id), HttpStatus.OK);
+    }
 
 }

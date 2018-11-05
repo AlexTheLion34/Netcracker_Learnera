@@ -2,18 +2,15 @@ package com.netcracker.learnera.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 @Entity
 @Table(name = "group_messages")
-public class GroupMessage {
+public class GroupMessage implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,10 +19,14 @@ public class GroupMessage {
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private User sender;
 
     @ManyToOne
     @JoinColumn(name = "group_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private Group destinationGroup;
 
     @Column(name = "message")

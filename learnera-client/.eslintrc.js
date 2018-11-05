@@ -33,7 +33,8 @@ module.exports = {
         "no-empty": "error",
         "no-console": "off",
         "no-unused-vars": "off",
-        "vue/max-attributes-per-line": "off"
+        "vue/max-attributes-per-line": "off",
+        "vue/require-prop-types": "off"
     },
     "env": {
         "browser": true,

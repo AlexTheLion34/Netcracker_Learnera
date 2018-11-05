@@ -1,17 +1,16 @@
 package com.netcracker.learnera.entity.template;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.netcracker.learnera.entity.IdentifiableEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "weeks")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
-public class Week {
+public class Week implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,6 +19,8 @@ public class Week {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "template_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private Template template;
 
     @Column(name = "week_number")
@@ -27,6 +28,11 @@ public class Week {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "week")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
+    private List<Lesson> lessons;
 
     public Week() {
     }
@@ -61,5 +67,13 @@ public class Week {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

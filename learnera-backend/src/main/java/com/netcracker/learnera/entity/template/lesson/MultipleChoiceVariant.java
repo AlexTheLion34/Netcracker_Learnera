@@ -1,10 +1,15 @@
 package com.netcracker.learnera.entity.template.lesson;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.netcracker.learnera.entity.IdentifiableEntity;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "mc_question_variants")
-public class MultipleChoiceVariant {
+public class MultipleChoiceVariant implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -13,6 +18,8 @@ public class MultipleChoiceVariant {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private MultipleChoiceQuestion question;
 
     @Column(name = "choice_text")

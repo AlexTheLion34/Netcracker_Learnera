@@ -1,37 +1,59 @@
 import {courseService} from '../services'
 import generalMutations from '../helpers/store-mutations'
+import Vue from 'vue';
 
 const state = {
-  all: {}
+  items: []
+}
+
+const getters = {
+  coursesByTeacherId: (state) => (teacherId) => {
+    return state.items.filter(i => i.teacherId === teacherId);
+  }
 }
 
 const actions = {
-  getAll({commit}) {
+  create({commit}, course) {
     return new Promise((resolve, reject) => {
-      commit('getAllRequest');
+      commit('createRequest', course);
 
-      courseService.getAll()
+      courseService.create(course)
         .then(c => {
-          commit('getAllSuccess', c);
+          commit('createSuccess', c);
           resolve(c);
         })
         .catch(e => {
-          commit('getAllFailure', e);
+          commit('createFailure', e);
           reject(e);
         });
     });
   },
   get({commit}, id) {
     return new Promise((resolve, reject) => {
-      commit('getRequest');
+      commit('getRequest', id);
 
-      courseService.get(id)
+      courseService.getById(id)
         .then(c => {
           commit('getSuccess', c);
           resolve(c);
         })
         .catch(e => {
           commit('getFailure', {id, error: e.toString()});
+          reject(e);
+        });
+    });
+  },
+  getByTeacherId({commit}, id) {
+    return new Promise((resolve, reject) => {
+      commit('getByTeacherIdRequest');
+
+      courseService.getByTeacherId(id)
+        .then(courses => {
+          commit('getByTeacherIdSuccess', {teacherId: id, courses});
+          resolve(courses);
+        })
+        .catch(e => {
+          commit('getByTeacherIdFailure', e);
           reject(e);
         });
     });
@@ -54,12 +76,28 @@ const actions = {
 }
 
 const mutations = {
-  ...generalMutations
+  ...generalMutations,
+  getByTeacherIdRequest(state) {
+  },
+  getByTeacherIdSuccess(state, {teacherId, courses}) {
+    courses.forEach(course => {
+      const idx = state.items.findIndex(c => c.id === course.id);
+      if (idx === -1) {
+        state.items.push({...course, teacherId});
+      } else {
+        Vue.set(state.items, idx, {...course, teacherId});
+      }
+    });
+  },
+  getByTeacherIdFailure(state, id) {
+  }
+
 }
 
 export const courses = {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters
 }

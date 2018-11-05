@@ -7,6 +7,7 @@
       <v-list>
         <v-list-tile
           v-for="item in menuItems"
+          v-if="!loggedIn && item.isPublic || loggedIn && !item.isPublic"
           :key="item.title"
           :to="item.path"
         >
@@ -59,24 +60,30 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 
-export default {
+export default { 
   data() {
     return {
       appTitle: "ОБУЧАЛОЧКА",
-      sidebar: false,
-      menuItems: [
-        {title: "Profile", path: "/profile", icon: "face"},
-        {title: "Logout", path: "/logout", icon: 'accessible_forward'},
-        {title: "Registration", path: "/register", icon: "account_circle", isPublic: true},
-        {title: "Login", path: "/login", icon: "lock_open", isPublic: true}
-      ]
+      sidebar: false
     };
   },
   computed: {
     ...mapState({
       alert: state => state.alert,
-      loggedIn: state => state.account.status.loggedIn
-    })
+      loggedIn: state => state.account.status.loggedIn,
+      user: state => state.account.user
+    }),
+    userPrefix: function() {
+      return `/user/${this.user.id}`;
+    },
+    menuItems: function() {
+      return [
+        {title: "Home", path: this.loggedIn ? this.userPrefix : '', icon: 'face'},
+        {title: 'Logout', path: '/logout', icon: 'accessible_forward'},
+        {title: "Registration", path: "/register", icon: "account_circle", isPublic: true},
+        {title: "Login", path: "/login", icon: "lock_open", isPublic: true}
+      ]
+    }
   },
   methods: {
     ...mapActions({

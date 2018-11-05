@@ -1,19 +1,17 @@
 package com.netcracker.learnera.entity.template;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.Course;
+import com.netcracker.learnera.entity.IdentifiableEntity;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "course_week_dates")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
-public class CourseWeekDate {
+public class CourseWeekDate implements IdentifiableEntity<CourseWeekDateId> {
 
     @EmbeddedId
     private CourseWeekDateId id;
@@ -21,6 +19,8 @@ public class CourseWeekDate {
     @ManyToOne
     @MapsId(value = "course_id")
     @JoinColumn(name = "course_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private Course course;
 
     @ManyToOne

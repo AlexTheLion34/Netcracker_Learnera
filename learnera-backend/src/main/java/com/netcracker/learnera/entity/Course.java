@@ -2,6 +2,7 @@ package com.netcracker.learnera.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.Image;
 import com.netcracker.learnera.entity.template.CourseWeekDate;
@@ -12,20 +13,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 @Entity
 @Table(name = "courses")
-public class Course {
+public class Course implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "template_id")
     private Template template;
 
@@ -62,6 +59,8 @@ public class Course {
             joinColumns = {@JoinColumn(name = "course_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private List<Group> groups = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -70,6 +69,7 @@ public class Course {
     public Course() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }

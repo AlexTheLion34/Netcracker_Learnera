@@ -1,7 +1,9 @@
 package com.netcracker.learnera.entity.template;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.netcracker.learnera.entity.IdentifiableEntity;
 import com.netcracker.learnera.entity.User;
 import com.netcracker.learnera.entity.media.Image;
 
@@ -11,19 +13,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "templates")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
-public class Template {
+public class Template implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private User teacher;
 
     @Column(name = "name")
@@ -45,6 +45,7 @@ public class Template {
     public Template() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }

@@ -2,6 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {store} from './store/index.js'
 
+import Courses from './components/Courses.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
+import User from './components/User.vue'
+import UserHome from './components/UserHome.vue'
+import Course from './components/Course.vue'
+import CourseCreator from './components/CourseCreator.vue'
+
 const logoutComponent = {
   functional: true,
   render: (createElement, context) => {
@@ -11,21 +19,20 @@ const logoutComponent = {
   }
 }
 
-const routerOptions = [
-  {path: '/login', component: 'Login', meta: {isPublic: true}},
-  {path: '/register', component: 'Register', meta: {isPublic: true}},
-  {path: '/profile', component: 'Profile', alias: '/'},
-  {path: '/course_list', component: 'CourseList'}
-]
 
-const routes = [ 
+
+const routes = [
   {path: '/logout', component: logoutComponent},
-  ...routerOptions.map(route => {
-    return {
-      ...route,
-      component: () => import(`@/components/${route.component}.vue`)
-    }
-  })
+  {path: '/login', component: Login, meta: {isPublic: true}},
+  {path: '/register', component: Register, meta: {isPublic: true}},
+  {path: '/user/:userIdStr', component: User, props: true,
+    children: [
+      {path: '', alias: '/home', component: UserHome, props: true},
+      {path: 'courses', component: Courses, props: true},
+      {path: 'create-course', component: CourseCreator, props: true}
+    ]
+  },
+  {path: '/course/:courseIdStr', component: Course, props: true}
 ]
 
 Vue.use(Router)
@@ -33,6 +40,21 @@ Vue.use(Router)
 export const router = new Router({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.fullPath === '/')
+  {
+    const loggedIn = store.state.account.status.loggedIn;
+
+    if (loggedIn) {
+      next(`/user/${store.state.account.user.id}`);
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
 })
 
 router.beforeEach((to, from, next) => {

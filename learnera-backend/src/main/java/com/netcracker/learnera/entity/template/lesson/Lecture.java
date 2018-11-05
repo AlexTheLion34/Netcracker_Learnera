@@ -1,6 +1,7 @@
-package com.netcracker.learnera.entity.template;
+package com.netcracker.learnera.entity.template.lesson;
 
 import com.netcracker.learnera.entity.media.File;
+import com.netcracker.learnera.entity.template.Lesson;
 
 import javax.persistence.*;
 

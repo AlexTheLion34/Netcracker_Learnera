@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<User> register(@RequestBody User user) throws EntityAlreadyExistsException {
-        userService.createUser(user);
+        userService.create(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

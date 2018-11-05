@@ -1,6 +1,8 @@
 package com.netcracker.learnera.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.Image;
 
@@ -8,13 +10,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 @Entity
 @Table(name = "groups")
-public class Group {
+public class Group implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -23,6 +21,8 @@ public class Group {
 
     @ManyToOne
     @JoinColumn(name = "curator_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private User curator;
 
     @Column(name = "name")
@@ -36,9 +36,13 @@ public class Group {
     private Image image;
 
     @ManyToMany(mappedBy = "studyGroups")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private List<User> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "destinationGroup")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private List<GroupMessage> messages = new ArrayList<>();
 
     @ManyToMany(mappedBy = "groups")
@@ -47,6 +51,7 @@ public class Group {
     public Group() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }

@@ -1,11 +1,11 @@
 import {authHeader, handleResponse} from '../helpers/auth-helper'
 import axios from 'axios'
-import {userService} from './user.service'
 
 export const courseService = {
   create,
   getAll,
   getById,
+  getByTeacherId,
   update,
   delete: _delete
 }
@@ -33,6 +33,14 @@ function getById(id) {
   };
 
   return axios.get(`/api/courses/${id}`, requestOptions).then(handleResponse);
+}
+
+function getByTeacherId(id) {
+  const requestOptions = {
+    headers: authHeader()
+  };
+
+  return axios.get(`/api/courses/teacher/${id}`, requestOptions).then(handleResponse);
 }
 
 function update(course) {
