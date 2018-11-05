@@ -15,7 +15,8 @@ const routerOptions = [
   {path: '/login', component: 'Login', meta: {isPublic: true}},
   {path: '/register', component: 'Register', meta: {isPublic: true}},
   {path: '/profile', component: 'Profile', alias: '/'},
-  {path: '/course_list', component: 'CourseList'}
+  {path: '/course_list', component: 'CourseList'},
+  {path: '/groups_list', component: 'MyGroups'}
 ]
 
 const routes = [ 
