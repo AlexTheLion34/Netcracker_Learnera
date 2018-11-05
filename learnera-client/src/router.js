@@ -19,8 +19,6 @@ const logoutComponent = {
   }
 }
 
-
-
 const routes = [
   {path: '/logout', component: logoutComponent},
   {path: '/login', component: Login, meta: {isPublic: true}},
