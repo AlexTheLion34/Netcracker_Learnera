@@ -20,7 +20,7 @@ public class LessonMessageController extends BasicController<LessonMessage, Long
         this.lessonMessageService = lessonMessageService;
     }
 
-    @GetMapping("/lesson/{id}")
+    @GetMapping("/destination/{id}")
     public ResponseEntity<Iterable<LessonMessage>> findAllByDestinationLessonId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(lessonMessageService.findAllByDestinationLessonId(id), HttpStatus.OK);
     }

@@ -20,7 +20,7 @@ public class QuestionAttemptController extends BasicController<QuestionAttempt, 
         this.questionAttemptService = questionAttemptService;
     }
 
-    @GetMapping("/questionAttempt/{id}")
+    @GetMapping("/question/{id}")
     public ResponseEntity<Iterable<QuestionAttempt>> findAllByQuestionId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(questionAttemptService.findAllByQuestionId(id), HttpStatus.OK);
     }

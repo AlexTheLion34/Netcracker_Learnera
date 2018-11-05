@@ -7,6 +7,7 @@ const apiUrl = '/api/groups'
 export const groupService = {
   ...crudService(apiUrl),
   getByCuratorId,
+  getByCourseId
 }
 
 function getByCuratorId(id) {
@@ -15,4 +16,12 @@ function getByCuratorId(id) {
   };
 
   return axios.get(`${apiUrl}/curator/${id}`, requestOptions).then(handleResponse);
+}
+
+function getByCourseId(id) {
+  const requestOptions = {
+    headers: authHeader()
+  };
+
+  return axios.get(`${apiUrl}/course/${id}`, requestOptions).then(handleResponse);
 }

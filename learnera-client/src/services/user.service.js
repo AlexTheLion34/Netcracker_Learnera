@@ -8,8 +8,17 @@ export const userService = {
   login,
   logout,
   register,
+  getByStudyGroupId,
   ...crudService(apiUrl)
 };
+
+function getByStudyGroupId(id) {
+  const requestOptions = {
+    headers: authHeader()
+  };
+
+  return axios.get(`${apiUrl}/study-group/${id}`, requestOptions).then(handleResponse);
+}
 
 function login(email, password) {
   return axios.get(`/api/auth`, {
