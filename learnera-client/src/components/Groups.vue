@@ -5,20 +5,21 @@
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
         <v-btn>Add group</v-btn>
       </v-flex>
-            <groups-list :user="user"/>
+            <user-group-list :user="user" :actions="isAuthorized ? listActions : []"/>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import GroupsList from './GroupsList.vue'
+import UserGroupList from './base/UserGroupList.vue'
 export default {
     name: 'Groups',
-    components: {'groups-list': GroupsList},
+    components: {UserGroupList},
   props: ['userIdStr'],
   data() {
     return {
+      listActions: [{name: "Edit", icon: "build"}, {name: "Delete", icon: "delete", color: "red darken-1"}]
     };
   },
   computed: {
@@ -32,7 +33,10 @@ export default {
       user(state) { 
         const ret = state.items.find(x => x.id === this.userId);
         return ret;
-      }
+      },
+      isAuthorized: function() {
+      return this.user && this.user.role === 'TEACHER' && this.currentUser.id === this.user.id;
+    }
     })
   },
   watch: {
