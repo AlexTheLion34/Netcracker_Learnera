@@ -4,6 +4,7 @@
 /learnera-client/node_modules/
 /learnera-client/target/
 /learnera-client/test/
+/learnera-backend/src/main/resources/application.properties
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

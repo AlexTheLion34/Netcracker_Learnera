@@ -123,7 +123,8 @@
                 <v-btn color="primary" block @click="onCourseCreate">Create course</v-btn>
               </v-flex>
               <v-flex style="margin: 0 10px 0 10px" xs6>
-                <v-btn color="secondary" block @click="$router.back()">Cancel</v-btn>
+                <v-btn color="secondary" block @click="
+                $router.back()">Cancel</v-btn>
               </v-flex>
             </v-layout>
           </v-responsive>

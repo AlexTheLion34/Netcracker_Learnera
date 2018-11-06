@@ -27,12 +27,10 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import GroupsList from './GroupsList.vue'
-import TeacherCourseList from './TeacherCourseList.vue'
-import StudentCourseList from './StudentCourseList.vue'
 export default {
   // TODO: IMPLEMENT USER HOME PAGE
-  name: 'userHome',
-  components: {GroupsList, StudentCourseList, TeacherCourseList},
+  name: 'UserHome',
+  components: {GroupsList},
   computed: {
     ...mapState('account', {
       currentUser: state => state.user

@@ -5,23 +5,22 @@
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
         <v-btn>Add course</v-btn>
       </v-flex>
-      <teacher-course-list v-if="user && user.role === 'TEACHER'" :user="user"/>
-      <student-course-list v-if="user && user.role === 'STUDENT'" :user="user"/>
+      <user-course-list :user="user" :actions="isAuthorized ? listActions : []"/>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
-import TeacherCourseList from './TeacherCourseList.vue'
-import StudentCourseList from './StudentCourseList.vue'
+import UserCourseList from './base/UserCourseList.vue'
 
 export default {
   name: 'Courses',
-  components: {StudentCourseList, TeacherCourseList},
+  components: {UserCourseList},
   props: ['userIdStr'],
   data() {
     return {
+      listActions: [{name: "Edit", icon: "build"}, {name: "Delete", icon: "delete", color: "red darken-1"}]
     };
   },
   computed: {
@@ -36,7 +35,10 @@ export default {
         const ret = state.items.find(x => x.id === this.userId);
         return ret;
       }
-    })
+    }),
+    isAuthorized: function() {
+      return this.user && this.user.role === 'TEACHER' && this.currentUser.id === this.user.id;
+    }
   },
   watch: {
     userIdStr: function() { 

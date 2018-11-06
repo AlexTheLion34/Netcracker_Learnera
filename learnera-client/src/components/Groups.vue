@@ -13,8 +13,6 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import GroupsList from './GroupsList.vue'
-import TeacherCourseList from './TeacherCourseList.vue'
-import StudentCourseList from './StudentCourseList.vue'
 export default {
     name: 'Groups',
     components: {'groups-list': GroupsList},
