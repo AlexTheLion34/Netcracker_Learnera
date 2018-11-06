@@ -164,7 +164,6 @@ export default {
       if (!this.currentTemplate) {
         return undefined;
       }
-      console.log(JSON.stringify(this.currentTemplate.weeks));
       return this.currentTemplate.weeks;
     }
   },
@@ -196,11 +195,6 @@ export default {
       createCourse: 'create'
     }),
     onCourseCreate() {
-      // selectedTemplate: {},
-      // courseName: '',
-      // courseDescription: '',
-      // weekDateElems: [],
-
       const course = {
         template: {id: this.currentTemplate.id},
         name: this.courseName,

@@ -1,9 +1,9 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-layout row wrap>
       <v-flex xs12><h3 class="display-2">Courses</h3></v-flex>
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
-        <v-btn>Add course</v-btn>
+        <v-btn :to="`/user/${userIdStr}/create-course`">Add course</v-btn>
       </v-flex>
       <user-course-list :user="user" :actions="isAuthorized ? listActions : []"/>
     </v-layout>

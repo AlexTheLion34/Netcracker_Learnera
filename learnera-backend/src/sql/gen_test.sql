@@ -9,6 +9,10 @@ VALUES (1, 'd32f123', 'Andrey', 'Neste-ov'), (3, 'admin', 'Admin', 'Adminovich')
 INSERT INTO groups (id, curator_id, name, description, avatar_id)
 VALUES (1, 1, 'A group', 'A group description', NULL);
 
+INSERT INTO groups (id, curator_id, name, description, avatar_id)
+VALUES (2, 1, 'B group', 'A group description', NULL);
+
+
 INSERT INTO templates (id, teacher_id, name, description, avatar_id)
 VALUES (1, 1, 'A template', 'A template description', NULL);
 
