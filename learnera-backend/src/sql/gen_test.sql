@@ -15,6 +15,13 @@ VALUES (1, 1, 'A template', 'A template description', NULL);
 INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
 VALUES (1, 1, 'A course', 'A course description', NULL, '03/11/2018');
 
+INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
+VALUES (2, 1, 'Second course', 'Second description', NULL, '04/11/2018');
+
+SELECT * FROM courses;
+
+SELECT * FROM course_week_dates;
+
 INSERT INTO group_users (user_id, group_id) VALUES (2, 1), (3, 1), (4, 1);
 INSERT INTO course_groups (group_id, course_id) VALUES (1, 1);
 

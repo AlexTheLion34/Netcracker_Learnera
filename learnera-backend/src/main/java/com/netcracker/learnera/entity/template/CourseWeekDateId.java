@@ -17,6 +17,11 @@ public class CourseWeekDateId implements Serializable {
     public CourseWeekDateId() {
     }
 
+    public CourseWeekDateId(Long courseId, Long weekId) {
+        this.courseId = courseId;
+        this.weekId = weekId;
+    }
+
 
     @Override
     public int hashCode() {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/lesson-messages")
+@RequestMapping("/api/group-messages")
 public class GroupMessageController extends BasicController<GroupMessage, Long> {
 
     private GroupMessageService groupMessageService;

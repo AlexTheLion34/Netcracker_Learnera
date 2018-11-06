@@ -63,7 +63,7 @@ public class Course implements IdentifiableEntity<Long> {
     @JsonIdentityReference(alwaysAsId=true)
     private List<Group> groups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CourseWeekDate> weekDates = new ArrayList<>();
 
     public Course() {
