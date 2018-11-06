@@ -120,10 +120,10 @@
           <v-responsive>
             <v-layout row>
               <v-flex style="margin: 0 10px 0 10px" xs6>
-                <v-btn color="primary" block>Create course</v-btn>
+                <v-btn color="primary" block @click="onCourseCreate">Create course</v-btn>
               </v-flex>
               <v-flex style="margin: 0 10px 0 10px" xs6>
-                <v-btn color="secondary" block>Cancel</v-btn>
+                <v-btn color="secondary" block @click="$router.back()">Cancel</v-btn>
               </v-flex>
             </v-layout>
           </v-responsive>
@@ -136,6 +136,7 @@
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
+import {router} from '../router'
 
 export default {
   name: 'CourseCreator',
@@ -193,6 +194,43 @@ export default {
     ...mapActions('courses', {
       createCourse: 'create'
     }),
+    onCourseCreate() {
+      // selectedTemplate: {},
+      // courseName: '',
+      // courseDescription: '',
+      // weekDateElems: [],
+
+      const course = {
+        template: {id: this.currentTemplate.id},
+        name: this.courseName,
+        description: this.courseDescription,
+        startDate: this.weekDateElems[0].startDate,
+        endDate: this.weekDateElems[this.weekDateElems.length - 1].endDate,
+        weekDates: this.weekDateElems.map(wde => {
+          const {week, startDate, endDate} = wde;
+          return {
+            id: {
+              weekId: week.id
+            },
+            week: {
+              id: week.id
+            },
+            startDate,
+            endDate
+          };
+        }),
+        avatar: null, // TODO
+        passPercent: 60, // TODO
+        goodPercent: 75, // TODO
+        excellentPercent: 90, // TODO
+        groups: null, // TODO
+      };
+
+      this.createCourse(course).then(course => {
+        // TODO: IMPLEMENT NOTIFICATION
+        router.push(`/course/${course.id}`);
+      }).catch(e => console.error);
+    }
   },
 }
 </script>
