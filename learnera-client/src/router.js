@@ -10,7 +10,7 @@ import UserHome from './components/UserHome.vue'
 import Course from './components/Course.vue'
 import CourseCreator from './components/CourseCreator.vue'
 import Groups from './components/Groups.vue'
-import {groups} from './store/groups.module.js';
+import Group from './components/Group.vue'
 
 const logoutComponent = {
   functional: true,
@@ -34,6 +34,7 @@ const routes = [
     ]
   },
   {path: '/course/:courseIdStr', component: Course, props: true},
+  {path: '/group/:groupIdStr', component: Group, props: true}
 ]
 
 Vue.use(Router)
