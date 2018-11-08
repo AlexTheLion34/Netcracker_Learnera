@@ -31,27 +31,27 @@
           <v-responsive>
             <v-data-table
               :headers="[
-                {text: 'Nickname', value: 'nickname'}, 
+                {text: 'Id', value: ''}, 
                 {text: 'Points', value: ''}, 
               ]"
-              :items="nickname"
+              :items="id"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.nickname }}</td>
+                <td>{{ props.item }}</td>
               </template>
             </v-data-table>
           </v-responsive>
         </v-card>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-flex xs12>
+      <!-- <v-flex xs12>
         <v-card>
           <v-card-title><h3 class="headline mb-0">Discussion</h3></v-card-title>
         </v-card>
         <v-btn fluid>Send</v-btn>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
   </v-container>
 </template>
@@ -80,9 +80,9 @@ export default {
     }),
     ...mapState('account', ['user']),
     ...mapState('users', {
-        nickname: function(state) {
-            return this.group.students
-        },
+    id: function() {
+      return this.group.students
+    }
     }),
   },
   methods: {

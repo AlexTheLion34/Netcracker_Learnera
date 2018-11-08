@@ -11,6 +11,7 @@ import Course from './components/Course.vue'
 import CourseCreator from './components/CourseCreator.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
+import GroupCreator from './components/GroupCreator.vue'
 
 const logoutComponent = {
   functional: true,
@@ -30,7 +31,8 @@ const routes = [
       {path: '', alias: '/home', component: UserHome, props: true},
       {path: 'courses', component: Courses, props: true},
       {path: 'create-course', component: CourseCreator, props: true},
-      {path: 'groups', component: Groups, props: true}
+      {path: 'groups', component: Groups, props: true},
+      {path: 'create-group', component: GroupCreator, props: true}
     ]
   },
   {path: '/course/:courseIdStr', component: Course, props: true},

@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12><h3 class="display-2">Groups</h3></v-flex>
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
-        <v-btn>Add group</v-btn>
+        <v-btn :to="`/user/${userIdStr}/create-group`">Add group</v-btn>
       </v-flex>
             <user-group-list :user="user" :actions="isAuthorized ? listActions : []"/>
     </v-layout>
