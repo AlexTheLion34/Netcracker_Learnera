@@ -24,33 +24,7 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">User management</h3></v-card-title>
           <v-responsive>
-            <v-container>
-              <v-layout row>
-                <v-flex d-flex align-center justify-center>
-                  <v-layout column>
-                    <v-flex>
-                      <h6 class="title">All users</h6>
-                      <v-list/>
-                    </v-flex>
-                    <v-flex>
-                      TODO: SHOW Users
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-                <v-divider class="mx-2" vertical/>
-                <v-flex>
-                  <v-layout column>
-                    <v-flex>
-                      <h6 class="title">Participants</h6>
-                      <v-list/>
-                    </v-flex>
-                    <v-flex>
-                      TODO: SHOW Users
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-              </v-layout>
-            </v-container>
+            <!-- <two-lists-selector :items="userGroups" :list-renderer="GroupList" @update:selected-items="selectedGroups = $event" /> -->
           </v-responsive>
         </v-card>
       </v-flex>
@@ -78,6 +52,8 @@
 import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 import {router} from '../router'
+// import GroupList from './base/GroupList.vue'
+import TwoListsSelector from './base/TwoListsSelector.vue'
 
 export default {
   name: 'GroupCreator',
@@ -91,6 +67,9 @@ export default {
     ...mapState('account', ['user']),
     currentUser: state => state.user,
   },
+  userGroups: function() {
+      return this.currentUser ? this.currentUser.curatedGroups : undefined;
+    },
   beforeMount() {
   },
   methods: {
@@ -106,7 +85,6 @@ export default {
         students: null,
       };
       this.createGroup(group).then(group => {
-        // TODO: IMPLEMENT NOTIFICATION
         router.push(`/group/${group.id}`);
       }).catch(e => console.error);
     }

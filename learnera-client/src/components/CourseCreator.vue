@@ -86,31 +86,7 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">Group management</h3></v-card-title>
           <v-responsive>
-            <v-container>
-              <v-layout row>
-                <v-flex d-flex align-center justify-center>
-                  <v-layout column>
-                    <v-flex>
-                      <h6 class="title">All groups</h6>
-                    </v-flex>
-                    <v-flex>
-                      TODO: SHOW GROUPS
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-                <v-divider class="mx-2" vertical/>
-                <v-flex>
-                  <v-layout column>
-                    <v-flex>
-                      <h6 class="title">Participants</h6>
-                    </v-flex>
-                    <v-flex>
-                      TODO: SHOW GROUPS
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-              </v-layout>
-            </v-container>
+            <two-lists-selector :items="userGroups" :list-renderer="GroupList" @update:selected-items="selectedGroups = $event" />
           </v-responsive>
         </v-card>
       </v-flex>
@@ -138,21 +114,39 @@
 import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 import {router} from '../router'
+import GroupList from './base/GroupList.vue'
+import TwoListsSelector from './base/TwoListsSelector.vue'
 
 export default {
   name: 'CourseCreator',
+  components: {GroupList, TwoListsSelector},
+  props: ['userIdStr'],
   data() {
     return {
       selectedTemplate: {},
       courseName: '',
       courseDescription: '',
       weekDateElems: [],
+      selectedGroups: [],
+      GroupList
     };
   },
   computed: {
-    ...mapState('account', ['user']),
+    ...mapState('account', [{currentUser: 'user'}]),
+    ...mapState('users', {
+      user(state) { 
+        const ret = state.items.find(x => x.id === this.userId);
+        return ret;
+      }
+    }),
+    userId: function() {
+      return parseInt(this.userIdStr);
+    },
     userTemplates: function() {
       return this.user.templates;
+    },
+    userGroups: function() {
+      return this.user ? this.user.curatedGroups : undefined;
     },
     userTemplatesSelection: function() {
       return this.userTemplates.map(t => {return {text: t.name, value: t.id}; })
@@ -167,12 +161,7 @@ export default {
       return this.currentTemplate.weeks;
     }
   },
-  watch: {
-    user: function(val) {
-      if (val && val.id) {
-        this.getByTeacherId(val.id);
-      }
-    },
+  watch: {                                                                 
     weeks: function(val) {
       if (!val) {
         this.weekDateElems = [];
@@ -187,8 +176,6 @@ export default {
         endMenu: false
       };});
     }
-  },
-  beforeMount() {
   },
   methods: {
     ...mapActions('courses', {
@@ -218,7 +205,7 @@ export default {
         passPercent: 60, // TODO
         goodPercent: 75, // TODO
         excellentPercent: 90, // TODO
-        groups: null, // TODO
+        groups: this.selectedGroups.map(g => ({id: g.id})),
       };
 
       this.createCourse(course).then(course => {

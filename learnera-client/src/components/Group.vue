@@ -90,6 +90,9 @@ export default {
     ...mapActions('groups', {
       getGroup: 'get'
     }),
+    ...mapActions('users', {
+      getUsers: 'getByStudyGroupId'
+    })
   },
 }
 </script>

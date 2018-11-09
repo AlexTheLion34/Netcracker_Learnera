@@ -1,21 +1,21 @@
 <template>
   <v-layout>
-      <v-flex>
-        <v-layout>
-          <v-flex xs6><h3 class="display-2">Groups</h3></v-flex>
-        </v-layout>
-        <v-layout>
-          <user-group-list :user="user"/>
-        </v-layout>
-      </v-flex>
-      <v-flex>
-        <v-layout>
-          <v-flex xs6><h3 class="display-2">Courses</h3></v-flex>
-        </v-layout>
-        <v-layout>
-          <user-course-list :user="user"/>
-        </v-layout>
-      </v-flex>
+    <v-flex>
+      <v-layout>
+        <v-flex xs6><h3 class="display-2">Groups</h3></v-flex>
+      </v-layout>
+      <v-layout>
+        <user-group-list :user="user"/>
+      </v-layout>
+    </v-flex>
+    <v-flex>
+      <v-layout>
+        <v-flex xs6><h3 class="display-2">Courses</h3></v-flex>
+      </v-layout>
+      <v-layout>
+        <user-course-list :user="user"/>
+      </v-layout>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -25,8 +25,8 @@ import UserGroupList from './base/UserGroupList.vue'
 import UserCourseList from './base/UserCourseList.vue'
 
 export default {
-  components: {UserGroupList, UserCourseList},
   name: 'UserHome',
+  components: {UserGroupList, UserCourseList},
   props: ['userIdStr'],
   computed: {
     ...mapState('account', {

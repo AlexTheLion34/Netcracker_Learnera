@@ -1,16 +1,17 @@
 <template>
-  <item-list :items="mappedCourses"
-             :actions="actions"
-             api-url="/course" @actionClicked="onActionClicked"/>
+  <course-list :items="courses"
+               :actions="actions"
+               @action-clicked="onActionClicked"/>
 </template>
 
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
 import ItemList from './ItemList.vue'
+import CourseList from './CourseList.vue'
 
 export default {
   name: 'UserCourseList',
-  components: {ItemList},
+  components: {ItemList, CourseList},
   props: ['user', 'actions'],
   data() {
     return {
@@ -21,7 +22,7 @@ export default {
     ...mapState('account', {
       currentUser: state => state.user
     }),
-    mappedCourses: function() {
+    courses: function() {
       if (!this.user || !this.user.role) {
         return [];
       }
@@ -36,14 +37,6 @@ export default {
         }).flat())];
       }
 
-      ret = ret.map(course => {
-        return {
-          id: course.id,
-          name: course.name,
-          description: course.description,
-          avatar: course.info ? course.info.avatar : undefined,
-        };
-      })
       return ret;
     }
   },
@@ -64,7 +57,7 @@ export default {
       getCoursesByTeacherId: 'getByTeacherId'
     }),
     onActionClicked(info) {
-      this.$emit('actionClicked', info);
+      this.$emit('action-clicked', info);
     }
   }
 }

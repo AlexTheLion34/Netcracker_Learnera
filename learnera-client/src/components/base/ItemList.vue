@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-list v-if="items" two-line>
       <v-list-tile
-        v-for="item in items"
+        v-for="(item, i) in items"
         :to="`${apiUrl}/${item.id}`"
         :key="item.id"
         avatar
@@ -11,7 +11,7 @@
           <v-flex>
             <v-avatar color="teal">
               <img v-if="item.avatar" :src="item.avatar">
-              <span v-else class="white--text headline">{{ item.name[0] }}</span>
+              <span v-else class="white--text headline">{{ item.name ? item.name[0] : '' }}</span>
             </v-avatar>
           </v-flex>
         </v-list-tile-avatar>
@@ -22,8 +22,8 @@
         </v-list-tile-content>
 
         <v-list-tile-action>
-          <v-tooltip v-for="(action, index) in actions" :key="index" bottom>
-            <v-btn slot="activator" icon ripple @click.prevent="onActionClicked({name: action.name, index})">
+          <v-tooltip v-for="(action, j) in actions" :key="item.id % j" bottom>
+            <v-btn slot="activator" icon ripple @click.prevent="onActionClicked({name: action.name, index: i})">
               <v-icon :color="action.color || 'grey lighten-1'">{{ action.icon }}</v-icon>
             </v-btn>
             <span>{{ action.name }}</span>
@@ -40,7 +40,7 @@ export default {
   props: ['items', 'actions', 'apiUrl'],
   methods: {
     onActionClicked: function(actionInfo) {
-      this.$emit('actionClicked', actionInfo);
+      this.$emit('action-clicked', actionInfo);
     }
   }
 }
