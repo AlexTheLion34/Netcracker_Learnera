@@ -35,7 +35,6 @@ const mutations = {
   getByTeacherIdRequest(state) {
   },
   getByTeacherIdSuccess(state, {templates}) {
-    console.log(templates);
     templates.forEach(template => {
       const idx = state.items.findIndex(t => t.id === template.id);
       if (idx === -1) {

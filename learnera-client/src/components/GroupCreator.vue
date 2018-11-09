@@ -103,7 +103,6 @@ export default {
         avatar: null, // TODO
         students: null, // TODO
       };
-      console.log(this.currentUser.id)
       this.createGroup(group).then(course => {
         // TODO: IMPLEMENT NOTIFICATION
         router.push(`/group/${group.id}`);

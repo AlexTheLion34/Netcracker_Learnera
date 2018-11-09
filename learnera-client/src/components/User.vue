@@ -45,7 +45,7 @@
               <v-flex xs6>
                 <v-layout column>
                   <v-btn :to="`/user/${userId}/groups`" round>Groups</v-btn>
-                  <v-btn round>Link Four</v-btn>
+                  <v-btn :to="`/user/${userId}/templates`" :disabled="user.role !== 'TEACHER'" round>Templates</v-btn>
                 </v-layout>
               </v-flex>
             </v-layout>

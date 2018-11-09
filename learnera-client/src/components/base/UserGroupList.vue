@@ -1,16 +1,16 @@
 <template>
-  <item-list :items="mappedGroups"
-             :actions="actions"
-             api-url="/group" @actionClicked="onActionClicked"/>
+  <group-list :items="groups"
+              :actions="actions"
+              @action-clicked="onActionClicked"/>
 </template>
 
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
-import ItemList from './ItemList.vue'
+import GroupList from './GroupList.vue'
 
 export default {
   name: 'UserGroupList',
-  components: {ItemList},
+  components: {GroupList},
   props: ['user', 'actions'],
   data() {
     return {
@@ -20,22 +20,20 @@ export default {
     ...mapState('account', {
       currentUser: state => state.user
     }),
-    mappedGroups: function() {
-      console.log(this.user)
+    groups: function() {
       if (!this.user || !this.user.role) {
-        return []
+        return [];
       }
-      let ret = [];
       if (this.user.role == 'TEACHER') {
-        return this.user.curatedGroups
+        return this.user.curatedGroups;
       } else if (this.user.role == 'STUDENT') {
-        return this.user.studyGroups
+        return this.user.studyGroups;
       }
     }
   },
   methods: {
     onActionClicked(info) {
-      this.$emit('actionClicked', info);
+      this.$emit('action-clicked', info);
     }
   }
 }
