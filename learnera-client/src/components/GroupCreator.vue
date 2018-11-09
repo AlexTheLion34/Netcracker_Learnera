@@ -30,6 +30,7 @@
                   <v-layout column>
                     <v-flex>
                       <h6 class="title">All users</h6>
+                      <v-list/>
                     </v-flex>
                     <v-flex>
                       TODO: SHOW Users
@@ -41,6 +42,7 @@
                   <v-layout column>
                     <v-flex>
                       <h6 class="title">Participants</h6>
+                      <v-list/>
                     </v-flex>
                     <v-flex>
                       TODO: SHOW Users
@@ -97,14 +99,13 @@ export default {
     }),
     onGroupCreate() {
       const group = {
-        //curator: this.currentUser,
+        curator: {id: this.currentUser.id},
         name: this.groupName,
         description: this.groupDescription,
-        avatar: null, // TODO
-        students: null, // TODO
+        avatar: null, 
+        students: null,
       };
-      console.log(this.currentUser.id)
-      this.createGroup(group).then(course => {
+      this.createGroup(group).then(group => {
         // TODO: IMPLEMENT NOTIFICATION
         router.push(`/group/${group.id}`);
       }).catch(e => console.error);
