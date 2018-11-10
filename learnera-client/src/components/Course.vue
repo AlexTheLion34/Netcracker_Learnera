@@ -105,7 +105,7 @@ export default {
   computed: {
     ...mapState('courses', {
       course: function(state) {
-        const ret = state.items.find(i => i.id === this.courseId && !i.loading);
+        const ret = state.items.find(i => i.id === this.courseId);
         return ret;
       }
     }),

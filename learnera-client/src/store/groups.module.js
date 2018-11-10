@@ -8,7 +8,7 @@ const actions = {
   ...crudActions,
   getByCuratorId({commit}, id) {
     return new Promise((resolve, reject) => {
-      commit('getByCuratorIdRequest');
+      commit('getByCuratorIdRequest', id);
 
       groupService.getByCuratorId(id)
         .then(groups => {
@@ -16,7 +16,7 @@ const actions = {
           resolve(groups);
         })
         .catch(e => {
-          commit('getByCuratorIdFailure', e);
+          commit('getByCuratorIdFailure', {id, error: e});
           reject(e);
         });
     });
@@ -31,7 +31,7 @@ const actions = {
           resolve(groups);
         })
         .catch(e => {
-          commit('getByCourseIdFailure', e);
+          commit('getByCourseIdFailure', {id, error: e});
           reject(e);
         });
     });
@@ -40,9 +40,11 @@ const actions = {
 
 const mutations = {
   ...crudMutations,
-  getByCuratorIdRequest(state) {
+  getByCuratorIdRequest(state, id) {
+    console.log('Getting groups with curator id: ', id)
   },
   getByCuratorIdSuccess(state, groups) {
+    console.log('Got groups: ', groups);
     groups.forEach(group => {
       const idx = state.items.findIndex(i => i.id === i.id);
       if (idx === -1) {
@@ -52,11 +54,15 @@ const mutations = {
       }
     });
   },
-  getByCuratorIdFailure(state, id) {
+  getByCuratorIdFailure(state, {id, error}) {
+    console.error('Failed to get item with id: ', id);
+    console.error('Error: ', error);
   },
-  getByCourseIdRequest(state) {
+  getByCourseIdRequest(state, id) {
+    console.log('Getting groups with course id: ', id)
   },
   getByCourseIdSuccess(state, groups) {
+    console.log('Got groups: ', groups);
     groups.forEach(group => {
       const idx = state.items.findIndex(i => i.id === group.id);
       if (idx === -1) {
@@ -66,7 +72,9 @@ const mutations = {
       }
     });
   },
-  getByCourseIdFailure(state, id) {
+  getByCourseIdFailure(state, {id, error}) {
+    console.error('Failed to get item with id: ', id);
+    console.error('Error: ', error);
   }
 }
 

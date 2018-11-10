@@ -1,5 +1,5 @@
 import {authHeader, handleResponse} from '../helpers/auth-helper'
-import axios from 'axios'
+import axios from '../helpers/axios-proxy'
 
 export default function(apiUrl) {
   return {
@@ -8,7 +8,6 @@ export default function(apiUrl) {
         headers: {...authHeader(), 'Content-Type': 'application/json'}
       };
     
-      console.log(`Performing POST to ${apiUrl}`);
       return axios.post(apiUrl, item, requestOptions).then(handleResponse);
     },
     update(item) {
@@ -16,7 +15,6 @@ export default function(apiUrl) {
         headers: {...authHeader(), 'Content-Type': 'application/json'},
       };
     
-      console.log(`Performing PUT to ${apiUrl}/${item.id}`);
       return axios.put(`${apiUrl}/${item.id}`, item, requestOptions).then(handleResponse);
     },
     delete(id) {
@@ -24,7 +22,6 @@ export default function(apiUrl) {
         headers: authHeader()
       };
 
-      console.log(`Performing DELETE to ${apiUrl}/${id}`);
       return axios.delete(`${apiUrl}/${id}`, requestOptions).then(handleResponse);
     }, 
     getById(id) {
@@ -32,7 +29,6 @@ export default function(apiUrl) {
         headers: authHeader()
       };
     
-      console.log(`Performing GET to ${apiUrl}/${id}`);
       return axios.get(`${apiUrl}/${id}`, requestOptions).then(handleResponse);
     },
     getAll() {

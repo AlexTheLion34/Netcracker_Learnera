@@ -19,9 +19,6 @@ export default {
   },
   computed: {
     ...mapGetters('courses', {coursesByTeacherId: 'coursesByTeacherId'}),
-    ...mapState('account', {
-      currentUser: state => state.user
-    }),
     courses: function() {
       if (!this.user || !this.user.role) {
         return [];

@@ -14,7 +14,7 @@ const actions = {
   ...crudActions,
   getByTeacherId({commit}, id) {
     return new Promise((resolve, reject) => {
-      commit('getByTeacherIdRequest');
+      commit('getByTeacherIdRequest', id);
 
       courseService.getByTeacherId(id)
         .then(courses => {
@@ -22,7 +22,7 @@ const actions = {
           resolve(courses);
         })
         .catch(e => {
-          commit('getByTeacherIdFailure', e);
+          commit('getByTeacherIdFailure', {id, error: e});
           reject(e);
         });
     });
@@ -31,9 +31,11 @@ const actions = {
 
 const mutations = {
   ...crudMutations,
-  getByTeacherIdRequest(state) {
+  getByTeacherIdRequest(state, id) {
+    console.log('Getting courses with teacher id: ', id)
   },
   getByTeacherIdSuccess(state, {teacherId, courses}) {
+    console.log('Got courses: ', courses);
     courses.forEach(course => {
       const idx = state.items.findIndex(c => c.id === course.id);
       if (idx === -1) {
@@ -43,7 +45,9 @@ const mutations = {
       }
     });
   },
-  getByTeacherIdFailure(state, id) {
+  getByTeacherIdFailure(state, {id, error}) {
+    console.error('Failed to get item with id: ', id);
+    console.error('Error: ', error);
   }
 }
 

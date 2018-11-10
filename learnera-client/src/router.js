@@ -12,6 +12,9 @@ import CourseCreator from './components/CourseCreator.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
 import GroupCreator from './components/GroupCreator.vue'
+import Template from './components/Template.vue'
+import Templates from './components/Templates.vue'
+import TemplateCreator from './components/TemplateCreator.vue'
 
 const logoutComponent = {
   functional: true,
@@ -32,11 +35,14 @@ const routes = [
       {path: 'courses', component: Courses, props: true},
       {path: 'create-course', component: CourseCreator, props: true},
       {path: 'groups', component: Groups, props: true},
-      {path: 'create-group', component: GroupCreator, props: true}
+      {path: 'create-group', component: GroupCreator, props: true},
+      {path: 'templates', component: Templates, props:true},
+      {path: 'create-template', component: TemplateCreator, props: true}
     ]
   },
   {path: '/course/:courseIdStr', component: Course, props: true},
-  {path: '/group/:groupIdStr', component: Group, props: true}
+  {path: '/group/:groupIdStr', component: Group, props: true},
+  {path: '/template/:templateIdStr', component: Template, props:true}
 ]
 
 Vue.use(Router)
