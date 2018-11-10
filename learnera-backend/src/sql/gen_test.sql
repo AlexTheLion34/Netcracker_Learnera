@@ -30,12 +30,12 @@ INSERT INTO group_users (user_id, group_id) VALUES (2, 1), (3, 1), (4, 1);
 INSERT INTO course_groups (group_id, course_id) VALUES (1, 1);
 
 
-INSERT INTO weeks (id, template_id, week_number, name) VALUES (1, 1, 1, 'First week');
-INSERT INTO weeks (id, template_id, week_number, name) VALUES (2, 1, 2, NULL);
+INSERT INTO weeks (id, template_id, week_number, name) VALUES (1, 1, 0, 'First week');
+INSERT INTO weeks (id, template_id, week_number, name) VALUES (2, 1, 1, NULL);
 
-INSERT INTO lessons (id, week_id, ordering) VALUES (1, 1, 1);
-INSERT INTO lessons (id, week_id, ordering) VALUES (2, 1, 2);
-INSERT INTO lessons (id, week_id, ordering) VALUES (3, 2, 1);
+INSERT INTO lessons (id, week_id, ordering) VALUES (1, 1, 0);
+INSERT INTO lessons (id, week_id, ordering) VALUES (2, 1, 1);
+INSERT INTO lessons (id, week_id, ordering) VALUES (3, 2, 0);
 
 INSERT INTO lectures (lesson_id, lecture_text, file_id) VALUES (1, 'REAL GOOD LECTURE!', NULL);
 INSERT INTO assignments (lesson_id) VALUES (2);
