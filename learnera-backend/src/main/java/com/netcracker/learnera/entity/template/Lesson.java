@@ -1,10 +1,10 @@
 package com.netcracker.learnera.entity.template;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.netcracker.learnera.entity.IdentifiableEntity;
 import com.netcracker.learnera.entity.media.File;
+import com.netcracker.learnera.entity.template.lesson.Assignment;
+import com.netcracker.learnera.entity.template.lesson.Lecture;
 import com.netcracker.learnera.entity.template.lesson.LessonMessage;
 
 import javax.persistence.*;
@@ -14,6 +14,14 @@ import java.util.List;
 @Entity
 @Table(name = "lessons")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Lecture.class, name = "lecture"),
+        @JsonSubTypes.Type(value = Assignment.class, name = "assignment")
+})
 public abstract class Lesson implements IdentifiableEntity<Long> {
 
     @Id
@@ -29,6 +37,9 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
 
     @Column(name = "ordering")
     protected Integer ordering;
+
+    @Transient
+    protected String type;
 
     @OneToMany(mappedBy = "destinationLesson", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
@@ -59,5 +70,21 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
 
     public void setMessages(List<LessonMessage> messages) {
         this.messages = messages;
+    }
+
+    public Integer getOrdering() {
+        return ordering;
+    }
+
+    public void setOrdering(Integer ordering) {
+        this.ordering = ordering;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

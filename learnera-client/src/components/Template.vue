@@ -10,9 +10,9 @@
           <div class="mainInfo">
             <v-layout justify-space-between column fill-height>
               <v-flex d-flex justify-center align-center class="head">{{ template.name ? template.name : '' }}</v-flex>
-              <v-flex d-flex justify-center align-center>
-                <v-chip align color="orange darken-3" text-color="white">
-                  {{ template.isCompleted ? 'FINAL' : 'EDITABLE' }}
+              <v-flex d-flex justify align-center>
+                <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" align text-color="white">
+                  {{ template.completed ? 'FINAL' : 'EDITABLE' }}
                 </v-chip>
               </v-flex>
             </v-layout>
@@ -50,19 +50,23 @@
           <v-responsive>
             <v-tabs color="cyan" dark slider-color="yellow">
               <v-tab v-for="week in weeks" :key="week.id" ripple>
-                {{ week.name ? week.name : 'Week ' + week.weekNumber }}
+                {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
               </v-tab>
+
               <v-tab-item v-for="week in weeks" :key="week.id">
-                <v-tabs color="teal lighten-1" dark slider-color="yellow">
-                  <v-tab v-for="(lesson, index) in lessonsByWeekId(week.id)" :key="lesson.id" ripple>
-                    {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering ? lesson.ordering : index + 1)) }}
-                  </v-tab>
-                  <v-tab-item v-for="lesson in lessonsByWeekId(week.id)" :key="lesson.id">
-                    <v-card flat>
-                      Lesson info should be here.
-                    </v-card>
-                  </v-tab-item>
-                </v-tabs>
+                <v-card>
+                  <v-tabs color="teal lighten-1" dark slider-color="yellow">
+                    <v-tab v-for="(lesson, index) in lessonsByWeekId(week.id)" :key="week.weekNumber * 100 + index" ripple>
+                      {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
+                    </v-tab>
+
+                    <v-tab-item v-for="(lesson, index) in lessonsByWeekId(week.id)" :key="week.weekNumber * 100 + index">
+                      <v-card flat>
+                        Lesson info should be here.
+                      </v-card>
+                    </v-tab-item>
+                  </v-tabs>
+                </v-card>
               </v-tab-item>
             </v-tabs>
           </v-responsive>

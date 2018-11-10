@@ -18,5 +18,22 @@ public class Lecture extends Lesson {
     private File file;
 
     public Lecture() {
+        super.type = "lecture";
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public String getLectureText() {
+        return lectureText;
+    }
+
+    public void setLectureText(String lectureText) {
+        this.lectureText = lectureText;
     }
 }

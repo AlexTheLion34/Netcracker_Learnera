@@ -14,6 +14,10 @@ public class Assignment extends Lesson {
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
+    public Assignment() {
+        super.type = "assignment";
+    }
+
     public List<Question> getQuestions() {
         return questions;
     }

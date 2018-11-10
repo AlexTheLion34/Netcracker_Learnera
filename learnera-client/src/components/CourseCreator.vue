@@ -12,9 +12,6 @@
         />
       </v-flex>
       <v-flex xs12>
-        {{ selectedTemplate + ' ' + courseName + ' ' + courseDescription }}
-      </v-flex>
-      <v-flex xs12>
         <v-text-field v-model="courseName" label="Course name"/>
       </v-flex>
       <v-flex xs12>

@@ -27,14 +27,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(
+    public ResponseEntity<Object> handleEntityNotFound(
             EntityNotFoundException ex) {
         ApiError apiError = new ApiError(NOT_FOUND, ex);
         return buildResponseEntity(apiError);
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
-    protected ResponseEntity<Object> handleEntityAlreadyExists(EntityAlreadyExistsException ex) {
+    public ResponseEntity<Object> handleEntityAlreadyExists(EntityAlreadyExistsException ex) {
         ApiError apiError = new ApiError(BAD_REQUEST, ex);
         return buildResponseEntity(apiError);
     }

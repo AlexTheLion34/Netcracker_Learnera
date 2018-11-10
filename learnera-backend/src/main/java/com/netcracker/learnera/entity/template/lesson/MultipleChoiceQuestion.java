@@ -8,7 +8,7 @@ import java.util.List;
 @DiscriminatorValue(value = "MC")
 public class MultipleChoiceQuestion extends Question {
 
-    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.MERGE)
     private List<MultipleChoiceVariant> variants = new ArrayList<>();
 
     public MultipleChoiceQuestion() {

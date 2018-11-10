@@ -1,8 +1,6 @@
 package com.netcracker.learnera.entity.template.lesson;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.netcracker.learnera.entity.IdentifiableEntity;
 
 import javax.persistence.*;
@@ -13,6 +11,15 @@ import java.util.List;
 @Table(name = "questions")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = FixedAnswerQuestion.class, name = "fixed"),
+        @JsonSubTypes.Type(value = MultipleChoiceQuestion.class, name = "mc"),
+        @JsonSubTypes.Type(value = RegexAnswerQuestion.class, name="regex")
+})
 public abstract class Question implements IdentifiableEntity<Long> {
 
     @Id
@@ -41,7 +48,7 @@ public abstract class Question implements IdentifiableEntity<Long> {
     @Column(name = "penalty")
     private Float penalty;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE, orphanRemoval = true)
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<QuestionAttempt> attempts = new ArrayList<>();

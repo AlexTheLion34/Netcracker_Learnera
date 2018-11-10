@@ -29,7 +29,7 @@ public class Week implements IdentifiableEntity<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "week")
+    @OneToMany(mappedBy = "week", cascade = CascadeType.MERGE)
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<Lesson> lessons;

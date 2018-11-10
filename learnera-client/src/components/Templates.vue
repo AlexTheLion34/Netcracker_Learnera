@@ -3,9 +3,10 @@
     <v-layout row wrap>
       <v-flex xs12><h3 class="display-2">Templates</h3></v-flex>
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
-        <v-btn :to="`/user/${userIdStr}/create-template`">Add template</v-btn>
+        <v-btn :to="'/create-template'">Add template</v-btn>
       </v-flex>
-      <template-list :items="templates" :actions="isAuthorized ? listActions : []"/>
+      <template-list :items="templates" :actions="isAuthorized ? listActions : []"
+                     @action-clicked="onActionClicked"/>
     </v-layout>
   </v-container>
 </template>
@@ -60,7 +61,19 @@ export default {
   methods: {
     ...mapActions('users', {
       getUser: 'get'
-    })
+    }),
+    ...mapActions('templates', {
+      deleteTemplate: 'delete'
+    }),
+    onActionClicked({name, index}) {
+      if (name === 'Edit') {
+        this.$router.push(`/template/${this.templates[index].id}/edit`);
+      } else if (name === 'Delete') {
+        // this.deleteTemplate(this.templates[index].id).then(x => {
+        //   this.user.templates = this.templates.filter(t => t.id !== this.templates[index].id);
+        // }) // TODO
+      }
+    }
   }
 }
 </script>
