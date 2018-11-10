@@ -46,12 +46,6 @@
         </v-card>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <!-- <v-flex xs12>
-        <v-card>
-          <v-card-title><h3 class="headline mb-0">Discussion</h3></v-card-title>
-        </v-card>
-        <v-btn fluid>Send</v-btn>
-      </v-flex> -->
     </v-layout>
   </v-container>
 </template>
@@ -61,38 +55,45 @@ import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 
 export default {
-  name: 'Group',
+  name: 'Groupe',
   props: ['groupIdStr'],
   data() {
     return {
     };
   },
   computed: {
-      currentUser: state => state.user,
     ...mapState('groups', {
       group: function(state) {
-        if (this.currentUser.role == "TEACHER") {
-            return this.currentUser.curatedGroups[this.groupIdStr - 1]
-        } else {
-            return this.currentUser.studyGroups[this.groupId - 1]
-        }
+        const ret = state.items.find(i => i.id === this.groupId && !i.loading);
+        return ret;
       }
     }),
-    ...mapState('account', ['user']),
-    ...mapState('users', {
     id: function() {
       return this.group.students
-    }
+    },
+    ...mapState('account', ['user']),
+    ...mapState('users', {
     }),
+    groupId: function() {
+      return parseInt(this.groupIdStr);
+    },
+  },
+  watch: {
+    groupId: function(val) {
+      this.getGroup(val);
+    },
+  },
+  beforeMount() {
+    this.getGroup(this.groupId);
   },
   methods: {
     ...mapActions('groups', {
-      getCourse: 'get'
+      getGroup: 'get'
     }),
     ...mapActions('users', {
-      getUser: 'get'
+      getUsers: 'getByStudyGroupId'
     })
-  }
+  },
 }
 </script>
 
