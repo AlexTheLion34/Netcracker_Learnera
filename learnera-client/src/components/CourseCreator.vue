@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="user">
     <v-layout row wrap>
       <v-flex d-flex justify-center align-center xs8>
         <h3 class="headline">Create course based on template </h3>
@@ -120,7 +120,6 @@ import TwoListsSelector from './base/TwoListsSelector.vue'
 export default {
   name: 'CourseCreator',
   components: {GroupList, TwoListsSelector},
-  props: ['userIdStr'],
   data() {
     return {
       selectedTemplate: {},
@@ -132,7 +131,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('account', [{currentUser: 'user'}]),
+    ...mapState('account', {currentUser: 'user'}),
     ...mapState('users', {
       user(state) { 
         const ret = state.items.find(x => x.id === this.userId);
@@ -140,13 +139,13 @@ export default {
       }
     }),
     userId: function() {
-      return parseInt(this.userIdStr);
+      return this.currentUser.id;
     },
     userTemplates: function() {
-      return this.user.templates;
+      return this.user ? this.user.templates : [];
     },
     userGroups: function() {
-      return this.user ? this.user.curatedGroups : undefined;
+      return this.user ? this.user.curatedGroups : [];
     },
     userTemplatesSelection: function() {
       return this.userTemplates.map(t => {return {text: t.name, value: t.id}; })
@@ -175,11 +174,20 @@ export default {
         startMenu: false,
         endMenu: false
       };});
+    },
+    userId: function(val) {
+      this.getUser(val);
     }
+  },
+  beforeMount() {
+    this.getUser(this.userId);
   },
   methods: {
     ...mapActions('courses', {
       createCourse: 'create'
+    }),
+    ...mapActions('users', {
+      getUser: 'get'
     }),
     onCourseCreate() {
       const course = {

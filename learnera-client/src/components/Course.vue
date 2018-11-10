@@ -75,7 +75,7 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex xs12>
-        <v-btn v-if="course.template.weeks" :to="`/course/${courseId}/week/${course.template.weeks[0].id}`" block color="primary" dark>
+        <v-btn v-if="course.template.weeks[0]" :to="`/course/${courseId}/week/${course.template.weeks[0].id}`" block color="primary" dark>
           <strong v-if="teacher && teacher.id !== user.id">Continue studying!</strong>
           <strong v-else-if="!teacher || teacher.id === user.id">Take a look at the course!</strong>
         </v-btn>

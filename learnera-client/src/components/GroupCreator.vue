@@ -64,17 +64,28 @@ export default {
     };
   },
   computed: {
-    ...mapState('account', ['user']),
-    currentUser: state => state.user,
+    ...mapState('account', {
+      currentUser: state => state.user
+    }),
   },
+  ...mapState('users', {
+    user(state) {
+      const ret = state.items.find(x => x.id === this.userId);
+      return ret;
+    }
+  }),
   userGroups: function() {
-      return this.currentUser ? this.currentUser.curatedGroups : undefined;
-    },
+    return this.user ? this.user.curatedGroups : [];
+  },
   beforeMount() {
+    this.getUser(this.currentUser.id);
   },
   methods: {
     ...mapActions('groups', {
       createGroup: 'create'
+    }),
+    ...mapActions('users', {
+      getUser: 'get'
     }),
     onGroupCreate() {
       const group = {
