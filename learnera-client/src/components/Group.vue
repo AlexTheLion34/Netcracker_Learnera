@@ -34,7 +34,7 @@
                 {text: 'Id', value: ''}, 
                 {text: 'Points', value: ''}, 
               ]"
-              :items="id"
+              :items="userNicknames"
               hide-actions
               class="elevation-1"
             >
@@ -73,6 +73,9 @@ export default {
     },
     ...mapState('account', ['user']),
     ...mapState('users', {
+      userNicknames: function(state) {
+        const ret = state.items.find(i => i === 2)
+    },
     }),
     groupId: function() {
       return parseInt(this.groupIdStr);

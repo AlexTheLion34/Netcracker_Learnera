@@ -20,6 +20,9 @@ const actions = {
           reject(e);
         });
     });
+  },
+  getAllStudents({commit}) {
+
   }
 };
 
