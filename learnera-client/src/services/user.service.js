@@ -9,6 +9,7 @@ export const userService = {
   logout,
   register,
   getByStudyGroupId,
+  getAllStudents,
   ...crudService(apiUrl)
 };
 

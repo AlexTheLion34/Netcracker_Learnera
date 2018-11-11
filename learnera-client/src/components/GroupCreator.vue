@@ -24,7 +24,7 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">User management</h3></v-card-title>
           <v-responsive>
-            <two-lists-selector :items="allUsers" :list-renderer="UserList" @update:selected-items="selectedUsers = $event" />
+            <two-lists-selector :items="students" :list-renderer="UserList" @update:selected-items="selectedUsers = $event" />
           </v-responsive>
         </v-card>
       </v-flex>
@@ -70,19 +70,28 @@ export default {
     ...mapState('account', {
       currentUser: state => state.user
     }),
-    allUsers: function() {
-      console.log(this.getAllUsers())
-      return this.getAllUsers()
-  },
   ...mapState('users', {
     user(state) {
       const ret = state.items.find(x => x.id === this.userId);
       return ret;
+    },
+    students(state) {
+      const ret = state.items.filter(s => s.role === 'STUDENT')
+      return ret
+    },
+    studentsId: function() {
+      var ids = []
+      this.selectedUsers.forEach(student => {
+        ids.push({id: student.id})
+      });
+      console.log(ids)
+      return ids
     }
   }),
   },
   beforeMount() {
     this.getUser(this.currentUser.id);
+    this.getAllStudents()
   },
   methods: {
     ...mapActions('groups', {
@@ -90,7 +99,7 @@ export default {
     }),
     ...mapActions('users', {
       getUser: 'get',
-      getAllUsers: 'getAllStudents',
+      getAllStudents: 'getAllStudents',
     }),
     onGroupCreate() {
       const group = {
@@ -98,7 +107,7 @@ export default {
         name: this.groupName,
         description: this.groupDescription,
         avatar: null, 
-        students: this.selectedUsers,
+        students: this.studentsId,
       };
       this.createGroup(group).then(group => {
         router.push(`/group/${group.id}`);

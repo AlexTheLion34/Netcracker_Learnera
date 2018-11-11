@@ -22,7 +22,19 @@ const actions = {
     });
   },
   getAllStudents({commit}) {
+    return new Promise((resolve, reject) => {
+      commit('getAllStudentsRequest');
 
+      userService.getAllStudents()
+        .then(students => {
+          commit('getAllStudentsSuccess', students);
+          resolve(students);
+        })
+        .catch(e => {
+          commit('getAllStudentsFailure', e);
+          reject(e);
+        });
+    });
   }
 };
 
@@ -41,7 +53,18 @@ const mutations = {
     });
   },
   getByStudyGroupIdFailure(state, id) {
-  }
+  },
+  getAllStudentsRequest(state) {
+  },
+  getAllStudentsSuccess(state, students) {
+    console.log('Got students: ', students);
+    state.items = []
+    students.forEach(student => {
+      state.items.push(student);
+    });
+  },
+  getAllStudentsFailure(state, id) {
+  },
 };
 
 export const users = {
