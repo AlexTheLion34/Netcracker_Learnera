@@ -15,8 +15,13 @@ public abstract class CrudServiceImpl<T extends IdentifiableEntity<TId>, TId> im
         this.crudRepository = crudRepository;
     }
 
+    protected void forwardReferences(T item) {
+
+    }
+
     @Override
     public T create(T item) throws EntityAlreadyExistsException {
+        forwardReferences(item);
         return crudRepository.save(item);
     }
 
@@ -34,6 +39,7 @@ public abstract class CrudServiceImpl<T extends IdentifiableEntity<TId>, TId> im
     public T update(T item) throws EntityNotFoundException {
         if (!crudRepository.existsById(item.getId()))
             throw new EntityNotFoundException("Entity not found!");
+        forwardReferences(item);
         return crudRepository.save(item);
     }
 

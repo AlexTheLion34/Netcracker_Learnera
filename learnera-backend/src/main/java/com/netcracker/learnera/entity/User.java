@@ -34,13 +34,13 @@ public class User implements IdentifiableEntity<Long> {
     @PrimaryKeyJoinColumn
     private UserInfo info;
 
-    @OneToMany(mappedBy = "curator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "curator", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Group> curatedGroups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Template> templates = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "group_users",
             joinColumns = {@JoinColumn(name = "user_id")},

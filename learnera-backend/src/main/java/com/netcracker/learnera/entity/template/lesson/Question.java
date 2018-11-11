@@ -45,10 +45,7 @@ public abstract class Question implements IdentifiableEntity<Long> {
     @Column(name = "points")
     private Float points;
 
-    @Column(name = "penalty")
-    private Float penalty;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "question")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<QuestionAttempt> attempts = new ArrayList<>();
@@ -91,14 +88,6 @@ public abstract class Question implements IdentifiableEntity<Long> {
 
     public void setPoints(Float points) {
         this.points = points;
-    }
-
-    public Float getPenalty() {
-        return penalty;
-    }
-
-    public void setPenalty(Float penalty) {
-        this.penalty = penalty;
     }
 
     public List<QuestionAttempt> getAttempts() {

@@ -3,10 +3,13 @@ package com.netcracker.learnera.service.impl;
 import com.netcracker.learnera.entity.template.Lesson;
 import com.netcracker.learnera.entity.template.Template;
 import com.netcracker.learnera.entity.template.Week;
+import com.netcracker.learnera.entity.template.lesson.Assignment;
+import com.netcracker.learnera.entity.template.lesson.MultipleChoiceQuestion;
+import com.netcracker.learnera.entity.template.lesson.MultipleChoiceVariant;
+import com.netcracker.learnera.entity.template.lesson.Question;
 import com.netcracker.learnera.exception.EntityAlreadyExistsException;
-import com.netcracker.learnera.repository.LessonRepository;
-import com.netcracker.learnera.repository.TemplateRepository;
-import com.netcracker.learnera.repository.WeekRepository;
+import com.netcracker.learnera.exception.EntityNotFoundException;
+import com.netcracker.learnera.repository.*;
 import com.netcracker.learnera.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,10 @@ public class TemplateServiceImpl extends CrudServiceImpl<Template, Long> impleme
     private WeekRepository weekRepository;
     @Autowired
     private LessonRepository lessonRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private MultipleChoiceVariantRepository multipleChoiceVariantRepository;
 
     public TemplateServiceImpl(TemplateRepository templateRepository) {
         super(templateRepository);
@@ -29,22 +36,31 @@ public class TemplateServiceImpl extends CrudServiceImpl<Template, Long> impleme
     }
 
     @Override
-    public Template create(Template template) throws EntityAlreadyExistsException {
-        template = templateRepository.save(template);
-
+    protected void forwardReferences(Template template) {
         if (template.getWeeks() != null) {
             for (Week week : template.getWeeks()) {
                 week.setTemplate(template);
-                week = weekRepository.save(week);
 
                 for (Lesson lesson : week.getLessons()) {
                     lesson.setWeek(week);
-                    lessonRepository.save(lesson);
+
+                    if (lesson instanceof Assignment) {
+                        Assignment assignment = (Assignment) lesson;
+                        for (Question question : assignment.getQuestions()) {
+                            question.setAssignment(assignment);
+
+                            if (question instanceof MultipleChoiceQuestion) {
+                                MultipleChoiceQuestion multipleChoiceQuestion = (MultipleChoiceQuestion) question;
+
+                                for (MultipleChoiceVariant variant : multipleChoiceQuestion.getVariants()) {
+                                    variant.setQuestion(multipleChoiceQuestion);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-
-        return template;
     }
 
     @Override

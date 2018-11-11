@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="user">
+  <v-container v-if="template">
     <v-layout row wrap>
       <v-flex d-flex justify-center align-center xs12>
         <h3 class="headline">Edit template</h3>
@@ -25,34 +25,70 @@
           <v-card-title><h3 class="headline mb-0">Weeks</h3></v-card-title>
           <v-responsive>
             <v-tabs color="cyan" dark slider-color="yellow">
-              <v-tab v-for="week in weeks" :key="week.id" ripple>
-                {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
-              </v-tab>
+              <template v-for="(week, i) in weeks">
+                <v-tab :key="`tab-w-${i}`" ripple>
+                  <v-layout row fill-height>
+                    <v-flex d-flex align-center="">
+                      <div>
+                        {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
+                      </div>
+                    </v-flex>
+                    <v-flex d-flex align-center>
+                      <div>
+                        <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon 
+                               @click.stop="removeWeek(i)">
+                          <v-icon color="red darken-4">remove</v-icon>
+                        </v-btn>
+                      </div>
+                    </v-flex>
+                  </v-layout>
+                </v-tab>
+                <v-divider :key="`div-w-${i}`" class="cyan lighten-4" inset vertical/>
+              </template>
               
               <v-tooltip v-if="!template.completed" bottom>
-                <v-btn slot="activator" icon ripple @click.prevent="addWeek">
+                <v-btn slot="activator" icon ripple @click.stop="addWeek">
                   <v-icon color="grey lighten-3">add</v-icon>
                 </v-btn>
                 <span>Add week</span>
               </v-tooltip>
 
-              <v-tab-item v-for="week in weeks" :key="week.id">
+              <v-tab-item v-for="(week, i) in weeks" :key="`tab-item-${i}`">
                 <v-card>
                   <v-tabs color="teal lighten-1" dark slider-color="yellow">
-                    <v-tab v-for="(lesson, index) in week.lessons" :key="week.weekNumber * 100 + index" ripple>
-                      {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
-                    </v-tab>
+                    <template v-for="(lesson, j) in week.lessons">
+                      <v-tab :key="`tab-w-${i}-l-${j}`" ripple>
+                        <v-layout row fill-height>
+                          <v-flex d-flex align-center="">
+                            <div>
+                              {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
+                            </div>
+                          </v-flex>
+                          <v-flex d-flex align-center>
+                            <div>
+                              <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon
+                                     @click.stop="removeLesson({weekIndex: i, lessonIndex: j})">
+                                <v-icon color="red darken-4">remove</v-icon>
+                              </v-btn>
+                            </div>
+                          </v-flex>
+                        </v-layout>
+                      </v-tab>
+                      <v-divider :key="`div-w-${i}-l-${j}`" 
+                                 class="teal lighten-4" inset vertical/>
+                    </template>
 
                     <v-tooltip v-if="!template.completed" bottom>
-                      <v-btn slot="activator" icon ripple @click.prevent="addLesson(week)">
+                      <v-btn slot="activator" icon ripple @click.stop="addLesson(i)">
                         <v-icon color="grey lighten-3">add</v-icon>
                       </v-btn>
                       <span>Add lesson</span>
                     </v-tooltip>
 
-                    <v-tab-item v-for="(lesson, index) in week.lessons" :key="week.weekNumber * 100 + index">
+                    <v-tab-item v-for="(lesson, j) in week.lessons"
+                                :key="`tab-item-w-${i}-l-${j}`">
                       <v-card flat>
-                        Lesson info should be here.
+                        <lesson-editor v-model="template.weeks[i].lessons[j]"/>
                       </v-card>
                     </v-tab-item>
                   </v-tabs>
@@ -92,9 +128,13 @@
 import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 import {router} from '../router'
+import LessonEditor from './base/LessonEditor.vue'
+
+import _id from '../helpers/id-generator'
 
 export default {
   name: 'TemplateEditor',
+  components: {LessonEditor},
   props: ['templateInput', 'templateIdStr'],
   data() {
     return {
@@ -140,7 +180,6 @@ export default {
       this.getTemplate(parseInt(this.templateIdStr)).then(t => {
         this.template = t;
         this.transformTemplate();
-        console.log(JSON.stringify(this.template));
       }).catch(e => console.err);
     }
   },
@@ -157,7 +196,6 @@ export default {
       getUser: 'get'
     }),
     transformTemplate() {
-      this.template.teacher = {id: this.currentUser.id};
       if (this.template.weeks) {
         this.template.weeks[0].template = {id: this.template.id};
         this.template.weeks = this.template.weeks.map(w => {
@@ -169,12 +207,47 @@ export default {
           });
           return w;
         });
+        console.log('Template transformed');
+      }
+    },
+    transformForPost() {
+      this.template.teacher = {id: this.currentUser.id};
+      if (this.template.weeks) {
+        this.template.weeks = this.template.weeks.map(w => {
+          w.template = null;
+
+          if (w.lessons) {
+            w.lessons = w.lessons.map(l => {
+              l.week = null;
+              l.messages = null;
+
+              if (l.questions) {
+                l.questions = l.questions.map(q => {
+                  q.assignment = null;
+                  q.attempts = null;
+
+                  if (q.variants) {
+                    q.variants = q.variants.map(v => {
+                      v.question = null;
+                      return v;
+                    });
+                  }
+
+                  return q;
+                });
+              }
+              return l;
+            });
+          }
+          return w;
+        });
       }
     },
     onTemplatePost() {
-      this.template.teacher = {id: this.currentUser.id};
-      console.log(JSON.stringify(this.template));
+      this.transformForPost();
       if (this.template.id) {
+        console.log(JSON.stringify(this.template));
+
         this.updateTemplate(this.template).then(template => {
           console.log('Template updated!');
           this.$emit('template-updated', template);
@@ -187,15 +260,13 @@ export default {
           console.log('Template created');
           this.$emit('template-created', template);
           // TODO: IMPLEMENT NOTIFICATION
-          this.template = template;
-          this.transformTemplate();
+          this.$router.push(`/template/${template.id}/edit`);
         }).catch(e => console.error);
       }
     },
     onFinalize() {
       this.template.completed = true;
       this.template.teacher = {id: this.currentUser.id};
-      console.log(JSON.stringify(this.template));
       this.updateTemplate(this.template).then(template => {
         console.log('Template finalized!');
         this.$emit('template-finalized', template);
@@ -205,21 +276,29 @@ export default {
       })
     },
     addWeek() {
-      this.weeks.push({
+      this.template.weeks.push({
         template: this.template.id ? {id: this.template.id} : null,
         weekNumber: this.weeks.length,
         name: '',
         lessons: []
       });
     },
-    addLesson(week) {
-      const idx = this.weeks.findIndex(w => w.weekNumber === week.weekNumber);
-      this.weeks[idx].lessons.push({
-        ordering: this.weeks[idx].lessons.length,
+    removeWeek(index) {
+      this.template.weeks.splice(index, 1);
+      let i = 0;
+      this.template.weeks.forEach(w => w.weekNumber = (i++));
+    },
+    addLesson(weekIndex) {
+      this.weeks[weekIndex].lessons.push({
+        ordering: this.weeks[weekIndex].lessons.length,
         lectureText: 'HELLO!',
-        type: 'lecture' // TODO
+        type: 'lecture'
       });
-      // TODO: IMPLEMENT
+    },
+    removeLesson({weekIndex, lessonIndex}) {
+      this.weeks[weekIndex].lessons.splice(lessonIndex, 1);
+      let i = 0;
+      this.weeks[weekIndex].lessons.forEach(l => l.ordering = (i++));
     }
   },
 }

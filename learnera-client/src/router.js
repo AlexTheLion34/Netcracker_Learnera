@@ -16,6 +16,8 @@ import Template from './components/Template.vue'
 import Templates from './components/Templates.vue'
 import TemplateEditor from './components/TemplateEditor.vue'
 
+import Test from './components/Test.vue'
+
 const logoutComponent = {
   functional: true,
   render: (createElement, context) => {
@@ -43,7 +45,8 @@ const routes = [
   {path: '/course/:courseIdStr', component: Course, props: true},
   {path: '/group/:groupIdStr', component: Group, props: true},
   {path: '/template/:templateIdStr', component: Template, props:true},
-  {path: '/template/:templateIdStr/edit', component: TemplateEditor, props: true}
+  {path: '/template/:templateIdStr/edit', component: TemplateEditor, props: true},
+  {path: '/test', component: Test},
 ]
 
 Vue.use(Router)

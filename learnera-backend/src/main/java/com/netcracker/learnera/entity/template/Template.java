@@ -39,7 +39,7 @@ public class Template implements IdentifiableEntity<Long> {
     @JoinColumn(name = "avatar_id")
     private Image avatar;
 
-    @OneToMany(mappedBy = "template", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Week> weeks = new ArrayList<>();
 
     public Template() {

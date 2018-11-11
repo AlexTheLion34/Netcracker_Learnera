@@ -7,65 +7,65 @@ INSERT INTO user_infos (user_id, nickname, first_name, last_name)
 VALUES (1, 'd32f123', 'Andrey', 'Neste-ov'), (3, 'admin', 'Admin', 'Adminovich');
 
 INSERT INTO groups (id, curator_id, name, description, avatar_id)
-VALUES (1, 1, 'A group', 'A group description', NULL);
+VALUES (5, 1, 'A group', 'A group description', NULL);
 
 INSERT INTO groups (id, curator_id, name, description, avatar_id)
-VALUES (2, 1, 'B group', 'A group description', NULL);
+VALUES (6, 1, 'B group', 'A group description', NULL);
 
 
 INSERT INTO templates (id, teacher_id, name, description, avatar_id)
-VALUES (1, 1, 'A template', 'A template description', NULL);
+VALUES (7, 1, 'A template', 'A template description', NULL);
 
 INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
-VALUES (1, 1, 'A course', 'A course description', NULL, '03/11/2018');
+VALUES (8, 7, 'A course', 'A course description', NULL, '03/11/2018');
 
 INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
-VALUES (2, 1, 'Second course', 'Second description', NULL, '04/11/2018');
+VALUES (9, 7, 'Second course', 'Second description', NULL, '04/11/2018');
 
-SELECT * FROM courses;
-SELECT * FROM groups;
-SELECT * FROM course_week_dates;
+-- SELECT * FROM courses;
+-- SELECT * FROM groups;
+-- SELECT * FROM course_week_dates;
 
-INSERT INTO group_users (user_id, group_id) VALUES (2, 1), (3, 1), (4, 1);
-INSERT INTO course_groups (group_id, course_id) VALUES (1, 1);
+INSERT INTO group_users (user_id, group_id) VALUES (2, 5), (3, 5), (4, 5);
+INSERT INTO course_groups (group_id, course_id) VALUES (5, 8);
 
 
-INSERT INTO weeks (id, template_id, week_number, name) VALUES (1, 1, 0, 'First week');
-INSERT INTO weeks (id, template_id, week_number, name) VALUES (2, 1, 1, NULL);
+INSERT INTO weeks (id, template_id, week_number, name) VALUES (10, 7, 0, 'First week');
+INSERT INTO weeks (id, template_id, week_number, name) VALUES (11, 7, 1, NULL);
 
-INSERT INTO lessons (id, week_id, ordering) VALUES (1, 1, 0);
-INSERT INTO lessons (id, week_id, ordering) VALUES (2, 1, 1);
-INSERT INTO lessons (id, week_id, ordering) VALUES (3, 2, 0);
+INSERT INTO lessons (id, week_id, ordering) VALUES (12, 10, 0);
+INSERT INTO lessons (id, week_id, ordering) VALUES (13, 10, 1);
+INSERT INTO lessons (id, week_id, ordering) VALUES (14, 11, 0);
 
-INSERT INTO lectures (lesson_id, lecture_text, file_id) VALUES (1, 'REAL GOOD LECTURE!', NULL);
-INSERT INTO assignments (lesson_id) VALUES (2);
-INSERT INTO assignments (lesson_id) VALUES (3);
-
-INSERT INTO questions (id, assignment_id, ordering, question_text, type, answer)
-VALUES (1, 2, 1, 'This is a very hard question!', 'FIXED', 'Answer123');
+INSERT INTO lectures (lesson_id, lecture_text, file_id) VALUES (12, 'REAL GOOD LECTURE!', NULL);
+INSERT INTO assignments (lesson_id) VALUES (13);
+INSERT INTO assignments (lesson_id) VALUES (14);
 
 INSERT INTO questions (id, assignment_id, ordering, question_text, type, answer)
-VALUES (2, 2, 2, 'This is a very hard multiple-choice question!', 'MC', NULL);
-INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
-VALUES (1, 2, 'Choice 1', true);
-INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
-VALUES (2, 2, 'Choice 2', false);
-INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
-VALUES (3, 2, 'Choice 3', false);
+VALUES (15, 13, 0, 'This is a very hard question!', 'FIXED', 'Answer123');
 
 INSERT INTO questions (id, assignment_id, ordering, question_text, type, answer)
-VALUES (3, 3, 1, 'Another hard question', 'REGEX', 'ASDASDASDASD');
+VALUES (16, 14, 1, 'This is a very hard multiple-choice question!', 'MC', NULL);
+INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
+VALUES (17, 16, 'Choice 1', true);
+INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
+VALUES (18, 16, 'Choice 2', false);
+INSERT INTO mc_question_variants (id, question_id, choice_text, is_correct)
+VALUES (19, 16, 'Choice 3', false);
+
+INSERT INTO questions (id, assignment_id, ordering, question_text, type, answer)
+VALUES (20, 14, 0, 'Another hard question', 'REGEX', 'ASDASDASDASD');
 
 INSERT INTO question_attempts (id, user_id, course_id, question_id, answer)
-VALUES (1, 2, 1, 1, 'XD');
+VALUES (21, 2, 8, 15, 'XD');
 
 INSERT INTO question_attempts (id, user_id, course_id, question_id, answer)
-VALUES (2, 3, 1, 3, 'what?');
+VALUES (22, 3, 8, 16, 'what?');
 
-INSERT INTO lesson_messages (id, sender_id, lesson_id, message) VALUES (1, 2, 1, 'some message');
+INSERT INTO lesson_messages (id, sender_id, lesson_id, message) VALUES (23, 2, 12, 'some message');
 
-INSERT INTO group_messages (id, sender_id, group_id, message) VALUES (1, 3, 1, 'another message');
-INSERT INTO group_messages (id, sender_id, group_id, message) VALUES (2, 3, 1, 'yet another message');
+INSERT INTO group_messages (id, sender_id, group_id, message) VALUES (24, 3, 5, 'another message');
+INSERT INTO group_messages (id, sender_id, group_id, message) VALUES (25, 3, 5, 'yet another message');
 
-INSERT INTO course_week_dates (course_id, week_id, start_date, end_date) VALUES (1, 1, '04/11/2018', '05/11/2018');
-INSERT INTO course_week_dates (course_id, week_id, start_date, end_date) VALUES (1, 2, '08/11/2018', '12/11/2018');
+INSERT INTO course_week_dates (course_id, week_id, start_date, end_date) VALUES (8, 10, '04/11/2018', '05/11/2018');
+INSERT INTO course_week_dates (course_id, week_id, start_date, end_date) VALUES (8, 11, '08/11/2018', '12/11/2018');

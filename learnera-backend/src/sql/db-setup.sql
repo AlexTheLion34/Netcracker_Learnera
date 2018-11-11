@@ -151,6 +151,7 @@ CREATE TABLE course_week_dates (
 CREATE TABLE lessons (
   id       BIGINT PRIMARY KEY,
   week_id  BIGINT  NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
+  name     VARCHAR(30),
   ordering INTEGER NOT NULL
 );
 
@@ -171,8 +172,7 @@ CREATE TABLE questions (
   question_text TEXT          NOT NULL,
   type          VARCHAR(10)   NOT NULL,
   answer        TEXT,
-  points        REAL          NOT NULL DEFAULT 1.0 CHECK (points > 0.0),
-  penalty       REAL          NOT NULL DEFAULT 1.0 CHECK (penalty > 0.0 AND penalty <= points)
+  points        REAL          NOT NULL DEFAULT 1.0 CHECK (points > 0.0)
 );
 
 CREATE TABLE lesson_messages (

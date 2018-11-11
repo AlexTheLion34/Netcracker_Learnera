@@ -35,13 +35,16 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
     @JsonIdentityReference(alwaysAsId=true)
     private Week week;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "ordering")
     protected Integer ordering;
 
     @Transient
     protected String type;
 
-    @OneToMany(mappedBy = "destinationLesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "destinationLesson")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<LessonMessage> messages = new ArrayList<>();
@@ -86,5 +89,13 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
