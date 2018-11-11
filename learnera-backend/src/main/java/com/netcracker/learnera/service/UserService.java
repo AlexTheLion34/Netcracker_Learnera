@@ -8,5 +8,6 @@ public interface UserService extends CrudService<User, Long> {
 
     User findByEmail(String email) throws EntityNotFoundException;
     Iterable<User> findAllByStudyGroupId(Long id);
+    Iterable<User> findAllStudents();
 
 }

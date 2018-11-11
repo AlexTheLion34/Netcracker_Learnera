@@ -14,6 +14,11 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements User
 
     private UserRepository userRepository;
 
+    @Override
+    public Iterable<User> findAllStudents() {
+        return userRepository.findAllByRole();
+    }
+
     public UserServiceImpl(UserRepository userRepository) {
         super(userRepository);
         this.userRepository = userRepository;

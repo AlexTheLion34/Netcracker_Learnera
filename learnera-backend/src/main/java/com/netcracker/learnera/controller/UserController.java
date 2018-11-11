@@ -17,6 +17,11 @@ public class UserController extends BasicController<User, Long> {
         this.userService = userService;
     }
 
+    @GetMapping("/students")
+    public ResponseEntity<Iterable<User>> getAllStudents() {
+        return new ResponseEntity<>(userService.findAllStudents(), HttpStatus.OK);
+    }
+
     @GetMapping("/study-group/{id}")
     public ResponseEntity<Iterable<User>> findAllByStudyGroupId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.findAllByStudyGroupId(id), HttpStatus.OK);
