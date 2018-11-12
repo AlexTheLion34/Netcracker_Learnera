@@ -2,11 +2,11 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-text-field v-model="lesson.name" label="Lesson name"/>
+        <v-text-field :readonly="!editable" v-model="lesson.name" label="Lesson name"/>
       </v-flex>
       <v-flex xs12>
-        <v-radio-group v-model="lesson.type" row>
-          <v-subheader class="pl-0"><div>Select <strong>lesson type:</strong></div></v-subheader>
+        <v-radio-group :readonly="!editable" v-model="lesson.type" row>
+          <v-subheader class="pl-0"><div><strong>Lesson</strong> type:</div></v-subheader>
           
           <v-radio label="Lecture" value="lecture"/>
           <v-radio label="Assignment" value="assignment"/>
@@ -14,14 +14,14 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: -0.5em 0 1em 0;"/></v-flex>
       <v-flex v-if="lesson.type === 'lecture'" xs12>
-        <v-textarea v-model="lesson.lectureText" box label="Lecture text" auto-grow/>
+        <v-textarea :readonly="!editable" v-model="lesson.lectureText" box label="Lecture text" auto-grow/>
       </v-flex>
       <v-flex v-else-if="lesson.type === 'assignment'" xs12>
         <v-expansion-panel>
           <v-expansion-panel-content v-for="(question, i) in lesson.questions" 
                                      :key="`q-${i}}`">
             <v-layout slot="header" justify-start align-center row>
-              <div>
+              <div v-if="editable">
                 <v-btn small style="margin-top: 0px; margin-bottom: 0px; margin-left: -5px;" 
                        flat icon @click.stop="removeQuestion(i)">
                   <v-icon color="red darken-4">remove</v-icon>
@@ -30,17 +30,10 @@
               <div>Question {{ question.ordering + 1 }}</div>
             </v-layout>
             
-            <question-editor v-model="lesson.questions[i]"/>
+            <question-editor v-model="lesson.questions[i]" :editable="editable"/>
           </v-expansion-panel-content>
-          <v-btn style="margin: 0" color="secondary" block @click="addQuestion">Add question</v-btn>
+          <v-btn v-if="editable" style="margin: 0" color="secondary" block @click="addQuestion">Add question</v-btn>
         </v-expansion-panel>
-      </v-flex>
-      <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-flex xs12 style="margin: 0 0 0.5em 0;">
-        <v-btn color="primary">
-          Save lesson
-        </v-btn>
-        <!-- TODO: IMPLEMENT SAVE LESSON -->
       </v-flex>
     </v-layout>
   </v-container>
@@ -56,7 +49,7 @@ export default {
     prop: 'lesson',
     event: 'lesson-changed'
   },
-  props: ['lesson'],
+  props: ['lesson', 'editable'],
   data() {
     return {
     }

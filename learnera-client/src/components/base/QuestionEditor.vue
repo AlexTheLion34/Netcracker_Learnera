@@ -1,12 +1,12 @@
 <template>
-  <v-container style="padding: 0px 24px 0px 24px;" fill-height="">
-    <v-layout fill-height="" row wrap>
-      <v-flex xs12>
-        <v-textarea v-model="question.questionText" label="Question text"/>
+  <v-container style="padding: 0px 24px 0px 24px;" fill-height>
+    <v-layout fill-height row wrap>
+      <v-flex xs8>
+        <v-textarea :readonly="!editable" v-model="question.questionText" label="Question text"/>
       </v-flex>
-      <v-flex xs12>
-        <v-radio-group v-model="question.type" row>
-          <v-subheader class="pl-0"><div>Select <strong>question type:</strong></div></v-subheader>
+      <v-flex fill-height xs4>
+        <v-radio-group :readonly="!editable" v-model="question.type" label>
+          <div slot="label" class="pl-0"><strong>Question</strong> type:</div>
           <v-radio label="Fixed answer" value="fixed"/>
           <v-radio label="Regex" value="regex"/>
           <v-radio label="Multiple choice" value="mc"/>
@@ -19,27 +19,27 @@
             <v-subheader>Question answer: </v-subheader>
           </v-flex>
           <v-flex>
-            <v-text-field v-model="question.answer" prefix/>
+            <v-text-field :readonly="!editable" v-model="question.answer" prefix/>
           </v-flex>
         </v-layout>
       </v-flex>
       <v-flex v-else-if="question.type === 'mc'" xs12>
-        <v-btn @click="addVariant">
+        <v-btn v-if="editable" @click="addVariant">
           Add variant
         </v-btn>
         <v-layout column>
           <v-layout v-for="(variant, i) in question.variants" :key="`v-${i}`" 
                     justify-start align-center row>
-            <div>
+            <div v-if="editable">
               <v-btn small style="margin-top: 0px; margin-bottom: 0px; margin-left: -5px;" flat icon @click="removeVariant(i)">
                 <v-icon color="red darken-4">remove</v-icon>
               </v-btn>
             </div>
             <v-flex xs4>
-              <v-text-field v-model="variant.choiceText" label="Variant text" />
+              <v-text-field :readonly="!editable" v-model="variant.choiceText" label="Variant text" />
             </v-flex>
             <v-flex xs4>
-              <v-checkbox v-model="variant.correct" label="Is correct?"/>
+              <v-checkbox :readonly="!editable" v-model="variant.correct" label="Is correct?"/>
             </v-flex>
           </v-layout>
         </v-layout>
@@ -47,14 +47,8 @@
       <v-flex xs12><v-divider style="margin: 0.5em 0 0em 0;"/></v-flex>
       <v-flex xs12>
         <v-subheader class="pl-0"><div><strong>Points</strong> for this question:</div></v-subheader>
-        <v-slider v-model="question.points" thumb-label="always" min="1" max="5" ticks="always" always-dirty tick-size="5" />
-      </v-flex>
-      <!-- TODO: IMPLEMENT SAVE QUESTION -->
-      <v-flex xs12><v-divider style="margin: 0 0 0.5em 0;"/></v-flex>
-      <v-flex xs12 style="margin: 0 0 0.5em 0;">
-        <v-btn color="primary">
-          Save question
-        </v-btn>
+        <v-slider :readonly="!editable" v-model="question.points" thumb-label="always" 
+                  min="1" max="5" ticks="always" always-dirty tick-size="5" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -67,7 +61,7 @@ export default {
     prop: 'question',
     event: 'question-changed'
   },
-  props: ['question'],
+  props: ['question', 'editable'],
   methods: {
     addVariant() {
       if (!this.question.variants) {

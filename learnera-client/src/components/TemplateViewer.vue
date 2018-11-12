@@ -1,24 +1,61 @@
 <template>
   <v-container v-if="template">
     <v-layout row wrap>
-      <v-flex d-flex justify-center align-center xs12>
-        <h3 class="headline">Edit template</h3>
-      </v-flex>
-      <v-flex xs12>
-        <v-text-field v-model="template.name" label="Template name"/>
-      </v-flex>
-      <v-flex xs12>
+      <v-flex v-if="readOnly" xs12>
         <v-layout row>
-          <v-flex>
-            <v-avatar size="100" color="teal">
-              <span>TODO</span>
-            </v-avatar>
-            <v-btn>Load avatar</v-btn>
-          </v-flex>
+          <v-avatar size="100" color="teal">
+            <img v-if="template.info && template.info.avatar" :src="template.info.avatar">
+            <span v-else-if="template.name" class="ava">{{ template.name[0] }}</span>
+          </v-avatar>
+          <div class="mainInfo">
+            <v-layout justify-space-between column fill-height>
+              <v-flex d-flex justify-center align-center class="head">{{ template.name ? template.name : '' }}</v-flex>
+              <v-flex d-flex justify align-center>
+                <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" align text-color="white">
+                  {{ template.completed ? 'FINAL' : 'EDITABLE' }}
+                </v-chip>
+              </v-flex>
+            </v-layout>
+          </div>
+          <v-spacer/>
+          <div>
+            <v-layout row>
+              <v-flex xs5>
+                <v-layout column fill-height>
+                  <v-flex d-flex justify-space-around="" align-center>Teacher:</v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex xs7>
+                <v-layout justify-space-between column fill-height>
+                  <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
+                    {{ teacherName }}
+                  </v-btn>
+                </v-layout>
+              </v-flex>
+            </v-layout>
+          </div>
         </v-layout>
       </v-flex>
+      <template v-else>
+        <v-flex d-flex justify-center align-center xs12>
+          <h3 class="headline">Edit template</h3>
+        </v-flex>
+        <v-flex xs12>
+          <v-text-field v-model="template.name" label="Template name"/>
+        </v-flex>
+        <v-flex xs12>
+          <v-layout row>
+            <v-flex>
+              <v-avatar size="100" color="teal">
+                <span>TODO</span>
+              </v-avatar>
+              <v-btn>Load avatar</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </template>
       <v-flex style="margin: 15px 0 0 0">
-        <v-textarea v-model="template.description" box label="Description" auto-grow/>
+        <v-textarea v-model="template.description" :readonly="readOnly" box label="Description" auto-grow/>
       </v-flex>
       <v-flex xs12>
         <v-card>
@@ -33,7 +70,7 @@
                         {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
                       </div>
                     </v-flex>
-                    <v-flex d-flex align-center>
+                    <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
                       <div>
                         <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon 
                                @click.stop="removeWeek(i)">
@@ -46,7 +83,7 @@
                 <v-divider :key="`div-w-${i}`" class="cyan lighten-4" inset vertical/>
               </template>
               
-              <v-tooltip v-if="!template.completed" bottom>
+              <v-tooltip v-if="!template.completed && !readOnly" bottom>
                 <v-btn slot="activator" icon ripple @click.stop="addWeek">
                   <v-icon color="grey lighten-3">add</v-icon>
                 </v-btn>
@@ -64,7 +101,7 @@
                               {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
                             </div>
                           </v-flex>
-                          <v-flex d-flex align-center>
+                          <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
                             <div>
                               <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon
                                      @click.stop="removeLesson({weekIndex: i, lessonIndex: j})">
@@ -78,7 +115,7 @@
                                  class="teal lighten-4" inset vertical/>
                     </template>
 
-                    <v-tooltip v-if="!template.completed" bottom>
+                    <v-tooltip v-if="!template.completed && !readOnly" bottom>
                       <v-btn slot="activator" icon ripple @click.stop="addLesson(i)">
                         <v-icon color="grey lighten-3">add</v-icon>
                       </v-btn>
@@ -88,7 +125,7 @@
                     <v-tab-item v-for="(lesson, j) in week.lessons"
                                 :key="`tab-item-w-${i}-l-${j}`">
                       <v-card flat>
-                        <lesson-editor v-model="template.weeks[i].lessons[j]"/>
+                        <lesson-editor v-model="template.weeks[i].lessons[j]" :editable="!template.completed && !readOnly"/>
                       </v-card>
                     </v-tab-item>
                   </v-tabs>
@@ -130,12 +167,10 @@ import {store} from '../store'
 import {router} from '../router'
 import LessonEditor from './base/LessonEditor.vue'
 
-import _id from '../helpers/id-generator'
-
 export default {
-  name: 'TemplateEditor',
+  name: 'TemplateViewer',
   components: {LessonEditor},
-  props: ['templateInput', 'templateIdStr'],
+  props: ['templateInput', 'templateIdStr', 'readOnly'],
   data() {
     return {
       template: {
@@ -152,9 +187,13 @@ export default {
   computed: {
     ...mapState('account', {currentUser: 'user'}),
     ...mapState('users', {
-      user(state) { 
-        const ret = state.items.find(x => x.id === this.userId);
-        return ret;
+      teacher(state) {
+        if (this.template.teacher && this.template.teacher.id) {
+          const ret = state.items.find(x => x.id === this.template.teacher.id);
+          return ret;
+        } else {
+          return null;
+        }
       }
     }),
     userId: function() {
@@ -165,20 +204,26 @@ export default {
         return undefined;
       }
       return this.template.weeks;
+    },
+    teacherName: function() {
+      if (!this.teacher) { return ''; }
+      if (this.teacher.info) {
+        return this.teacher.info.firstName || this.teacher.info.lastName || this.teacher.email;
+      }
+      return this.teacher.email;
     }
   },
   watch: {
-    userId: function(val) {
-      this.getUser(val);
-    },
   },
   beforeMount() {
-    this.getUser(this.userId);
     if (this.templateInput) {
       this.template = this.templateInput;
+      this.template.teacher = {id: this.currentUser.id};
     } else if (this.templateIdStr) {
       this.getTemplate(parseInt(this.templateIdStr)).then(t => {
         this.template = t;
+        this.template.teacher = {id: this.template.teacher};
+        this.getUser(this.template.teacher.id);
         this.transformTemplate();
       }).catch(e => console.err);
     }

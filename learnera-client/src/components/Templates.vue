@@ -21,7 +21,7 @@ export default {
   props: ['userIdStr'],
   data() {
     return {
-      listActions: [{name: "Edit", icon: "build"}, {name: "Delete", icon: "delete", color: "red darken-1"}]
+      listActions: [{name: "Edit", icon: "build"}]
     };
   },
   computed: {

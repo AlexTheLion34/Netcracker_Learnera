@@ -12,9 +12,8 @@ import CourseCreator from './components/CourseCreator.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
 import GroupCreator from './components/GroupCreator.vue'
-import Template from './components/Template.vue'
 import Templates from './components/Templates.vue'
-import TemplateEditor from './components/TemplateEditor.vue'
+import TemplateViewer from './components/TemplateViewer.vue'
 
 import Test from './components/Test.vue'
 
@@ -41,11 +40,14 @@ const routes = [
   },
   {path: '/create-course', component: CourseCreator},
   {path: '/create-group', component: GroupCreator},
-  {path: '/create-template', component: TemplateEditor},
+  {path: '/create-template', component: TemplateViewer},
   {path: '/course/:courseIdStr', component: Course, props: true},
   {path: '/group/:groupIdStr', component: Group, props: true},
-  {path: '/template/:templateIdStr', component: Template, props:true},
-  {path: '/template/:templateIdStr/edit', component: TemplateEditor, props: true},
+  {path: '/template/:templateIdStr', component: TemplateViewer, props: (route) => ({
+    templateIdStr: route.params.templateIdStr,
+    readOnly: true
+  })},
+  {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true},
   {path: '/test', component: Test},
 ]
 
