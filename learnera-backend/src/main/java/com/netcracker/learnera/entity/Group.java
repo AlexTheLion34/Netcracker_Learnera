@@ -35,7 +35,7 @@ public class Group implements IdentifiableEntity<Long> {
     @JoinColumn(name = "avatar_id")
     private Image image;
 
-    @ManyToMany(mappedBy = "studyGroups")
+    @ManyToMany(mappedBy = "studyGroups", cascade = CascadeType.MERGE)
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<User> students = new ArrayList<>();

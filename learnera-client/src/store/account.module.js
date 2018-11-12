@@ -47,6 +47,25 @@ const actions = {
           dispatch('alert/error', error, {root: true});
         }
       );
+  },
+  create({dispatch, commit}, user, creatorId) {
+    commit('registerRequest', user);
+    
+    userService.create(user, creatorId)
+      .then(
+        user => {
+          commit('registerSuccess', user);
+          router.push('login');
+          setTimeout(() => {
+            // display success message after route change completes
+            dispatch('alert/success', 'Registration successful', {root: true});
+          })
+        },
+        error => {
+          commit('registerFailure', error);
+          dispatch('alert/error', error, {root: true});
+        }
+      );
   }
 };
 

@@ -15,6 +15,7 @@ import GroupCreator from './components/GroupCreator.vue'
 import Template from './components/Template.vue'
 import Templates from './components/Templates.vue'
 import TemplateEditor from './components/TemplateEditor.vue'
+import UserCreator from './components/UserCreator.vue'
 
 const logoutComponent = {
   functional: true,
@@ -29,6 +30,7 @@ const routes = [
   {path: '/logout', component: logoutComponent},
   {path: '/login', component: Login, meta: {isPublic: true}},
   {path: '/register', component: Register, meta: {isPublic: true}},
+  {path: '/create', component: UserCreator},
   {path: '/user/:userIdStr', component: User, props: true,
     children: [
       {path: '', alias: '/home', component: UserHome, props: true},

@@ -10,6 +10,7 @@ export const userService = {
   register,
   getByStudyGroupId,
   getAllStudents,
+  create,
   ...crudService(apiUrl)
 };
 
@@ -46,7 +47,17 @@ function logout() {
   localStorage.removeItem('user');
 }
 
+function create(user, creatorId) {
+  console.log(user)
+  return axios.post('/api/auth', user, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(handleResponse);
+}
+
 function register(user) {
+  console.log(user)
   return axios.post('/api/auth', user, {
     headers: {
       'Content-Type': 'application/json'

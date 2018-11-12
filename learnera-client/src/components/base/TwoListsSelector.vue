@@ -4,7 +4,7 @@
       <v-flex xs6>
         <v-layout column>
           <v-flex>
-            <h6 class="title">All groups</h6>
+            <h6 class="title">All</h6>
           </v-flex>
           <v-flex>
             <component :is="listRenderer" :items="unselectedItems" :actions="unselectedItemActions"
