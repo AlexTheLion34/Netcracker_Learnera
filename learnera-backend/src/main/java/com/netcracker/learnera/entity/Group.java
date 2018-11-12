@@ -35,7 +35,12 @@ public class Group implements IdentifiableEntity<Long> {
     @JoinColumn(name = "avatar_id")
     private Image image;
 
-    @ManyToMany(mappedBy = "studyGroups", cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "group_users",
+            joinColumns = {@JoinColumn(name = "group_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<User> students = new ArrayList<>();
@@ -45,7 +50,12 @@ public class Group implements IdentifiableEntity<Long> {
     @JsonIdentityReference(alwaysAsId=true)
     private List<GroupMessage> messages = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany
+    @JoinTable(
+            name = "course_groups",
+            joinColumns = {@JoinColumn(name = "group_id")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id")}
+    )
     private List<Course> courses = new ArrayList<>();
 
     public Group() {

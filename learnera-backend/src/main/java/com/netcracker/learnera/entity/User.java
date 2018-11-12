@@ -40,12 +40,7 @@ public class User implements IdentifiableEntity<Long> {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Template> templates = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "group_users",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id")}
-    )
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Group> studyGroups = new ArrayList<>();
 
     public User() {

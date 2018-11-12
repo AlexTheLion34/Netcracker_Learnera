@@ -24,7 +24,8 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">User management</h3></v-card-title>
           <v-responsive>
-            <two-lists-selector :items="students" :list-renderer="UserList" @update:selected-items="selectedUsers = $event" />
+            <two-lists-selector :items="students" :list-renderer="UserList" header-all="All students" header-selected="Participants"
+                                @update:selected-items="selectedUsers = $event" />
           </v-responsive>
         </v-card>
       </v-flex>

@@ -4,7 +4,8 @@
       <v-flex xs6>
         <v-layout column>
           <v-flex>
-            <h6 class="title">All groups</h6>
+            <!-- <slot name="headerAll"/> -->
+            <h6 class="title">{{ headerAll }}</h6>
           </v-flex>
           <v-flex>
             <component :is="listRenderer" :items="unselectedItems" :actions="unselectedItemActions"
@@ -16,7 +17,8 @@
       <v-flex xs6>
         <v-layout column>
           <v-flex>
-            <h6 class="title">Participants</h6>
+            <!-- <slot name="headerSelected"/> -->
+            <h6 class="title">{{ headerSelected }}</h6>
           </v-flex>
           <v-flex>
             <component :is="listRenderer" :items="selectedItems" :actions="selectedItemActions" 
@@ -31,7 +33,7 @@
 <script>
 export default {
   name: 'TwoListSelector',
-  props: ['items', 'listRenderer'],
+  props: ['items', 'listRenderer', 'headerAll', 'headerSelected'],
   data() {
     return {
       selectedItems: [],

@@ -83,7 +83,8 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">Group management</h3></v-card-title>
           <v-responsive>
-            <two-lists-selector :items="userGroups" :list-renderer="GroupList" @update:selected-items="selectedGroups = $event" />
+            <two-lists-selector :items="userGroups" :list-renderer="GroupList" header-all="All groups" header-selected="Participants"
+                                @update:selected-items="selectedGroups = $event" />
           </v-responsive>
         </v-card>
       </v-flex>
