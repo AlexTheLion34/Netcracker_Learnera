@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b65bc063-c4de-4df0-8244-bac0178c93d3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/learnera-client/src/components/Template.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learnera-client/src/components/base/CourseList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learnera-client/src/components/base/GroupList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learnera-client/src/components/base/TwoListsSelector.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Course.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Course.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseCreator.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseCreator.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Group.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Group.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learnera-client/src/components/GroupCreator.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/GroupCreator.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/User.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/UserHome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/UserHome.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/base/ItemList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/base/ItemList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/base/UserCourseList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/base/UserCourseList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/base/UserGroupList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/base/UserGroupList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/templates.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/templates.module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/base/UserList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/base/UserList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnera-client/src/services/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/services/user.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/users.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/users.module.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/learnera-backend/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -92,19 +80,22 @@
     <session id="-2072869901">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="4" />
           <entry key="groups" value="1" />
-          <entry key="java" value="22" />
+          <entry key="java" value="29" />
           <entry key="properties" value="4" />
           <entry key="sql" value="8" />
           <entry key="xml" value="2" />
@@ -114,7 +105,7 @@
         <counts>
           <entry key="CLASS" value="4" />
           <entry key="Database Element" value="1" />
-          <entry key="JAVA" value="22" />
+          <entry key="JAVA" value="29" />
           <entry key="Properties" value="4" />
           <entry key="SQL" value="6" />
           <entry key="Scratch" value="2" />
@@ -123,18 +114,18 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="5" />
+          <entry key="java" value="179" />
           <entry key="properties" value="10" />
-          <entry key="sql" value="177" />
+          <entry key="sql" value="344" />
           <entry key="txt" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5" />
+          <entry key="JAVA" value="179" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="Properties" value="10" />
-          <entry key="Scratch" value="177" />
+          <entry key="Scratch" value="344" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -146,23 +137,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="54" selection-start-column="54" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="das://57ef8709-647d-42f5-86b5-40fac61e2fd0/database/nc_learn/schema/public/table/groups">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-              <column-attributes>
-                <column name="ctid" enabled="false" />
-              </column-attributes>
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/57ef8709-647d-42f5-86b5-40fac61e2fd0/console.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -177,46 +156,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/57ef8709-647d-42f5-86b5-40fac61e2fd0/console.sql">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/GroupRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="29" selection-start-column="29" selection-end-column="29" />
+            <state relative-caret-position="60">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="79" column="62" lean-forward="true" selection-start-line="79" selection-start-column="62" selection-end-line="79" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="18" column="77" lean-forward="true" selection-start-line="18" selection-start-column="77" selection-end-line="18" selection-end-column="77" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/CourseController.java">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/LessonController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupMessageController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -224,8 +176,47 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            <state relative-caret-position="210">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/UserService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/UserServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+              <folding>
+                <element signature="e#721#722#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/UserRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/AuthController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -233,8 +224,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/BasicController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="71">
+              <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -255,6 +246,10 @@
         <option value="$PROJECT_DIR$/learnera-backend/pom.xml" />
         <option value="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupMessageController.java" />
         <option value="$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/UserService.java" />
+        <option value="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/UserRepository.java" />
+        <option value="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/UserController.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/57ef8709-647d-42f5-86b5-40fac61e2fd0/console.sql" />
       </list>
     </option>
@@ -313,6 +308,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -373,7 +369,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="learnera" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="learnera" type="b2602c69:ProjectViewProjectNode" />
@@ -401,30 +397,21 @@
               <item name="learnera" type="462c0819:PsiDirectoryNode" />
               <item name="learnera-backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learnera" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learnera" type="462c0819:PsiDirectoryNode" />
-              <item name="learnera-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="sql" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541800776900" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541937877982" />
     <property name="database.console.LAST_STATE" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -498,18 +485,21 @@
       <workItem from="1541542665665" duration="633000" />
       <workItem from="1541546535577" duration="683000" />
       <workItem from="1541602637023" duration="921000" />
-      <workItem from="1541673741592" duration="5306000" />
+      <workItem from="1541673741592" duration="5340000" />
+      <workItem from="1541884646910" duration="1873000" />
+      <workItem from="1541932460255" duration="2627000" />
+      <workItem from="1541938766084" duration="3241000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12148000" />
+    <option name="totallyTimeSpent" value="19923000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -517,7 +507,6 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Web" order="7" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Database Console" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
@@ -531,13 +520,14 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="13" visible="true" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
-      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.3297568" />
+      <window_info anchor="right" id="Database" order="6" weight="0.3297568" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" />
@@ -625,13 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/QuestionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -643,20 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/CourseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupMessageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -674,10 +643,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/UserController.java">
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties" />
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="79" column="62" selection-start-line="79" selection-start-column="62" selection-end-line="79" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://57ef8709-647d-42f5-86b5-40fac61e2fd0/database/nc_learn/schema/public/table/groups">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="77" selection-start-line="18" selection-start-column="77" selection-end-line="18" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/CourseController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupMessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/LessonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+          <folding>
+            <element signature="e#721#722#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/AuthController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/BasicController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -688,48 +738,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/BasicController.java">
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/GroupRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="79" column="62" lean-forward="true" selection-start-line="79" selection-start-column="62" selection-end-line="79" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="18" column="77" lean-forward="true" selection-start-line="18" selection-start-column="77" selection-end-line="18" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        <state relative-caret-position="60">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/57ef8709-647d-42f5-86b5-40fac61e2fd0/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="29" selection-start-column="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://57ef8709-647d-42f5-86b5-40fac61e2fd0/database/nc_learn/schema/public/table/groups">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="ctid" enabled="false" />
-          </column-attributes>
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="32" />
         </state>
       </provider>
     </entry>

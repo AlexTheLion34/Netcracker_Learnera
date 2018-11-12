@@ -24,7 +24,7 @@
         <v-card>
           <v-card-title><h3 class="headline mb-0">User management</h3></v-card-title>
           <v-responsive>
-            <!-- <two-lists-selector :items="userGroups" :list-renderer="GroupList" @update:selected-items="selectedGroups = $event" /> -->
+            <two-lists-selector :items="students" :list-renderer="UserList" @update:selected-items="selectedUsers = $event" />
           </v-responsive>
         </v-card>
       </v-flex>
@@ -52,40 +52,54 @@
 import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 import {router} from '../router'
-// import GroupList from './base/GroupList.vue'
+import UserList from './base/UserList.vue'
 import TwoListsSelector from './base/TwoListsSelector.vue'
 
 export default {
   name: 'GroupCreator',
+  components: {UserList, TwoListsSelector},
   data() {
     return {
       groupName: '',
       groupDescription: '',
+      selectedUsers: [],
+      UserList
     };
   },
   computed: {
     ...mapState('account', {
       currentUser: state => state.user
     }),
-  },
   ...mapState('users', {
     user(state) {
       const ret = state.items.find(x => x.id === this.userId);
       return ret;
+    },
+    students(state) {
+      const ret = state.items.filter(s => s.role === 'STUDENT')
+      return ret
+    },
+    studentsId: function() {
+      var ids = []
+      this.selectedUsers.forEach(student => {
+        ids.push({id: student.id})
+      });
+      console.log(ids)
+      return ids
     }
   }),
-  userGroups: function() {
-    return this.user ? this.user.curatedGroups : [];
   },
   beforeMount() {
     this.getUser(this.currentUser.id);
+    this.getAllStudents()
   },
   methods: {
     ...mapActions('groups', {
       createGroup: 'create'
     }),
     ...mapActions('users', {
-      getUser: 'get'
+      getUser: 'get',
+      getAllStudents: 'getAllStudents',
     }),
     onGroupCreate() {
       const group = {
@@ -93,7 +107,7 @@ export default {
         name: this.groupName,
         description: this.groupDescription,
         avatar: null, 
-        students: null,
+        students: this.studentsId,
       };
       this.createGroup(group).then(group => {
         router.push(`/group/${group.id}`);

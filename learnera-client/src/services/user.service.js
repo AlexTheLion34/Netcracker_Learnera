@@ -9,6 +9,7 @@ export const userService = {
   logout,
   register,
   getByStudyGroupId,
+  getAllStudents,
   ...crudService(apiUrl)
 };
 
@@ -18,6 +19,13 @@ function getByStudyGroupId(id) {
   };
 
   return axios.get(`${apiUrl}/study-group/${id}`, requestOptions).then(handleResponse);
+}
+
+function getAllStudents() {
+  const requestOptions = {
+    headers: authHeader()
+  };
+  return axios.get(`${apiUrl}/students`, requestOptions).then(handleResponse);
 }
 
 function login(email, password) {
