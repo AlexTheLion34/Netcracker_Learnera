@@ -14,8 +14,8 @@ import Group from './components/Group.vue'
 import GroupCreator from './components/GroupCreator.vue'
 import Templates from './components/Templates.vue'
 import TemplateViewer from './components/TemplateViewer.vue'
-
-import Test from './components/Test.vue'
+//import Test from './components/Test.vue'
+import UserCreator from './components/UserCreator.vue'
 
 const logoutComponent = {
   functional: true,
@@ -30,6 +30,7 @@ const routes = [
   {path: '/logout', component: logoutComponent},
   {path: '/login', component: Login, meta: {isPublic: true}},
   {path: '/register', component: Register, meta: {isPublic: true}},
+  {path: '/create', component: UserCreator},
   {path: '/user/:userIdStr', component: User, props: true,
     children: [
       {path: '', alias: '/home', component: UserHome, props: true},
@@ -48,7 +49,7 @@ const routes = [
     readOnly: true
   })},
   {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true},
-  {path: '/test', component: Test},
+  //{path: '/test', component: Test},
 ]
 
 Vue.use(Router)

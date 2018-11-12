@@ -24,7 +24,6 @@ export default {
       return this.items.map(user => {
         return {
           id: user.id,
-          //nickname: user.info ? user.info.nickname : undefined,
           name: user.info ? user.info.firstName : undefined,
           avatar: user.info ? user.info.avatar : undefined,
         };

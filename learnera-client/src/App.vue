@@ -79,9 +79,10 @@ export default {
     menuItems: function() {
       return [
         {title: "Home", path: this.loggedIn ? this.userPrefix : '', icon: 'face'},
+        {title: "Create", path: "/create", icon: ""},
         {title: 'Logout', path: '/logout', icon: 'accessible_forward'},
         {title: "Registration", path: "/register", icon: "account_circle", isPublic: true},
-        {title: "Login", path: "/login", icon: "lock_open", isPublic: true}
+        {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
       ]
     }
   },

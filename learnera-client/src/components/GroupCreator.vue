@@ -85,6 +85,7 @@ export default {
       this.selectedUsers.forEach(student => {
         ids.push({id: student.id})
       });
+      console.log('привет')
       console.log(ids)
       return ids
     }
