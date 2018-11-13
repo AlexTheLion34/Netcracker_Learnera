@@ -31,10 +31,10 @@
           <v-responsive>
             <v-data-table
               :headers="[
-                {text: 'Id', value: ''}, 
+                {text: 'Name', value: ''}, 
                 {text: 'Points', value: ''}, 
               ]"
-              :items="userNicknames"
+              :items="studentsNames"
               hide-actions
               class="elevation-1"
             >
@@ -55,7 +55,7 @@ import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 
 export default {
-  name: 'Groupe',
+  name: 'Group',
   props: ['groupIdStr'],
   data() {
     return {
@@ -68,15 +68,21 @@ export default {
         return ret;
       }
     }),
-    id: function() {
-      return this.group.students
-    },
     ...mapState('account', ['user']),
     ...mapState('users', {
-      userNicknames: function(state) {
-        const ret = state.items.find(i => i === 2)
+      students: function(state) {
+        const ret = state.items.filter(s => s.role === 'STUDENT')
+        return ret
     },
     }),
+    studentsNames: function() {
+      var names = []
+      this.students.forEach(student => {
+        name = student.info ? student.info.firstName : undefined
+        names.push(name)
+      });
+      return names
+    },
     groupId: function() {
       return parseInt(this.groupIdStr);
     },
@@ -88,13 +94,14 @@ export default {
   },
   beforeMount() {
     this.getGroup(this.groupId);
+    this.getStudents(this.groupId);
   },
   methods: {
     ...mapActions('groups', {
       getGroup: 'get'
     }),
     ...mapActions('users', {
-      getUsers: 'getByStudyGroupId'
+      getStudents: 'getByStudyGroupId'
     })
   },
 }
