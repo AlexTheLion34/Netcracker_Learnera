@@ -43,14 +43,19 @@ const mutations = {
   getByStudyGroupIdRequest(state) {
   },
   getByStudyGroupIdSuccess(state, users) {
+    console.log('Got students: ', users);
+    state.items = []
     users.forEach(user => {
-      const idx = state.items.findIndex(i => i.id === i.id);
-      if (idx === -1) {
-        state.items.push(user);
-      } else {
-        Vue.set(state.items, idx, user);
-      }
+      state.items.push(user);
     });
+    // users.forEach(user => {
+    //   const idx = state.items.findIndex(i => i.id === i.id);
+    //   if (idx === -1) {
+    //     state.items.push(user);
+    //   } else {
+    //     Vue.set(state.items, idx, user);
+    //   }
+    // });
   },
   getByStudyGroupIdFailure(state, id) {
   },

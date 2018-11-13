@@ -51,18 +51,18 @@ const actions = {
   create({dispatch, commit}, user, creatorId) {
     commit('registerRequest', user);
     
-    userService.create(user, creatorId)
+    userService.create(user)
       .then(
         user => {
-          commit('registerSuccess', user);
-          router.push('login');
+          commit('createSuccess', user);
+          router.push('/login');
           setTimeout(() => {
             // display success message after route change completes
-            dispatch('alert/success', 'Registration successful', {root: true});
+            dispatch('alert/success', 'Creation successful', {root: true});
           })
         },
         error => {
-          commit('registerFailure', error);
+          commit('createFailure', error);
           dispatch('alert/error', error, {root: true});
         }
       );
@@ -97,7 +97,13 @@ const mutations = {
   registerFailure(state, error) {
     state.status = {};
     console.log(error);
-  }
+  },
+  createSuccess(state) {
+  },
+  createFailure(state, error) {
+    state.status = {};
+    console.log(error);
+  },
 };
 
 export const account = {
