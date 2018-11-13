@@ -66,13 +66,7 @@ export default {
       deleteTemplate: 'delete'
     }),
     onActionClicked({name, index}) {
-      if (name === 'Edit') {
-        this.$router.push(`/template/${this.templates[index].id}/edit`);
-      } else if (name === 'Delete') {
-        // this.deleteTemplate(this.templates[index].id).then(x => {
-        //   this.user.templates = this.templates.filter(t => t.id !== this.templates[index].id);
-        // }) // TODO
-      }
+      this.$router.push(`/template/${this.templates[index].id}/edit`);
     }
   }
 }

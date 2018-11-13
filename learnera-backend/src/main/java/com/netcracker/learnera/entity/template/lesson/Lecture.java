@@ -6,8 +6,7 @@ import com.netcracker.learnera.entity.template.Lesson;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lectures")
-@PrimaryKeyJoinColumn(name = "lesson_id")
+@DiscriminatorValue("lecture")
 public class Lecture extends Lesson {
 
     @Column(name = "lecture_text")
@@ -16,10 +15,6 @@ public class Lecture extends Lesson {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "file_id")
     private File file;
-
-    public Lecture() {
-        super.type = "lecture";
-    }
 
     public File getFile() {
         return file;

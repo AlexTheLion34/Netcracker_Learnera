@@ -45,7 +45,8 @@
               <v-flex xs6>
                 <v-layout column>
                   <v-btn :to="`/user/${userId}/groups`" round>Groups</v-btn>
-                  <v-btn :to="`/user/${userId}/templates`" :disabled="user.role !== 'TEACHER'" round>Templates</v-btn>
+                  <v-btn :to="`/user/${userId}/templates`" 
+                         :disabled="currentUser.role !== 'TEACHER' || user.role !== 'TEACHER'" round>Templates</v-btn>
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -75,6 +76,9 @@ export default {
         const ret = state.items.find(x => x.id === this.userId);
         return ret;
       }
+    }),
+    ...mapState('account', {
+      currentUser: 'user'
     })
   },
   watch: {

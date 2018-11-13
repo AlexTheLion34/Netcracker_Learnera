@@ -1,22 +1,24 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <v-layout>
-        <v-flex xs6><h3 class="display-2">Groups</h3></v-flex>
-      </v-layout>
-      <v-layout>
-        <user-group-list :user="user"/>
-      </v-layout>
-    </v-flex>
-    <v-flex>
-      <v-layout>
-        <v-flex xs6><h3 class="display-2">Courses</h3></v-flex>
-      </v-layout>
-      <v-layout>
-        <user-course-list :user="user"/>
-      </v-layout>
-    </v-flex>
-  </v-layout>
+  <v-container>
+    <v-layout>
+      <v-flex>
+        <v-layout>
+          <v-flex xs6><h3 class="display-2">Groups</h3></v-flex>
+        </v-layout>
+        <v-layout>
+          <user-group-list :user="user"/>
+        </v-layout>
+      </v-flex>
+      <v-flex>
+        <v-layout>
+          <v-flex xs6><h3 class="display-2">Courses</h3></v-flex>
+        </v-layout>
+        <v-layout>
+          <user-course-list :user="user"/>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

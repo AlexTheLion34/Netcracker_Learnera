@@ -63,7 +63,9 @@ public class Course implements IdentifiableEntity<Long> {
     @JsonIdentityReference(alwaysAsId=true)
     private List<Group> groups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,
+            CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<CourseWeekDate> weekDates = new ArrayList<>();
 
     public Course() {
@@ -165,4 +167,5 @@ public class Course implements IdentifiableEntity<Long> {
     public void setWeekDates(List<CourseWeekDate> weekDates) {
         this.weekDates = weekDates;
     }
+
 }

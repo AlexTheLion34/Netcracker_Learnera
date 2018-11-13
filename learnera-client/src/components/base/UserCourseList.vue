@@ -53,8 +53,8 @@ export default {
     ...mapActions('courses', {
       getCoursesByTeacherId: 'getByTeacherId'
     }),
-    onActionClicked(info) {
-      this.$emit('action-clicked', info);
+    onActionClicked({name, index}) {
+      this.$emit('action-clicked', {name, course: this.courses[index]} );
     }
   }
 }

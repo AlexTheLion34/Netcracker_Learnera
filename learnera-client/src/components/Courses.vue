@@ -5,7 +5,8 @@
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
         <v-btn :to="`/create-course`">Add course</v-btn>
       </v-flex>
-      <user-course-list :user="user" :actions="isAuthorized ? listActions : []"/>
+      <user-course-list :user="user" :actions="isAuthorized ? listActions : []"
+                        @action-clicked="onActionClicked"/>
     </v-layout>
   </v-container>
 </template>
@@ -51,7 +52,10 @@ export default {
   methods: {
     ...mapActions('users', {
       getUser: 'get'
-    })
+    }),
+    onActionClicked({name, course}) {
+      this.$router.push(`/course/${course.id}/edit`);
+    }
   }
 }
 </script>

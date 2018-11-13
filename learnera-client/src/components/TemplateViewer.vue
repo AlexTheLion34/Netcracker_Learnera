@@ -1,59 +1,50 @@
 <template>
   <v-container v-if="template">
     <v-layout row wrap>
-      <v-flex v-if="readOnly" xs12>
-        <v-layout row>
+      <v-flex d-flex justify-center align-center xs12>
+        <h3 class="headline">{{ readOnly ? 'View' : 'Edit' }} template</h3>
+      </v-flex>
+      <v-flex xs12>
+        <v-layout align-start justify-start row>
           <v-avatar size="100" color="teal">
             <img v-if="template.info && template.info.avatar" :src="template.info.avatar">
             <span v-else-if="template.name" class="ava">{{ template.name[0] }}</span>
           </v-avatar>
-          <div class="mainInfo">
-            <v-layout justify-space-between column fill-height>
-              <v-flex d-flex justify-center align-center class="head">{{ template.name ? template.name : '' }}</v-flex>
-              <v-flex d-flex justify align-center>
-                <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" align text-color="white">
-                  {{ template.completed ? 'FINAL' : 'EDITABLE' }}
-                </v-chip>
-              </v-flex>
-            </v-layout>
-          </div>
-          <v-spacer/>
-          <div>
-            <v-layout row>
-              <v-flex xs5>
-                <v-layout column fill-height>
-                  <v-flex d-flex justify-space-around="" align-center>Teacher:</v-flex>
+          <v-flex>
+            <v-layout column>
+              <v-layout justify-space-between row>
+                <v-flex xs2 style="margin-left: 5px" fill-height>
+                  <v-text-field v-if="!readOnly" v-model="template.name" label="Template name"/>
+                  <div v-else class="head">{{ template.name ? template.name : '' }}</div>
+                </v-flex>
+                <v-spacer/>
+                <v-flex fill-height xs2>
+                  <div>
+                    <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
+                      Teacher: {{ teacherName }}
+                    </v-btn>
+                  </div>
+                </v-flex>
+              </v-layout>
+              <v-flex>
+                <v-layout justify-space-between row>
+                  <v-flex fill-height="" xs2>
+                    <v-btn v-if="!readOnly" small>
+                      Update avatar
+                    </v-btn>
+                  </v-flex>
+                  <v-spacer/>
+                  <v-flex fill-height xs2 justify-end>
+                    <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" small text-color="white">
+                      {{ template.completed ? 'FINAL' : 'EDITABLE' }}
+                    </v-chip>
+                  </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs7>
-                <v-layout justify-space-between column fill-height>
-                  <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
-                    {{ teacherName }}
-                  </v-btn>
-                </v-layout>
-              </v-flex>
             </v-layout>
-          </div>
+          </v-flex>
         </v-layout>
       </v-flex>
-      <template v-else>
-        <v-flex d-flex justify-center align-center xs12>
-          <h3 class="headline">Edit template</h3>
-        </v-flex>
-        <v-flex xs12>
-          <v-text-field v-model="template.name" label="Template name"/>
-        </v-flex>
-        <v-flex xs12>
-          <v-layout row>
-            <v-flex>
-              <v-avatar size="100" color="teal">
-                <span>TODO</span>
-              </v-avatar>
-              <v-btn>Load avatar</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-      </template>
       <v-flex style="margin: 15px 0 0 0">
         <v-textarea v-model="template.description" :readonly="readOnly" box label="Description" auto-grow/>
       </v-flex>
@@ -135,7 +126,7 @@
           </v-responsive>
         </v-card>
       </v-flex>
-      <v-flex xs12 style="margin: 15px 0 0 0">
+      <v-flex v-if="!readOnly" xs12 style="margin: 15px 0 0 0">
         <v-card>
           <v-card-title><h3 class="headline mb-0">Confirm your action</h3></v-card-title>
           <v-responsive>
@@ -305,13 +296,16 @@ export default {
           console.log('Template created');
           this.$emit('template-created', template);
           // TODO: IMPLEMENT NOTIFICATION
+
+          this.template = template;
+          this.transformTemplate();
           this.$router.push(`/template/${template.id}/edit`);
         }).catch(e => console.error);
       }
     },
     onFinalize() {
+      this.transformForPost();
       this.template.completed = true;
-      this.template.teacher = {id: this.currentUser.id};
       this.updateTemplate(this.template).then(template => {
         console.log('Template finalized!');
         this.$emit('template-finalized', template);

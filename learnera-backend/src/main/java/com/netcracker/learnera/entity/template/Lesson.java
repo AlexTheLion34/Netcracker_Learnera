@@ -2,7 +2,6 @@ package com.netcracker.learnera.entity.template;
 
 import com.fasterxml.jackson.annotation.*;
 import com.netcracker.learnera.entity.IdentifiableEntity;
-import com.netcracker.learnera.entity.media.File;
 import com.netcracker.learnera.entity.template.lesson.Assignment;
 import com.netcracker.learnera.entity.template.lesson.Lecture;
 import com.netcracker.learnera.entity.template.lesson.LessonMessage;
@@ -13,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "lessons")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -41,7 +41,7 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
     @Column(name = "ordering")
     protected Integer ordering;
 
-    @Transient
+    @Column(name = "type", insertable = false, updatable = false)
     protected String type;
 
     @OneToMany(mappedBy = "destinationLesson")

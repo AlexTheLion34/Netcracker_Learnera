@@ -34,7 +34,7 @@ public class Group implements IdentifiableEntity<Long> {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private Image image;
-    
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "group_users",

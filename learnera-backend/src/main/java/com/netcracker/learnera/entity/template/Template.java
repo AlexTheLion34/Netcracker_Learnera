@@ -40,6 +40,7 @@ public class Template implements IdentifiableEntity<Long> {
     private Image avatar;
 
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("week_number asc")
     private List<Week> weeks = new ArrayList<>();
 
     public Template() {

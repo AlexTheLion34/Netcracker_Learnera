@@ -11,8 +11,6 @@ DROP VIEW IF EXISTS template_lessons;
 DROP TABLE IF EXISTS mc_question_variants;
 DROP TABLE IF EXISTS question_attempts;
 DROP TABLE IF EXISTS questions;
-DROP TABLE IF EXISTS assignments;
-DROP TABLE IF EXISTS lectures;
 DROP TABLE IF EXISTS lesson_messages;
 DROP TABLE IF EXISTS lessons;
 DROP TABLE IF EXISTS course_week_dates;
@@ -55,7 +53,7 @@ CREATE TABLE users (
   id            BIGINT PRIMARY KEY,
   email         VARCHAR(50) UNIQUE NOT NULL,
   password_hash TEXT               NOT NULL,
-  role          VARCHAR(10)          NOT NULL
+  role          VARCHAR(10)        NOT NULL
 );
 
 -- FOREIGN KEY (b, c) REFERENCES other_table (c1, c2)
@@ -113,14 +111,14 @@ CREATE TABLE courses (
   name              VARCHAR(30) NOT NULL,
   description       TEXT,
   avatar_id         BIGINT REFERENCES images (id) ON DELETE SET NULL,
-  start_date        DATE        NOT NULL                                            DEFAULT now(),
+  start_date        DATE        NOT NULL                                                 DEFAULT now(),
   end_date          DATE        NOT NULL,
   pass_percent      INTEGER     NOT NULL
-    CHECK (pass_percent >= 0 AND pass_percent <= 100)                               DEFAULT 60,
+    CHECK (pass_percent >= 0 AND pass_percent <= 100)                                    DEFAULT 60,
   good_percent      INTEGER     NOT NULL
-    CHECK (good_percent > pass_percent AND good_percent <= 100)                     DEFAULT 75,
+    CHECK (good_percent > pass_percent AND good_percent <= 100)                          DEFAULT 75,
   excellent_percent INTEGER     NOT NULL
-    CHECK (excellent_percent > good_percent AND excellent_percent <= 100)           DEFAULT 90
+    CHECK (excellent_percent > good_percent AND excellent_percent <= 100)                DEFAULT 90
 );
 
 CREATE TABLE course_groups (
@@ -149,30 +147,23 @@ CREATE TABLE course_week_dates (
 
 --- LESSONS ---
 CREATE TABLE lessons (
-  id       BIGINT PRIMARY KEY,
-  week_id  BIGINT  NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
-  name     VARCHAR(30),
-  ordering INTEGER NOT NULL
-);
-
-CREATE TABLE lectures (
-  lesson_id    BIGINT PRIMARY KEY REFERENCES lessons (id) ON DELETE CASCADE,
-  lecture_text TEXT,
-  file_id      BIGINT REFERENCES files (id) ON DELETE SET NULL
-);
-
-CREATE TABLE assignments (
-  lesson_id BIGINT PRIMARY KEY REFERENCES lessons (id) ON DELETE CASCADE
+  id           BIGINT PRIMARY KEY,
+  week_id      BIGINT      NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
+  name         VARCHAR(30),
+  ordering     INTEGER     NOT NULL,
+  lecture_text TEXT                 DEFAULT NULL,
+  file_id      BIGINT               DEFAULT NULL REFERENCES files (id) ON DELETE SET NULL,
+  type         VARCHAR(10) NOT NULL DEFAULT 'lecture'
 );
 
 CREATE TABLE questions (
   id            BIGINT PRIMARY KEY,
-  assignment_id BIGINT        NOT NULL REFERENCES assignments (lesson_id) ON DELETE CASCADE,
-  ordering      INTEGER       NOT NULL,
-  question_text TEXT          NOT NULL,
-  type          VARCHAR(10)   NOT NULL,
+  assignment_id BIGINT      NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+  ordering      INTEGER     NOT NULL,
+  question_text TEXT        NOT NULL,
+  type          VARCHAR(10) NOT NULL,
   answer        TEXT,
-  points        REAL          NOT NULL DEFAULT 1.0 CHECK (points > 0.0)
+  points        REAL        NOT NULL DEFAULT 1.0 CHECK (points > 0.0)
 );
 
 CREATE TABLE lesson_messages (

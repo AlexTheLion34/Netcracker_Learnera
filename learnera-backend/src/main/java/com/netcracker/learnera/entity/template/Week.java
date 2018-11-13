@@ -17,7 +17,7 @@ public class Week implements IdentifiableEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "template_id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
@@ -30,6 +30,7 @@ public class Week implements IdentifiableEntity<Long> {
     private String name;
 
     @OneToMany(mappedBy = "week", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OrderBy("ordering asc")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<Lesson> lessons;

@@ -1,22 +1,19 @@
 package com.netcracker.learnera.entity.template.lesson;
 
 import com.netcracker.learnera.entity.template.Lesson;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "assignments")
-@PrimaryKeyJoinColumn(name = "lesson_id")
+@DiscriminatorValue("assignment")
 public class Assignment extends Lesson {
 
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordering asc")
     private List<Question> questions = new ArrayList<>();
-
-    public Assignment() {
-        super.type = "assignment";
-    }
 
     public List<Question> getQuestions() {
         return questions;

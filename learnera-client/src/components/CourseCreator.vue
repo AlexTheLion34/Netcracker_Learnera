@@ -140,7 +140,7 @@ export default {
       return this.currentUser.id;
     },
     userTemplates: function() {
-      return this.user ? this.user.templates : [];
+      return this.user ? this.user.templates.filter(t => t.completed) : [];
     },
     userGroups: function() {
       return this.user ? this.user.curatedGroups : [];

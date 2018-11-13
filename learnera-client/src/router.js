@@ -8,7 +8,10 @@ import Register from './components/Register.vue'
 import User from './components/User.vue'
 import UserHome from './components/UserHome.vue'
 import Course from './components/Course.vue'
+import CourseHome from './components/CourseHome.vue'
 import CourseCreator from './components/CourseCreator.vue'
+import CourseEditor from './components/CourseEditor.vue'
+import CourseStudier from './components/CourseStudier.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
 import GroupCreator from './components/GroupCreator.vue'
@@ -42,7 +45,15 @@ const routes = [
   {path: '/create-course', component: CourseCreator},
   {path: '/create-group', component: GroupCreator},
   {path: '/create-template', component: TemplateViewer},
-  {path: '/course/:courseIdStr', component: Course, props: true},
+  {path: '/course/:courseIdStr', component: Course, props: true, 
+    children: [
+      {path: '', component: CourseHome, props: true},
+      {path: 'edit', component: CourseEditor, props: true},
+      // {path: 'observe', } TODO,
+      {path: 'study', component: CourseStudier, props: true}
+    ]
+  },
+  {path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
   {path: '/group/:groupIdStr', component: Group, props: true},
   {path: '/template/:templateIdStr', component: TemplateViewer, props: (route) => ({
     templateIdStr: route.params.templateIdStr,
