@@ -47,7 +47,7 @@ function logout() {
   localStorage.removeItem('user');
 }
 
-function create(user, creatorId) {
+function create(user) {
   console.log(user)
   return axios.post('/api/auth', user, {
     headers: {
