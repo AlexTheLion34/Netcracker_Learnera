@@ -76,12 +76,12 @@ export default {
     },
     }),
     studentsNames: function() {
-      var names = []
+      var infos = []
       this.students.forEach(student => {
-        name = student.info ? student.info.firstName : undefined
-        names.push(name)
+        name = student.info ? 'name: ' + student.info.firstName + ' ' + student.info.lastName  : ''
+        infos.push(name)
       });
-      return names
+      return infos
     },
     groupId: function() {
       return parseInt(this.groupIdStr);
