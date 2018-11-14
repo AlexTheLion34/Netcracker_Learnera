@@ -63,7 +63,7 @@ import {mapState, mapActions} from 'vuex'
 export default { 
   data() {
     return {
-      appTitle: "ОБУЧАЛОЧКА",
+      appTitle: "LEARNERA",
       sidebar: false
     };
   },
@@ -77,13 +77,15 @@ export default {
       return `/user/${this.user.id}`;
     },
     menuItems: function() {
-      return [
-        {title: "Home", path: this.loggedIn ? this.userPrefix : '', icon: 'face'},
-        {title: "Create", path: "/create", icon: ""},
-        {title: 'Logout', path: '/logout', icon: 'accessible_forward'},
-        {title: "Registration", path: "/register", icon: "account_circle", isPublic: true},
-        {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
-      ]
+      var baseItems = [
+          {title: "Home", path: this.loggedIn ? this.userPrefix : '', icon: 'face'},
+          {title: 'Logout', path: '/logout', icon: 'accessible_forward'},
+          {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
+        ]
+      if (this.loggedIn && this.user.role == "TEACHER") {
+        baseItems.splice(1, 0, {title: "Add student", path: "/create", icon: "add"})
+      } 
+      return baseItems  
     }
   },
   methods: {
