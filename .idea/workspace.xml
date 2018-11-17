@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="86da49a9-0135-407e-9cae-c8001889f5ab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Group.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Group.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Groups.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Groups.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/UserCreator.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/UserCreator.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/account.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/account.module.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/learnera-backend/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -44,16 +37,17 @@
     <session id="-2072869901">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.14" value="2" />
+          <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="2" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -80,7 +74,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="186" />
-          <entry key="properties" value="15" />
+          <entry key="properties" value="17" />
           <entry key="sql" value="473" />
           <entry key="txt" value="37" />
         </counts>
@@ -89,7 +83,7 @@
         <counts>
           <entry key="JAVA" value="186" />
           <entry key="PLAIN_TEXT" value="37" />
-          <entry key="Properties" value="15" />
+          <entry key="Properties" value="17" />
           <entry key="SQL" value="2" />
           <entry key="Scratch" value="471" />
         </counts>
@@ -142,8 +136,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="450">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -151,8 +145,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+            <state relative-caret-position="780">
+              <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -240,8 +234,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -314,6 +306,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -412,16 +406,18 @@
       <workItem from="1542023444944" duration="3000" />
       <workItem from="1542105217923" duration="423000" />
       <workItem from="1542191096571" duration="4587000" />
+      <workItem from="1542277933977" duration="1516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30826000" />
+    <option name="totallyTimeSpent" value="32342000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -647,6 +643,13 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ee193e31-207d-4cd3-bc5c-b8b5230823e1/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -661,20 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ee193e31-207d-4cd3-bc5c-b8b5230823e1/console_1.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -682,10 +671,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        <state relative-caret-position="450">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
         </state>
       </provider>
     </entry>
