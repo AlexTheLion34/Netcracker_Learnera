@@ -5,7 +5,8 @@
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
         <v-btn :to="`/create-group`">Add group</v-btn>
       </v-flex>
-            <user-group-list :user="user" :actions="isAuthorized ? listActions : []"/>
+            <user-group-list :user="user" :actions="isAuthorized ? listActions : []"
+            @action-clicked="onActionClicked"/>
     </v-layout>
   </v-container>
 </template>
@@ -19,7 +20,7 @@ export default {
   props: ['userIdStr'],
   data() {
     return {
-      listActions: [{name: "Edit", icon: "build"}, {name: "Delete", icon: "delete", color: "red darken-1"}]
+      listActions: [{name: "Edit", icon: "build"}]
     };
   },
   computed: {
@@ -34,6 +35,9 @@ export default {
         const ret = state.items.find(x => x.id === this.userId);
         return ret;
       },
+      groups: function() {
+      return this.user.curatedGroups;
+    },
       isAuthorized: function() {
       return this.user && this.user.role === 'TEACHER' && this.currentUser.id === this.user.id;
     }
@@ -50,7 +54,12 @@ export default {
   methods: {
     ...mapActions('users', {
       getUser: 'get'
-    })
+    }),
+    onActionClicked({name, index}) {
+      if (name === 'Edit') {
+        this.$router.push(`/group/${this.groups[index].id}/edit`);
+      }
+    }
   }
 }
 </script>

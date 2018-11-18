@@ -53,13 +53,17 @@ const routes = [
       {path: 'study', component: CourseStudier, props: true}
     ]
   },
-  {path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
-  {path: '/group/:groupIdStr', component: Group, props: true},
+  //{path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
+  {path: '/group/:groupIdStr', component: Group, props: (route) => ({
+    groupIdStr: route.params.groupIdStr,
+    readOnly: true
+  })},
   {path: '/template/:templateIdStr', component: TemplateViewer, props: (route) => ({
     templateIdStr: route.params.templateIdStr,
     readOnly: true
   })},
   {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true},
+  {path: '/group/:groupIdStr/edit', component: Group, props: true}
   //{path: '/test', component: Test},
 ]
 

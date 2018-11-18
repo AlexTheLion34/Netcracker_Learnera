@@ -4,6 +4,15 @@
       row 
       wrap
     >
+    <v-alert
+      v-model="alert"
+      dismissible
+      :outline="true"
+      type="success"
+      transition="scale-transition"
+    >
+      Successfully added a new student.
+    </v-alert>
       <v-flex 
         xs12 
         class="text-xs-center" 
@@ -75,7 +84,7 @@
               <v-btn 
                 color="primary" 
                 type="submit"
-              >Create</v-btn>
+              >Add</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -96,7 +105,8 @@ export default {
       surname: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      alert: false
     }
   },
   computed: {
@@ -120,6 +130,12 @@ export default {
         }
       }
       this.create(user, this.currentUser.id);
+      this.alert = true
+      this.name = ""
+      this.surname = ""
+      this.email = ""
+      this.password = ""
+      this.confirmPassword = ""
     }
   }
 }

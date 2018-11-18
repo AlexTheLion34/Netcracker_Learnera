@@ -47,6 +47,11 @@
                 color="primary" 
                 type="submit"
               >Login</v-btn>
+              <v-btn 
+                color="" 
+                type="submit"
+                :to="'/register'"
+              >Register</v-btn>
             </v-flex>
           </v-layout>
         </form>

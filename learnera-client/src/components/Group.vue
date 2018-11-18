@@ -9,9 +9,13 @@
           </v-avatar>
             <div>
             <v-layout justify-space-between column fill-height>
-                <v-flex d-flex justify-center align-center>
-                     <v-flex d-flex justify-center align-center class="head">{{ group.name ? group.name : '' }}</v-flex>
-                </v-flex>
+              <v-flex d-flex justify-center align-center class="head">{{ group.name ? group.name : '' }}</v-flex>
+              <v-flex d-flex justify-center align-center>
+                <v-btn v-if="curator" :to="`/user/${curator.id}`" color="primary">
+                  CURATOR
+                </v-btn>
+                <!-- TODO: ADD MENU POPUP TO SELECT GROUP TO GO TO -->
+              </v-flex>
             </v-layout>
           </div>
           <v-spacer/>
@@ -31,15 +35,21 @@
           <v-responsive>
             <v-data-table
               :headers="[
-                {text: 'Name', value: ''}, 
+                {text: 'Students', value: ''}, 
                 {text: 'Points', value: ''}, 
               ]"
-              :items="studentsNames"
+              :items="students"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item }}</td>
+                <td>
+                  <v-avatar color="teal"  size="36px">
+                    <img v-if="props.item.avatar" :src="props.item.avatar">
+                    <span v-else class="white--text headline">{{ props.item.info ? props.item.info.firstName[0] : '' }}</span>
+                  </v-avatar>
+                  {{ props.item.info ? props.item.info.firstName + " " + props.item.info.lastName: "Not defined" }}
+                  </td>
               </template>
             </v-data-table>
           </v-responsive>
@@ -74,15 +84,14 @@ export default {
         const ret = state.items.filter(s => s.role === 'STUDENT')
         return ret
     },
+      curator: function(state) {
+        if (!this.group) {
+          return undefined;
+        }
+        const ret = state.items.find(i => i.id === this.group.curator);
+        return ret;
+      }
     }),
-    studentsNames: function() {
-      var names = []
-      this.students.forEach(student => {
-        name = student.info ? student.info.firstName : undefined
-        names.push(name)
-      });
-      return names
-    },
     groupId: function() {
       return parseInt(this.groupIdStr);
     },
@@ -91,6 +100,11 @@ export default {
     groupId: function(val) {
       this.getGroup(val);
     },
+    group: function(val) {
+      if (val) {
+        this.getUser(val.curator)
+      }
+    }
   },
   beforeMount() {
     this.getGroup(this.groupId);
@@ -101,7 +115,8 @@ export default {
       getGroup: 'get'
     }),
     ...mapActions('users', {
-      getStudents: 'getByStudyGroupId'
+      getStudents: 'getByStudyGroupId',
+      getUser: 'get'
     })
   },
 }

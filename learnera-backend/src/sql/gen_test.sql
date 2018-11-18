@@ -15,7 +15,7 @@ INSERT INTO groups (id, curator_id, name, description, avatar_id)
 VALUES (5, 1, 'A group', 'A group description', NULL);
 
 INSERT INTO groups (id, curator_id, name, description, avatar_id)
-VALUES (6, 1, 'B group', 'A group description', NULL);
+VALUES (6, 1, 'B group', 'B group description', NULL);
 
 
 INSERT INTO templates (id, teacher_id, name, description, avatar_id)

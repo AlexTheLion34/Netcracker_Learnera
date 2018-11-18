@@ -55,7 +55,7 @@ const actions = {
       .then(
         user => {
           commit('createSuccess', user);
-          router.push('/login');
+          router.push('/create');
           setTimeout(() => {
             // display success message after route change completes
             dispatch('alert/success', 'Creation successful', {root: true});
@@ -99,6 +99,8 @@ const mutations = {
     console.log(error);
   },
   createSuccess(state) {
+    state.status = {loggedIn: true};
+    state.user = user;
   },
   createFailure(state, error) {
     state.status = {};
