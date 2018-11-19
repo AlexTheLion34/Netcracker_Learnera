@@ -50,7 +50,7 @@ const routes = [
       {path: '', component: CourseHome, props: true},
       {path: 'edit', component: CourseEditor, props: true},
       // {path: 'observe', } TODO,
-      {path: 'study', component: CourseStudier, props: true}
+      {path: 'week/:weekIdStr', component: CourseStudier, props: true}
     ]
   },
   //{path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
