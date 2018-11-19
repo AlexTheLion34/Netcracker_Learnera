@@ -48,9 +48,9 @@ export default {
       this.getUser(this.userId);
     }
   },
-  created() {
-    this.getUser(this.userId);
-  },
+    created() {
+      this.getUser(this.userId);
+    },
   methods: {
     ...mapActions('users', {
       getUser: 'get'
