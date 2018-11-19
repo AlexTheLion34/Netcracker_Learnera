@@ -14,7 +14,9 @@ import CourseEditor from './components/CourseEditor.vue'
 import CourseStudier from './components/CourseStudier.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
+import GroupHome from './components/GroupHome.vue'
 import GroupCreator from './components/GroupCreator.vue'
+import GroupEditor from './components/GroupEditor.vue'
 import Templates from './components/Templates.vue'
 import TemplateViewer from './components/TemplateViewer.vue'
 //import Test from './components/Test.vue'
@@ -54,16 +56,16 @@ const routes = [
     ]
   },
   //{path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
-  {path: '/group/:groupIdStr', component: Group, props: (route) => ({
-    groupIdStr: route.params.groupIdStr,
-    readOnly: true
-  })},
+  {path: '/group/:groupIdStr', component: Group, props: true,
+    children: [
+      {path: '', component: GroupHome, props: true},
+      {path: 'edit', component: GroupEditor, props: true}
+    ]},
   {path: '/template/:templateIdStr', component: TemplateViewer, props: (route) => ({
     templateIdStr: route.params.templateIdStr,
     readOnly: true
   })},
   {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true},
-  {path: '/group/:groupIdStr/edit', component: Group, props: true}
   //{path: '/test', component: Test},
 ]
 

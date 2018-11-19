@@ -14,7 +14,6 @@
                 <v-btn v-if="curator" :to="`/user/${curator.id}`" color="primary">
                   CURATOR
                 </v-btn>
-                <!-- TODO: ADD MENU POPUP TO SELECT GROUP TO GO TO -->
               </v-flex>
             </v-layout>
           </div>
@@ -22,40 +21,9 @@
         </v-layout>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-textarea v-if="group.description" 
-                  :value="group.description"
-                  box
-                  label="Description"
-                  auto-grow
-                  readonly/>
-      <v-flex xs12><v-divider style="margin: -1.2em 0 1em 0;"/></v-flex>
       <v-flex xs12>
-        <v-card>
-          <v-card-title><h3 class="headline mb-0">Students</h3></v-card-title>
-          <v-responsive>
-            <v-data-table
-              :headers="[
-                {text: 'Students', value: ''}, 
-                {text: 'Points', value: ''}, 
-              ]"
-              :items="students"
-              hide-actions
-              class="elevation-1"
-            >
-              <template slot="items" slot-scope="props">
-                <td>
-                  <v-avatar color="teal"  size="36px">
-                    <img v-if="props.item.avatar" :src="props.item.avatar">
-                    <span v-else class="white--text headline">{{ props.item.info ? props.item.info.firstName[0] : '' }}</span>
-                  </v-avatar>
-                  {{ props.item.info ? props.item.info.firstName + " " + props.item.info.lastName: "Not defined" }}
-                  </td>
-              </template>
-            </v-data-table>
-          </v-responsive>
-        </v-card>
+        <router-view v-model="group"/>
       </v-flex>
-      <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
     </v-layout>
   </v-container>
 </template>
