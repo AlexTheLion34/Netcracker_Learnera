@@ -52,7 +52,10 @@ const routes = [
       {path: '', component: CourseHome, props: true},
       {path: 'edit', component: CourseEditor, props: true},
       // {path: 'observe', } TODO,
-      {path: 'week/:weekIdStr', component: CourseStudier, props: true}
+      {path: 'study', component: CourseStudier, props: (route) => ({
+        weekIdStr: route.query.week,
+        lessonIdStr: route.query.lesson
+      })}
     ]
   },
   //{path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},

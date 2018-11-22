@@ -7,6 +7,9 @@
             <div>
               {{ weekDate.name ? weekDate.name : 'Week ' + (weekDate.weekNumber + 1) }}
             </div>
+            <v-chip v-if="isCurrentWeek(weekDate)" disabled small color="blue darken-3" text-color="white">
+              ACTIVE
+            </v-chip>
           </v-flex>
         </v-layout>
       </v-tab>
@@ -33,7 +36,9 @@
           <v-tab-item v-for="(lesson, j) in weekDate.lessons"
                       :key="`tab-item-w-${i}-l-${j}`">
             <v-card v-if="lesson.id" flat>
-              <lesson-studier v-model="course.template.weeks[i].lessons[j]" :course-id="course.id"
+              <lesson-studier v-model="course.template.weeks[i].lessons[j]" 
+                              :course-id="course.id" :week-id="weekDate.id" 
+                              :not-available="isLessonDisabled(lesson, weekDate)"
                               :has-prev="hasPrev(i, j)" :has-next="hasNext(i, j)"
                               @go-prev="goPrev()" @go-next="goNext()"/>
             </v-card>
@@ -130,6 +135,15 @@ export default {
       } else {
         this.activeLessons[activeWeek] = activeLesson + 1;
       }
+    },
+    isCurrentWeek(weekDate) {
+      return new Date(weekDate.dates.startDate) <= Date.now() && new Date(weekDate.dates.endDate) >= Date.now();
+    },
+    isLessonDisabled(lesson, weekDate) {
+      if (lesson.type === "lecture") {
+        return false;
+      }
+      return !this.isCurrentWeek;
     }
   },
 }

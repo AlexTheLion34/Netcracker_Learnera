@@ -10,13 +10,13 @@
         <v-spacer/>
         <v-flex d-flex xs2>
           <div v-if="lesson.type === 'lecture'">
-            <v-chip small color="green" text-color="white">
+            <v-chip disabled small color="green" text-color="white">
               Lecture
               <v-icon right>star</v-icon>
             </v-chip>
           </div>
           <div v-else-if="lesson.type === 'assignment'">
-            <v-chip small color="blue" text-color="white">
+            <v-chip disabled small color="blue" text-color="white">
               Assignment
               <v-icon right>person</v-icon>
             </v-chip>
@@ -33,15 +33,15 @@
                                      :key="`q-${i}}`">
             <v-card slot="header" flat>                         
               <v-layout align-center row>
-                <v-flex xs4>
+                <v-flex>
                   <span class="title"> 
                     Question {{ question.ordering + 1 }}
                     <v-chip color="orange" disabled small text-color="white">
                       <v-avatar :color="'orange darken-' + question.points" small>{{ question.points }}</v-avatar>
-                      total points
+                      pts
                     </v-chip>
                     <v-chip v-if="questionPassed(question)" :color="questionColor(question)" disabled small text-color="white">
-                      {{ questionPassed(question) === 'yes' ? 'PASSED' : 'FAILED' }}
+                      {{ questionPassed(question) === 'yes' ? 'PASS' : 'FAIL' }}
                     </v-chip>
                   </span>
                 </v-flex>
@@ -66,7 +66,7 @@
                 </div>
               </v-layout>
             </v-card>
-            <question-studier v-model="questions[i]"/>
+            <question-studier v-model="questions[i]" :not-available="notAvailable"/>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
@@ -77,7 +77,8 @@
             Previous
           </v-btn>
           <v-flex d-flex xs4>
-            <v-btn v-if="lesson.type === 'assignment'" @click="doSave()">
+            <v-btn v-if="lesson.type === 'assignment'"
+                   :disabled="notAvailable || questionPassed(questions[0])" @click="doSave()">
               Save attempt
             </v-btn>
           </v-flex>
@@ -101,7 +102,7 @@ export default {
     prop: 'lesson',
     event: 'lesson-changed'
   },
-  props: ['lesson', 'courseId', 'hasPrev', 'hasNext'],
+  props: ['lesson', 'courseId', 'weekId', 'hasPrev', 'hasNext', 'notAvailable'],
   data() {
     return {
       panels: [],
@@ -124,7 +125,8 @@ export default {
         userAttempt: {answer: '', score: 0.0, submitted: false}
       }));
 
-      this.getLatestUserWeekAttempts({userId: this.currentUser.id, weekId: this.lesson.week.id})
+      console.log('Will send to: ', this.weekId);
+      this.getLatestUserWeekAttempts({userId: this.currentUser.id, weekId: this.weekId})
         .then(qas => {
           qas.forEach(qa => {
             const idx = this.questions.findIndex(q => q.id === qa.question);

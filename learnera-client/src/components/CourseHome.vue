@@ -33,7 +33,8 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex xs12>
-        <v-btn v-if="course.template.weeks[0]" :to="`/course/${course.id}/week/${course.template.weeks[0].id}`" block color="primary" dark>
+        <v-btn v-if="course.template.weeks[0]" 
+               :to="{path: `/course/${course.id}/study`, query: { week: currentWeek.id}}" block color="primary" dark>
           <strong v-if="teacher && teacher.id !== user.id">Continue studying!</strong>
           <strong v-else-if="!teacher || teacher.id === user.id">Take a look at the course!</strong>
         </v-btn>
@@ -104,6 +105,15 @@ export default {
         }
       });
       return ret; 
+    },
+    currentWeek: function() {
+      if (!this.course || !this.course.weekDates) {
+        return [];
+      }
+      const wd = this.course.weekDates.find(wd => new Date(wd.startDate) >= Date.now() && new Date(wd.endDate) <= Date.now());
+
+      return wd ? wd.week : this.course.template.weeks[0];
+
     }
   },
   watch: {

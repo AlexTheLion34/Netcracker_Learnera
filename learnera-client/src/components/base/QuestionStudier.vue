@@ -2,7 +2,7 @@
   <v-container style="padding: 0px 24px 0px 24px;" fill-height>
     <v-layout column wrap>
       <v-flex>
-        <v-textarea v-model="question.text" box readonly label="Question text"/>
+        <v-textarea v-model="question.questionText" box readonly label="Question text"/>
       </v-flex>
       <v-flex xs12><v-divider/></v-flex>
       <v-flex v-if="question.type === 'fixed' || question.type === 'regex'">
@@ -33,7 +33,7 @@ export default {
     prop: 'question',
     event: 'question-changed'
   },
-  props: ['question'],
+  props: ['question', 'notAvailable'],
   data() {
     return {
       typedAnswer: '',
@@ -46,7 +46,7 @@ export default {
       return ret;
     },
     isEditable() {
-      return !this.question.userAttempt.submitted;
+      return !this.question.userAttempt.submitted && !this.notAvailable;
     },
     userAnswer() {
       return this.question.userAttempt.answer;
@@ -78,7 +78,7 @@ export default {
       }
     }
     if (this.question.variants) {
-      this.chosenVariants = this.question.variants.map(_ => true); 
+      this.chosenVariants = this.question.variants.map(_ => false); 
     }
   },
   methods: {
