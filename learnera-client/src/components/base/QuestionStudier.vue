@@ -11,7 +11,7 @@
             <v-subheader>Type your answer: </v-subheader>
           </v-flex>
           <v-flex>
-            <v-text-field prefix/>
+            <v-text-field v-model="typedAnswer" :disabled="!isEditable" prefix />
           </v-flex>
         </v-layout>
       </v-flex>
@@ -19,7 +19,7 @@
         <v-layout row wrap>
           <v-checkbox v-for="(variant, i) in question.variants" 
                       v-model="chosenVariants[i]" :label="variant.choiceText"
-                      :key="`v-cb-${i}`" xs4/>
+                      :key="`v-cb-${i}`" :disabled="!isEditable" xs4/>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -36,10 +36,47 @@ export default {
   props: ['question'],
   data() {
     return {
+      typedAnswer: '',
       chosenVariants: []
     }
   },
+  computed: {
+    givenAnswer() {
+      const ret = this.question.type === 'mc' ? this.chosenVariants : this.typedAnswer;
+      return ret;
+    },
+    isEditable() {
+      return !this.question.userAttempt.submitted;
+    },
+    userAnswer() {
+      return this.question.userAttempt.answer;
+    }
+  },
+  watch: {
+    givenAnswer(val) {
+      if (!this.question.userAttempt.submitted)
+      {
+        this.question.userAttempt.answer = val;
+      }
+    },
+    userAnswer(val) {
+      if (this.question.userAttempt.submitted) {
+        if (this.question.type !== 'mc') {
+          this.typedAnswer = val;
+        } else {
+          this.chosenVariants = [...val].map(c => c !== '0');
+        }
+      }
+    }
+  },
   beforeMount() {
+    if (this.question.userAttempt.submitted) {
+      if (this.question.type !== 'mc') {
+        this.typedAnswer = this.question.userAttempt.answer;
+      } else {
+        this.chosenVariants = [...this.question.userAttempt.answer].map(c => c !== '0');
+      }
+    }
     if (this.question.variants) {
       this.chosenVariants = this.question.variants.map(_ => true); 
     }

@@ -20,6 +20,36 @@ const actions = {
           reject(e);
         });
     });
+  },
+  scoreAttempts({commit}, attempts) {
+    return new Promise((resolve, reject) => {
+      commit('scoreAttemptsRequest');
+
+      questionAttemptService.scoreAttempts(attempts)
+        .then(questionAttempts => {
+          commit('scoreAttemptsSuccess', questionAttempts);
+          resolve(questionAttempts);
+        })
+        .catch(e => {
+          commit('scoreAttemptsFailure', e);
+          reject(e);
+        });
+    });
+  },
+  getLatestUserWeekAttempts({commit}, {userId, weekId}) {
+    return new Promise((resolve, reject) => {
+      commit('getLatestUserWeekAttemptsRequest', {weekId, userId});
+
+      questionAttemptService.findLatestUserWeekAttempts(userId, weekId)
+        .then(questionAttempts => {
+          commit('getLatestUserWeekAttemptsSuccess', questionAttempts);
+          resolve(questionAttempts);
+        })
+        .catch(e => {
+          commit('getLatestUserWeekAttemptsFailure', e);
+          reject(e);
+        });
+    });
   }
 }
 
@@ -38,6 +68,37 @@ const mutations = {
     });
   },
   getByQuestionIdFailure(state, id) {
+  },
+  scoreAttemptsRequest(state) {
+
+  },
+  scoreAttemptsSuccess(state, questionAttempts) {
+    questionAttempts.forEach(questionAttempt => {
+      const idx = state.items.findIndex(i => i.id === i.id);
+      if (idx === -1) {
+        state.items.push(questionAttempt);
+      } else {
+        Vue.set(state.items, idx, questionAttempt);
+      }
+    });
+  },
+  scoreAttemptsFailure(state, e) {
+  },
+  getLatestUserWeekAttemptsRequest(state, {weekId, userId}) {
+
+  },
+  getLatestUserWeekAttemptsSuccess(state, questionAttempts) {
+    questionAttempts.forEach(questionAttempt => {
+      const idx = state.items.findIndex(i => i.id === i.id);
+      if (idx === -1) {
+        state.items.push(questionAttempt);
+      } else {
+        Vue.set(state.items, idx, questionAttempt);
+      }
+    });
+  },
+  getLatestUserWeekAttemptsFailure(state, e) {
+
   }
 }
 

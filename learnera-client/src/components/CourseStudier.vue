@@ -1,5 +1,5 @@
 <template>
-  <v-tabs color="cyan" dark slider-color="yellow">
+  <v-tabs v-model="activeWeek" color="cyan" dark slider-color="yellow">
     <template v-for="(weekDate, i) in weekDates">
       <v-tab :key="`tab-w-${i}`" :disabled="weekDate.dates.startDate > new Date()" ripple>
         <v-layout row fill-height>
@@ -15,7 +15,7 @@
 
     <v-tab-item v-for="(weekDate, i) in weekDates" :key="`tab-item-${i}`">
       <v-card>
-        <v-tabs color="teal lighten-1" dark slider-color="yellow">
+        <v-tabs v-model="activeLessons[i]" color="teal lighten-1" dark slider-color="yellow">
           <template v-for="(lesson, j) in weekDate.lessons">
             <v-tab v-if="lesson.id" :key="`tab-w-${i}-l-${j}`" ripple>
               <v-layout row fill-height>
@@ -33,7 +33,9 @@
           <v-tab-item v-for="(lesson, j) in weekDate.lessons"
                       :key="`tab-item-w-${i}-l-${j}`">
             <v-card v-if="lesson.id" flat>
-              <lesson-studier v-model="course.template.weeks[i].lessons[j]"/>
+              <lesson-studier v-model="course.template.weeks[i].lessons[j]" :course-id="course.id"
+                              :has-prev="hasPrev(i, j)" :has-next="hasNext(i, j)"
+                              @go-prev="goPrev()" @go-next="goNext()"/>
             </v-card>
           </v-tab-item>
         </v-tabs>
@@ -56,7 +58,10 @@ export default {
   },
   props: ['course'],
   data() {
-    return {};
+    return {
+      activeWeek: null,
+      activeLessons: []
+    };
   },
   computed: {
     ...mapState('account', ['user']),
@@ -90,6 +95,7 @@ export default {
         });
         return w;
       });
+      this.activeLessons = this.weeks.map(_ => 0);
     }
   },
   methods: {
@@ -99,6 +105,32 @@ export default {
     ...mapActions('lessons', {
       getLessonsByWeekId: 'getByWeekId'
     }),
+    hasPrev(weekIndex, lessonIndex) {
+      return !(weekIndex === 0 & lessonIndex === 0);
+    },
+    hasNext(weekIndex, lessonIndex) {
+      return !(weekIndex === this.weeks.length - 1 && lessonIndex === this.weeks[weekIndex].lessons.length - 1);
+    },
+    goPrev() {
+      const activeWeek = parseInt(this.activeWeek);
+      const activeLesson = parseInt(this.activeLessons[activeWeek]);
+      if (activeLesson === 0) {
+        this.activeWeek = activeWeek - 1;
+        this.activeLessons[activeWeek] = this.weeks[activeWeek].lessons.length - 1; 
+      } else {
+        this.activeLessons[activeWeek] = activeLesson - 1;
+      }
+    },
+    goNext() {
+      const activeWeek = parseInt(this.activeWeek);
+      const activeLesson = parseInt(this.activeLessons[activeWeek]);
+      if (activeLesson === this.weeks[activeWeek].lessons.length - 1) {
+        this.activeWeek = activeWeek + 1;
+        this.activeLessons[activeWeek] = 0;
+      } else {
+        this.activeLessons[activeWeek] = activeLesson + 1;
+      }
+    }
   },
 }
 </script>

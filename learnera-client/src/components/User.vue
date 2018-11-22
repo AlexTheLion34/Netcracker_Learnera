@@ -38,15 +38,15 @@
             <v-layout row>
               <v-flex xs6>
                 <v-layout column>
-                  <v-btn :to="`/user/${userId}`" round active-class>User home</v-btn>
-                  <v-btn :to="`/user/${userId}/courses`" round>Courses</v-btn>
+                  <v-btn v-if="user.role === 'TEACHER'" :to="`/user/${userId}/groups`" round>Groups</v-btn>
+                  <v-btn v-if="user.role === 'TEACHER'" :to="`/user/${userId}/templates`" 
+                         :disabled="currentUser.role !== 'TEACHER' || user.role !== 'TEACHER'" round>Templates</v-btn>
                 </v-layout>
               </v-flex>
               <v-flex xs6>
                 <v-layout column>
-                  <v-btn :to="`/user/${userId}/groups`" round>Groups</v-btn>
-                  <v-btn :to="`/user/${userId}/templates`" 
-                         :disabled="currentUser.role !== 'TEACHER' || user.role !== 'TEACHER'" round>Templates</v-btn>
+                  <v-btn :to="`/user/${userId}`" round active-class>User home</v-btn>
+                  <v-btn :to="`/user/${userId}/courses`" round>Courses</v-btn>
                 </v-layout>
               </v-flex>
             </v-layout>
