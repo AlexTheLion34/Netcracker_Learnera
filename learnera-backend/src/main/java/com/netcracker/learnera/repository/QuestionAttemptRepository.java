@@ -13,4 +13,5 @@ public interface QuestionAttemptRepository extends CrudRepository<QuestionAttemp
             "where a.week.id = :weekId and qa.student.id = :userId")
     Iterable<QuestionAttempt> findFirstByUserIdWeekId(@Param("userId") Long userId, @Param("weekId") Long weekId);
 
+    Iterable<QuestionAttempt> findAllByCourseId(Long courseId);
 }

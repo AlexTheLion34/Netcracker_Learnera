@@ -50,6 +50,21 @@ const actions = {
           reject(e);
         });
     });
+  },
+  getAllCourseAttempts({commit}, courseId) {
+    return new Promise((resolve, reject) => {
+      commit('getAllCourseAttemptsRequest', courseId);
+
+      questionAttemptService.findAllCourseAttempts(courseId)
+        .then(questionAttempts => {
+          commit('getAllCourseAttemptsSuccess', questionAttempts);
+          resolve(questionAttempts);
+        })
+        .catch(e => {
+          commit('getAllCourseAttemptsFailure', e);
+          reject(e);
+        });
+    });
   }
 }
 
@@ -98,6 +113,22 @@ const mutations = {
     });
   },
   getLatestUserWeekAttemptsFailure(state, e) {
+
+  },
+  getAllCourseAttemptsRequest(state, courseId) {
+
+  },
+  getAllCourseAttemptsSuccess(state, questionAttempts) {
+    questionAttempts.forEach(questionAttempt => {
+      const idx = state.items.findIndex(i => i.id === i.id);
+      if (idx === -1) {
+        state.items.push(questionAttempt);
+      } else {
+        Vue.set(state.items, idx, questionAttempt);
+      }
+    });
+  },
+  getAllCourseAttemptsFailure(state, e) {
 
   }
 }

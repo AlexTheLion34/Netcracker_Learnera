@@ -21,6 +21,21 @@ const actions = {
         });
     });
   },
+  getByCourseId({commit}, id) {
+    return new Promise((resolve, reject) => {
+      commit('getByCourseIdRequest');
+
+      userService.getByCourseId(id)
+        .then(users => {
+          commit('getByCourseIdSuccess', users);
+          resolve(users);
+        })
+        .catch(e => {
+          commit('getByCourseIdFailure', e);
+          reject(e);
+        });
+    });
+  },
   getAllStudents({commit}) {
     return new Promise((resolve, reject) => {
       commit('getAllStudentsRequest');
@@ -43,21 +58,32 @@ const mutations = {
   getByStudyGroupIdRequest(state) {
   },
   getByStudyGroupIdSuccess(state, users) {
-    console.log('Got students: ', users);
-    state.items = []
     users.forEach(user => {
-      state.items.push(user);
+      const idx = state.items.findIndex(i => i.id === user.id);
+      if (idx === -1) {
+        state.items.push(user);
+      } else {
+        Vue.set(state.items, idx, user);
+      }
     });
-    // users.forEach(user => {
-    //   const idx = state.items.findIndex(i => i.id === i.id);
-    //   if (idx === -1) {
-    //     state.items.push(user);
-    //   } else {
-    //     Vue.set(state.items, idx, user);
-    //   }
-    // });
   },
   getByStudyGroupIdFailure(state, id) {
+  },
+  getByCourseIdRequest(state) {
+
+  },
+  getByCourseIdSuccess(state, users) {
+    users.forEach(user => {
+      const idx = state.items.findIndex(i => i.id === user.id);
+      if (idx === -1) {
+        state.items.push(user);
+      } else {
+        Vue.set(state.items, idx, user);
+      }
+    });
+  },
+  getByCourseIdFailure(state, e) {
+
   },
   getAllStudentsRequest(state) {
   },

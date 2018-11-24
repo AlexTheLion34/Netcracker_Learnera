@@ -32,11 +32,16 @@
         </v-card>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-flex xs12>
+      <v-flex v-if="isCurrentUserStudent" xs12>
         <v-btn v-if="course.template.weeks[0]" 
-               :to="{path: `/course/${course.id}/study`, query: { week: currentWeek.id}}" block color="primary" dark>
-          <strong v-if="teacher && teacher.id !== user.id">Continue studying!</strong>
-          <strong v-else-if="!teacher || teacher.id === user.id">Take a look at the course!</strong>
+               :to="{path: `/course/${course.id}/study`, query: {week: currentWeek.id}}" block color="primary" dark>
+          <strong>Continue studying!</strong>
+        </v-btn>
+      </v-flex>
+      <v-flex v-else-if="user.role === 'TEACHER'" xs12>
+        <v-btn v-if="course.template.weeks[0]" 
+               :to="{path: `/course/${course.id}/observe`, query: {week: currentWeek.id}}" block color="primary" dark>
+          <strong>Take a look at the course!</strong>
         </v-btn>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
@@ -66,12 +71,6 @@ export default {
     };
   },
   computed: {
-    // ...mapState('courses', {
-    //   course: function(state) {
-    //     const ret = state.items.find(i => i.id === this.courseId);
-    //     return ret;
-    //   }
-    // }),
     ...mapState('account', ['user']),
     ...mapState('users', {
       teacher: function(state) {
@@ -79,6 +78,10 @@ export default {
           return undefined;
         }
         const ret = state.items.find(i => i.id === this.course.template.teacher);
+        return ret;
+      },
+      currentUser: function(state) {
+        const ret = state.items.find(i => i.id === this.user.id);
         return ret;
       }
     }),
@@ -114,6 +117,17 @@ export default {
 
       return wd ? wd.week : this.course.template.weeks[0];
 
+    },
+    isCurrentUserStudent: function() {
+      if (this.user.role !== 'STUDENT') {
+        return false;
+      }
+
+      if (!this.currentUser) {
+        return false;
+      }
+      
+      return this.currentUser.studyGroups.find(x => x.id === this.course.id) !== null;
     }
   },
   watch: {
@@ -122,6 +136,9 @@ export default {
         this.getUser(val.template.teacher);
       }
     }
+  },
+  beforeMount() {
+    this.getUser(this.user.id);
   },
   methods: {
     ...mapActions('courses', {

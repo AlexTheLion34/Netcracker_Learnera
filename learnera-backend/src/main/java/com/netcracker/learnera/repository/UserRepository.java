@@ -14,4 +14,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("select u from Group g join g.students u where g.id = :id")
     Iterable<User> findAllByStudyGroupId(@Param("id") Long id);
+
+    @Query("select distinct u from Course c join c.groups g join g.students u where c.id = :courseId")
+    Iterable<User> findAllByCourseId(@Param("courseId") Long courseId);
 }

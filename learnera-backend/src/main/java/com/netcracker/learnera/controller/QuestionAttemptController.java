@@ -34,4 +34,10 @@ public class QuestionAttemptController extends BasicController<QuestionAttempt, 
         return new ResponseEntity<>(questionAttemptService.findFirstByUserIdWeekId(userId, weekId), HttpStatus.OK);
     }
 
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<Iterable<QuestionAttempt>> findAllCourseAttempts(
+            @PathVariable("courseId") Long courseId
+    ) {
+        return new ResponseEntity<>(questionAttemptService.findAllCourseAttempts(courseId), HttpStatus.OK);
+    }
 }

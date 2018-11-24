@@ -24,6 +24,11 @@ public class QuestionAttemptServiceImpl extends CrudServiceImpl<QuestionAttempt,
     }
 
     @Override
+    public Iterable<QuestionAttempt> findAllCourseAttempts(Long courseId) {
+        return questionAttemptRepository.findAllByCourseId(courseId);
+    }
+
+    @Override
     public Iterable<QuestionAttempt> scoreAllAttempts(Iterable<QuestionAttempt> attempts) {
         List<QuestionAttempt> attemptsMapped = new ArrayList<>();
         for (QuestionAttempt attempt : attempts) {

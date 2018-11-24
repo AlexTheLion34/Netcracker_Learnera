@@ -19,6 +19,11 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements User
         return userRepository.findAllByRole();
     }
 
+    @Override
+    public Iterable<User> findAllByCourseId(Long courseId) {
+        return userRepository.findAllByCourseId(courseId);
+    }
+
     public UserServiceImpl(UserRepository userRepository) {
         super(userRepository);
         this.userRepository = userRepository;

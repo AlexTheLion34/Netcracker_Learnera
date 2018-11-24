@@ -7,5 +7,5 @@ public interface QuestionAttemptService extends CrudService<QuestionAttempt, Lon
     Iterable<QuestionAttempt> findAllByQuestionId(Long id);
     Iterable<QuestionAttempt> scoreAllAttempts(Iterable<QuestionAttempt> attempts);
     Iterable<QuestionAttempt> findFirstByUserIdWeekId(Long userId, Long weekId);
-
+    Iterable<QuestionAttempt> findAllCourseAttempts(Long courseId);
 }

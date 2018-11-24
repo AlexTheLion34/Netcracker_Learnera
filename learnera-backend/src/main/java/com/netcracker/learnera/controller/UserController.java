@@ -27,4 +27,9 @@ public class UserController extends BasicController<User, Long> {
         return new ResponseEntity<>(userService.findAllByStudyGroupId(id), HttpStatus.OK);
     }
 
+    @GetMapping("/course/{id}")
+    public ResponseEntity<Iterable<User>> findAllByCourseId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.findAllByCourseId(id), HttpStatus.OK);
+    }
+
 }
