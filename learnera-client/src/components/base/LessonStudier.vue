@@ -125,7 +125,6 @@ export default {
         userAttempt: {answer: '', score: 0.0, submitted: false}
       }));
 
-      console.log('Will send to: ', this.weekId);
       this.getLatestUserWeekAttempts({userId: this.currentUser.id, weekId: this.weekId})
         .then(qas => {
           qas.forEach(qa => {
@@ -162,8 +161,6 @@ export default {
         ret[0].course = {id: this.courseId};
       }
 
-      console.log('Saving: ', ret);
-      // TODO
       this.scoreAttempts(ret).then(attempts => {
         attempts.forEach(attempt => {
           const idx = this.questions.findIndex(q => q.id === attempt.question);

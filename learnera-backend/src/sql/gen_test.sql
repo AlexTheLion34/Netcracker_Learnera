@@ -1,11 +1,11 @@
 INSERT INTO users (id, email, password_hash, role)
-VALUES (1, 'example@google.com', 'qwerty', 'TEACHER');
+VALUES (1, 'example@google.com', '$2a$10$ud9azktwmW.81ZELDGDdt.Yipg8CgUNPFZm.3FKTLF/oieoH.Xs4S', 'TEACHER');
 INSERT INTO users (id, email, password_hash, role)
-VALUES (2, 'example1@google.com', 'qwerty', 'STUDENT');
+VALUES (2, 'example1@google.com', '$2a$10$ud9azktwmW.81ZELDGDdt.Yipg8CgUNPFZm.3FKTLF/oieoH.Xs4S', 'STUDENT');
 INSERT INTO users (id, email, password_hash, role)
-VALUES (3, 'example2@google.com', 'qwerty', 'STUDENT');
+VALUES (3, 'example2@google.com', '$2a$10$ud9azktwmW.81ZELDGDdt.Yipg8CgUNPFZm.3FKTLF/oieoH.Xs4S', 'STUDENT');
 INSERT INTO users (id, email, password_hash, role)
-VALUES (4, 'example3@google.com', 'qwerty', 'STUDENT');
+VALUES (4, 'example3@google.com', '$2a$10$ud9azktwmW.81ZELDGDdt.Yipg8CgUNPFZm.3FKTLF/oieoH.Xs4S', 'STUDENT');
 
 INSERT INTO user_infos (user_id, nickname, first_name, last_name)
 VALUES (1, 'd32f123', 'Andrey', 'Neste-ov'),

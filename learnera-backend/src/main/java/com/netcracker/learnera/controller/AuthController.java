@@ -23,15 +23,15 @@ public class AuthController {
     {
         String decoded = new String(Base64.getDecoder().decode(authorization.split(" ")[1]));
         String[] info = decoded.split(":");
-        User user = userService.findByEmail(info[0]);
-        if (user != null && user.getPassword().equals(info[1]))
+        User user = userService.login(info[0], info[1]);
+        if (user != null)
             return new ResponseEntity<>(user, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping
     public ResponseEntity<User> register(@RequestBody User user) throws EntityAlreadyExistsException {
-        userService.create(user);
+        userService.register(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

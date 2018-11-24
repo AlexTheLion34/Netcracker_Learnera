@@ -141,7 +141,6 @@ export default {
     }),
     saveCourse() {
       let {template, startDate, endDate, weekDates, groups, ...other} = this.course;
-      console.log(JSON.stringify(this.course));
       if (weekDates) {
         weekDates[0].course = {id: weekDates[0].course.id || weekDates[0].course};
       }
@@ -159,7 +158,7 @@ export default {
         weekDates: weekDates,
         groups: groups.map(g => ({id: g}))
       };
-      console.log(JSON.stringify(ret));
+
       this.updateCourse(ret).then(x => {
         x.weekDates = x.weekDates.map(({startDate, endDate, ...o}) => ({
           ...o,

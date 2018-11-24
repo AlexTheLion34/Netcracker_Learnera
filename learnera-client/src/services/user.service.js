@@ -43,6 +43,7 @@ function login(email, password) {
     headers: {'Authorization': 'Basic ' + btoa(email + ':' + password)}
   }).then(handleResponse)
     .then(data => {
+      data.password = password;
       localStorage.setItem('user', JSON.stringify(data));
       return data;
     })

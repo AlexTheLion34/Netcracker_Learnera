@@ -296,7 +296,6 @@ export default {
           });
           return w;
         });
-        console.log('Template transformed');
       }
     },
     transformForPost() {
@@ -335,10 +334,8 @@ export default {
     onTemplatePost() {
       this.transformForPost();
       if (this.template.id) {
-        console.log(JSON.stringify(this.template));
 
         this.updateTemplate(this.template).then(template => {
-          console.log('Template updated!');
           this.$emit('template-updated', template);
 
           this.template = template;
@@ -346,7 +343,6 @@ export default {
         }).catch(e => console.error);
       } else {
         this.createTemplate(this.template).then(template => {
-          console.log('Template created');
           this.$emit('template-created', template);
           // TODO: IMPLEMENT NOTIFICATION
 
@@ -360,7 +356,6 @@ export default {
       this.transformForPost();
       this.template.completed = true;
       this.updateTemplate(this.template).then(template => {
-        console.log('Template finalized!');
         this.$emit('template-finalized', template);
 
         this.template = template;

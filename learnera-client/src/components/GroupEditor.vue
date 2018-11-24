@@ -60,12 +60,12 @@ export default {
     }),
     saveGroup() {
       let {curator, ...other} = this.group
-      console.log(JSON.stringify(this.group));
+
       const ret = {
         ...other,
         curator: {id: this.curator.id},
       }
-      console.log(JSON.stringify(ret));
+
       this.updateGroup(ret).then(x => {
         this.$emit('group-changed', x)
       })

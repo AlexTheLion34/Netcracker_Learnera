@@ -39,13 +39,12 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-flex><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-expansion-panel>
+      <v-expansion-panel v-if="lesson.type === 'assignment'">
         <v-expansion-panel-content>
           <div slot="header">Student results</div>
 
           <v-container>
-            <v-data-table v-if="lesson.type === 'assignment'"
-                          :headers="[
+            <v-data-table :headers="[
                             {text: 'Name', value: 'name'}, 
                             {text: 'Email', value: 'email'},
                             {text: 'Finished', value: 'finished'},
@@ -115,7 +114,7 @@ export default {
     studentsMapped: function() {
       if (!this.questions) { 
         return [] 
-      }; 
+      }
 
       return this.students.map(student => {
         const name = student.info && (student.info.firstName + ' ' + student.info.lastName) || student.email;

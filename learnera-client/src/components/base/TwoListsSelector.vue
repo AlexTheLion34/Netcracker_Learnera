@@ -63,7 +63,6 @@ export default {
     }
   },
   beforeMount() {
-    console.log(this.items)
     this.unselectedItems = this.items ? this.items.slice() : [];
     this.selectedItems = [];
   },
