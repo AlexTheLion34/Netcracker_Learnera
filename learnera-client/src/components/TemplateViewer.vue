@@ -1,154 +1,165 @@
 <template>
   <v-container v-if="template">
-    <v-layout row wrap>
-      <v-flex d-flex justify-center align-center xs12>
-        <h3 class="headline">{{ readOnly ? 'View' : 'Edit' }} template</h3>
-      </v-flex>
-      <v-flex xs12>
-        <v-layout align-start justify-start row>
-          <v-avatar size="100" color="teal">
-            <img v-if="template.info && template.info.avatar" :src="template.info.avatar">
-            <span v-else-if="template.name" class="ava">{{ template.name[0] }}</span>
-          </v-avatar>
-          <v-flex>
-            <v-layout column>
-              <v-layout justify-space-between row>
-                <v-flex xs2 style="margin-left: 5px" fill-height>
-                  <v-text-field v-if="!readOnly" v-model="template.name" label="Template name"/>
-                  <div v-else class="head">{{ template.name ? template.name : '' }}</div>
-                </v-flex>
-                <v-spacer/>
-                <v-flex fill-height xs2>
-                  <div>
-                    <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
-                      Teacher: {{ teacherName }}
-                    </v-btn>
-                  </div>
-                </v-flex>
-              </v-layout>
-              <v-flex>
+    <v-form v-model="formValid">
+      <v-layout row wrap>
+        <v-flex d-flex justify-center align-center xs12>
+          <h3 class="headline">{{ readOnly ? 'View' : 'Edit' }} template</h3>
+        </v-flex>
+        <v-flex xs12>
+          <v-layout align-start justify-start row>
+            <v-avatar size="100" color="teal">
+              <img v-if="template.info && template.info.avatar" :src="template.info.avatar">
+              <span v-else-if="template.name" class="ava">{{ template.name[0] }}</span>
+            </v-avatar>
+            <v-flex>
+              <v-layout column>
                 <v-layout justify-space-between row>
-                  <v-flex fill-height="" xs2>
-                    <v-btn v-if="!readOnly" small>
-                      Update avatar
-                    </v-btn>
+                  <v-flex xs2 style="margin-left: 5px" fill-height>
+                    <v-text-field v-if="!readOnly" v-model="template.name" 
+                                  :rules="nameRules" label="Template name"/>
+                    <div v-else class="head">{{ template.name ? template.name : '' }}</div>
                   </v-flex>
                   <v-spacer/>
-                  <v-flex fill-height xs2 justify-end>
-                    <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" small text-color="white">
-                      {{ template.completed ? 'FINAL' : 'EDITABLE' }}
-                    </v-chip>
+                  <v-flex fill-height xs2>
+                    <div>
+                      <v-btn v-if="teacher" :to="`/user/${teacher.id}`" color="primary">
+                        Teacher: {{ teacherName }}
+                      </v-btn>
+                    </div>
                   </v-flex>
                 </v-layout>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex style="margin: 15px 0 0 0">
-        <v-textarea v-model="template.description" :readonly="readOnly" box label="Description" auto-grow/>
-      </v-flex>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title><h3 class="headline mb-0">Weeks</h3></v-card-title>
-          <v-responsive>
-            <v-tabs color="cyan" dark slider-color="yellow">
-              <template v-for="(week, i) in weeks">
-                <v-tab :key="`tab-w-${i}`" ripple>
-                  <v-layout row fill-height>
-                    <v-flex d-flex align-center="">
-                      <div>
-                        {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
-                      </div>
+                <v-flex>
+                  <v-layout justify-space-between row>
+                    <v-flex fill-height="" xs2>
+                      <v-btn v-if="!readOnly" small>
+                        Update avatar
+                      </v-btn>
                     </v-flex>
-                    <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
-                      <div>
-                        <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon 
-                               @click.stop="removeWeek(i)">
-                          <v-icon color="red darken-4">remove</v-icon>
-                        </v-btn>
-                      </div>
+                    <v-spacer/>
+                    <v-flex fill-height xs2 justify-end>
+                      <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" small text-color="white">
+                        {{ template.completed ? 'FINAL' : 'EDITABLE' }}
+                      </v-chip>
                     </v-flex>
                   </v-layout>
-                </v-tab>
-                <v-divider :key="`div-w-${i}`" class="cyan lighten-4" inset vertical/>
-              </template>
-              
-              <v-tooltip v-if="!template.completed && !readOnly" bottom>
-                <v-btn slot="activator" icon ripple @click.stop="addWeek">
-                  <v-icon color="grey lighten-3">add</v-icon>
-                </v-btn>
-                <span>Add week</span>
-              </v-tooltip>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex style="margin: 15px 0 0 0">
+          <v-textarea v-model="template.description" :readonly="readOnly" box label="Description" auto-grow/>
+        </v-flex>
+        <v-flex xs12>
+          <v-card>
+            <v-card-title><h3 class="headline mb-0">Weeks</h3></v-card-title>
+            <v-responsive>
+              <v-tabs color="cyan" dark slider-color="yellow">
+                <template v-for="(week, i) in weeks">
+                  <v-tab :key="`tab-w-${i}`" ripple>
+                    <v-layout row fill-height>
+                      <v-flex d-flex align-center="">
+                        <div>
+                          {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
+                        </div>
+                      </v-flex>
+                      <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
+                        <div>
+                          <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon 
+                                 @click.stop="removeWeek(i)">
+                            <v-icon color="red darken-4">remove</v-icon>
+                          </v-btn>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                  </v-tab>
+                  <v-divider :key="`div-w-${i}`" class="cyan lighten-4" inset vertical/>
+                </template>
+                
+                <v-tooltip v-if="!template.completed && !readOnly" bottom>
+                  <v-btn slot="activator" icon ripple @click.stop="addWeek">
+                    <v-icon color="grey lighten-3">add</v-icon>
+                  </v-btn>
+                  <span>Add week</span>
+                </v-tooltip>
 
-              <v-tab-item v-for="(week, i) in weeks" :key="`tab-item-${i}`">
-                <v-card>
-                  <v-tabs color="teal lighten-1" dark slider-color="yellow">
-                    <template v-for="(lesson, j) in week.lessons">
-                      <v-tab :key="`tab-w-${i}-l-${j}`" ripple>
-                        <v-layout row fill-height>
-                          <v-flex d-flex align-center="">
-                            <div>
-                              {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
-                            </div>
-                          </v-flex>
-                          <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
-                            <div>
-                              <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon
-                                     @click.stop="removeLesson({weekIndex: i, lessonIndex: j})">
-                                <v-icon color="red darken-4">remove</v-icon>
-                              </v-btn>
-                            </div>
-                          </v-flex>
-                        </v-layout>
-                      </v-tab>
-                      <v-divider :key="`div-w-${i}-l-${j}`" 
-                                 class="teal lighten-4" inset vertical/>
-                    </template>
+                <v-tab-item v-for="(week, i) in weeks" :key="`tab-item-${i}`">
+                  <v-card>
+                    <v-tabs color="teal lighten-1" dark slider-color="yellow">
+                      <template v-for="(lesson, j) in week.lessons">
+                        <v-tab :key="`tab-w-${i}-l-${j}`" ripple>
+                          <v-layout row fill-height>
+                            <v-flex d-flex align-center="">
+                              <div>
+                                {{ lesson.name ? lesson.name : ('Lesson ' + (lesson.ordering + 1)) }}
+                              </div>
+                            </v-flex>
+                            <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
+                              <div>
+                                <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon
+                                       @click.stop="removeLesson({weekIndex: i, lessonIndex: j})">
+                                  <v-icon color="red darken-4">remove</v-icon>
+                                </v-btn>
+                              </div>
+                            </v-flex>
+                          </v-layout>
+                        </v-tab>
+                        <v-divider :key="`div-w-${i}-l-${j}`" 
+                                   class="teal lighten-4" inset vertical/>
+                      </template>
 
-                    <v-tooltip v-if="!template.completed && !readOnly" bottom>
-                      <v-btn slot="activator" icon ripple @click.stop="addLesson(i)">
-                        <v-icon color="grey lighten-3">add</v-icon>
+                      <v-tooltip v-if="!template.completed && !readOnly" bottom>
+                        <v-btn slot="activator" icon ripple @click.stop="addLesson(i)">
+                          <v-icon color="grey lighten-3">add</v-icon>
+                        </v-btn>
+                        <span>Add lesson</span>
+                      </v-tooltip>
+
+                      <v-tab-item v-for="(lesson, j) in week.lessons"
+                                  :key="`tab-item-w-${i}-l-${j}`">
+                        <v-card flat>
+                          <lesson-editor v-model="template.weeks[i].lessons[j]" :editable="!template.completed && !readOnly" 
+                                         @update:valid="$set(weekValids[i], j, $event)"/>
+                        </v-card>
+                      </v-tab-item>
+                    </v-tabs>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs>
+            </v-responsive>
+          </v-card>
+        </v-flex>
+        <v-flex v-if="!readOnly" xs12 style="margin: 15px 0 0 0">
+          <v-card>
+            <v-card-title><h3 class="headline mb-0">Confirm your action</h3></v-card-title>
+            <v-responsive>
+              <v-layout column>  
+                <v-flex>
+                  <error-message v-model="showError" :message="hasError"/>
+                </v-flex>
+                <v-flex>
+                  <v-layout row>
+                    <v-flex style="margin: 0 10px 0 10px" xs4>
+                      <v-btn :disabled="!!hasError" color="primary" block @click="onTemplatePost">Save template</v-btn>
+                    </v-flex>
+                    <v-flex style="margin: 0 10px 0 10px" xs4>
+                      <v-btn :disabled="!template.id || template.completed || !!hasError" color="secondary" block @click="onFinalize">
+                        Finalize
                       </v-btn>
-                      <span>Add lesson</span>
-                    </v-tooltip>
-
-                    <v-tab-item v-for="(lesson, j) in week.lessons"
-                                :key="`tab-item-w-${i}-l-${j}`">
-                      <v-card flat>
-                        <lesson-editor v-model="template.weeks[i].lessons[j]" :editable="!template.completed && !readOnly"/>
-                      </v-card>
-                    </v-tab-item>
-                  </v-tabs>
-                </v-card>
-              </v-tab-item>
-            </v-tabs>
-          </v-responsive>
-        </v-card>
-      </v-flex>
-      <v-flex v-if="!readOnly" xs12 style="margin: 15px 0 0 0">
-        <v-card>
-          <v-card-title><h3 class="headline mb-0">Confirm your action</h3></v-card-title>
-          <v-responsive>
-            <v-layout row>
-              <v-flex style="margin: 0 10px 0 10px" xs4>
-                <v-btn color="primary" block @click="onTemplatePost">Save template</v-btn>
-              </v-flex>
-              <v-flex style="margin: 0 10px 0 10px" xs4>
-                <v-btn :disabled="!template.id || template.completed" color="secondary" block @click="onFinalize">
-                  Finalize
-                </v-btn>
-              </v-flex>
-              <v-flex style="margin: 0 10px 0 10px" xs4>
-                <v-btn color="error" block @click="$router.back()">
-                  Cancel
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-responsive>
-        </v-card>
-      </v-flex>
-    </v-layout>
+                    </v-flex>
+                    <v-flex style="margin: 0 10px 0 10px" xs4>
+                      <v-btn color="error" block @click="$router.back()">
+                        Cancel
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+              </v-layout>
+            </v-responsive>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-form>
   </v-container>
 </template>
 
@@ -157,13 +168,21 @@ import {mapState, mapActions, mapGetters} from 'vuex';
 import {store} from '../store'
 import {router} from '../router'
 import LessonEditor from './base/LessonEditor.vue'
+import ErrorMessage from './base/ErrorMessage.vue'
 
 export default {
   name: 'TemplateViewer',
-  components: {LessonEditor},
+  components: {LessonEditor, ErrorMessage},
   props: ['templateInput', 'templateIdStr', 'readOnly'],
   data() {
     return {
+      formValid: false,
+      weekValids: [],
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => !!v && v.length <= 25 || 'Name must be less than 25 characters'
+      ],
+      showError: true,
       template: {
         id: null,
         teacher: null,
@@ -202,9 +221,43 @@ export default {
         return this.teacher.info.firstName || this.teacher.info.lastName || this.teacher.email;
       }
       return this.teacher.email;
+    },
+    hasError: function() {
+      if (!this.weeks || this.weeks.length === 0) {
+        return 'There should be at least one week';
+      }
+      if (!this.formValid) {
+        return 'Fix all fields';
+      }
+      const lessonsPresent = this.weeks.reduce((acc, x) => acc && x.lessons && x.lessons.length > 0, true);
+      if (!lessonsPresent) {
+        return 'There should be at least one lesson in all weeks';
+      }
+
+      const allWeeksValid = this.weekValids.reduce((acc, x) => acc && x.reduce((acc, y) => acc && y, true), true);
+      if (!allWeeksValid) {
+        return 'One of the weeks is invalid';
+      }
+
+      return '';
     }
   },
   watch: {
+    weeks(val) {
+      if (!val) {
+        return;
+      }
+      this.weekValids = val.map(w => {
+        if (!w.lessons) {
+          return [];
+        }
+
+        return w.lessons.map(l => true);
+      });
+    },
+    hasError(val) {
+      this.showError = !!val;
+    }
   },
   beforeMount() {
     if (this.templateInput) {

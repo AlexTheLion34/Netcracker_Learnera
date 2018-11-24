@@ -12,7 +12,7 @@ import CourseList from './CourseList.vue'
 export default {
   name: 'UserCourseList',
   components: {ItemList, CourseList},
-  props: ['user', 'actions'],
+  props: ['user', 'actions', 'filter'],
   data() {
     return {
     };
@@ -33,7 +33,9 @@ export default {
           });
         }).flat())];
       }
-
+      if (this.filter) {
+        ret = ret.filter(this.filter);
+      }
       return ret;
     }
   },

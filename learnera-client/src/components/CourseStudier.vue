@@ -121,9 +121,9 @@ export default {
       const activeLesson = parseInt(this.activeLessons[activeWeek]);
       if (activeLesson === 0) {
         this.activeWeek = activeWeek - 1;
-        this.activeLessons[activeWeek] = this.weeks[activeWeek].lessons.length - 1; 
+        this.$set(this.activeLessons, activeWeek - 1, this.weeks[activeWeek - 1].lessons.length - 1); 
       } else {
-        this.activeLessons[activeWeek] = activeLesson - 1;
+        this.$set(this.activeLessons, activeWeek, activeLesson - 1);
       }
     },
     goNext() {
@@ -131,9 +131,9 @@ export default {
       const activeLesson = parseInt(this.activeLessons[activeWeek]);
       if (activeLesson === this.weeks[activeWeek].lessons.length - 1) {
         this.activeWeek = activeWeek + 1;
-        this.activeLessons[activeWeek] = 0;
+        this.$set(this.activeLessons, activeWeek, 0);
       } else {
-        this.activeLessons[activeWeek] = activeLesson + 1;
+        this.$set(this.activeLessons, activeWeek, activeLesson + 1);
       }
     },
     isCurrentWeek(weekDate) {

@@ -78,7 +78,7 @@
           </v-btn>
           <v-flex d-flex xs4>
             <v-btn v-if="lesson.type === 'assignment'"
-                   :disabled="notAvailable || questionPassed(questions[0])" @click="doSave()">
+                   :disabled="notAvailable || questionPassed(questions[0]).length > 0" @click="doSave()">
               Save attempt
             </v-btn>
           </v-flex>

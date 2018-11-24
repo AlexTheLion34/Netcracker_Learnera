@@ -32,7 +32,7 @@
                         v-model="weekDate.startDate"
                         label="Start date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.startDate" @input="weekDateMenus[i].startMenu = false"/>
+                      <v-date-picker v-model="weekDate.startDate" readonly @input="weekDateMenus[i].startMenu = false"/>
                     </v-menu>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
@@ -50,7 +50,7 @@
                         v-model="weekDate.endDate"
                         label="End date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.endDate" @input="weekDateMenus[i].endMenu = false"/>
+                      <v-date-picker v-model="weekDate.endDate" readonly @input="weekDateMenus[i].endMenu = false"/>
                     </v-menu>
                   </v-flex>
                 </v-layout>

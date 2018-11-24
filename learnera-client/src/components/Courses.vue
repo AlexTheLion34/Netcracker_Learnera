@@ -1,12 +1,23 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex xs12><h3 class="display-2">Courses</h3></v-flex>
       <v-flex v-if="user && user.role === 'TEACHER' && currentUser.id === user.id" xs12>
         <v-btn :to="`/create-course`">Add course</v-btn>
       </v-flex>
-      <user-course-list :user="user" :actions="isAuthorized ? listActions : []"
-                        @action-clicked="onActionClicked"/>
+      <v-flex xs6>
+        <v-layout column>
+          <v-flex><h3 class="display-2">Active courses</h3></v-flex>
+          <user-course-list :user="user" :actions="isAuthorized ? listActions : []"
+                            :filter="c => new Date(c.endDate) >= Date.now()" @action-clicked="onActionClicked"/>
+        </v-layout>
+      </v-flex>
+      <v-flex xs6>
+        <v-layout column>
+          <v-flex><h3 class="display-2">Passed courses</h3></v-flex>
+          <user-course-list :user="user" :actions="isAuthorized ? listActions : []"
+                            :filter="c => new Date(c.endDate) < Date.now()" @action-clicked="onActionClicked"/>
+        </v-layout>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>

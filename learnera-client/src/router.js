@@ -12,6 +12,7 @@ import CourseHome from './components/CourseHome.vue'
 import CourseCreator from './components/CourseCreator.vue'
 import CourseEditor from './components/CourseEditor.vue'
 import CourseStudier from './components/CourseStudier.vue'
+import CourseObserver from './components/CourseObserver.vue'
 import Groups from './components/Groups.vue'
 import Group from './components/Group.vue'
 import GroupHome from './components/GroupHome.vue'
@@ -53,6 +54,10 @@ const routes = [
       {path: 'edit', component: CourseEditor, props: true},
       // {path: 'observe', } TODO,
       {path: 'study', component: CourseStudier, props: (route) => ({
+        weekIdStr: route.query.week,
+        lessonIdStr: route.query.lesson
+      })},
+      {path: 'observe', component: CourseObserver, props: (route) => ({
         weekIdStr: route.query.week,
         lessonIdStr: route.query.lesson
       })}
