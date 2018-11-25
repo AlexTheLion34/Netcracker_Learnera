@@ -12,15 +12,15 @@
           <v-card-title><h3 class="headline mb-0">Deadlines</h3></v-card-title>
           <v-responsive>
             <v-layout column>
-              <template v-for="(weekDate, i) in weekDates">
-                <v-layout :key="weekDate.week.id" row>
+              <template v-for="(moduleDate, i) in moduleDates">
+                <v-layout :key="moduleDate.module.id" row>
                   <v-flex d-flex justify-center align-center xs2 style="margin: 0 0 0 0.5em">
-                    <v-chip disabled>{{ weekDate.week.name || 'Week ' + weekDate.week.weekNumber }}</v-chip>
+                    <v-chip disabled>{{ moduleDate.module.name || 'Module ' + moduleDate.module.moduleNumber }}</v-chip>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                     <v-menu
                       :close-on-content-click="false"
-                      v-model="weekDateMenus[i].startMenu"
+                      v-model="moduleDateMenus[i].startMenu"
                       :nudge-right="40"
                       lazy
                       transition="scale-transition"
@@ -29,16 +29,16 @@
                     >
                       <v-text-field
                         slot="activator"
-                        v-model="weekDate.startDate"
+                        v-model="moduleDate.startDate"
                         label="Start date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.startDate" readonly @input="weekDateMenus[i].startMenu = false"/>
+                      <v-date-picker v-model="moduleDate.startDate" readonly @input="moduleDateMenus[i].startMenu = false"/>
                     </v-menu>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                     <v-menu
                       :close-on-content-click="false"
-                      v-model="weekDateMenus[i].endMenu"
+                      v-model="moduleDateMenus[i].endMenu"
                       :nudge-right="40"
                       lazy
                       transition="scale-transition"
@@ -47,10 +47,10 @@
                     >
                       <v-text-field
                         slot="activator"
-                        v-model="weekDate.endDate"
+                        v-model="moduleDate.endDate"
                         label="End date"
                         readonly/>
-                      <v-date-picker v-model="weekDate.endDate" readonly @input="weekDateMenus[i].endMenu = false"/>
+                      <v-date-picker v-model="moduleDate.endDate" readonly @input="moduleDateMenus[i].endMenu = false"/>
                     </v-menu>
                   </v-flex>
                 </v-layout>
@@ -61,7 +61,7 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex xs12>
-        <v-btn v-if="course.template.weeks[0]" block color="primary" dark @click="saveCourse">
+        <v-btn v-if="course.template.modules[0]" block color="primary" dark @click="saveCourse">
           <strong v-if="teacher && teacher.id === user.id">Save course</strong>
         </v-btn>
       </v-flex>
@@ -82,7 +82,7 @@ export default {
   props: ['course'],
   data() {
     return {
-      weekDateMenus: [],
+      moduleDateMenus: [],
     };
   },
   computed: {
@@ -103,14 +103,14 @@ export default {
       }
       return this.teacher.email;
     },
-    weekDates: function() {
-      if (!this.course || !this.course.weekDates) {
+    moduleDates: function() {
+      if (!this.course || !this.course.moduleDates) {
         return [];
       }
-      return this.course.weekDates;
+      return this.course.moduleDates;
     },
-    weeks: function() {
-      return this.course.template.weeks;
+    modules: function() {
+      return this.course.template.modules;
     },
   },
   watch: {
@@ -119,17 +119,17 @@ export default {
         this.getUser(val.template.teacher);
       }
     },
-    weekDates: function() {
-      this.weekDateMenus = this.weekDates.map(() => ({startMenu: false, endMenu: false}));
+    moduleDates: function() {
+      this.moduleDateMenus = this.moduleDates.map(() => ({startMenu: false, endMenu: false}));
     }
   },
   beforeMount() {
-    if (!this.weeks) {
-      this.weekDateMenus = [];
+    if (!this.modules) {
+      this.moduleDateMenus = [];
       return;
     }
 
-    this.weekDateMenus = this.weekDates.map(() => ({startMenu: false, endMenu: false}));
+    this.moduleDateMenus = this.moduleDates.map(() => ({startMenu: false, endMenu: false}));
   },
   methods: {
     ...mapActions('courses', {
@@ -144,27 +144,27 @@ export default {
       alertSuccess: 'success'
     }),
     saveCourse() {
-      let {template, startDate, endDate, weekDates, groups, ...other} = this.course;
-      if (weekDates) {
-        weekDates[0].course = {id: weekDates[0].course.id || weekDates[0].course};
+      let {template, startDate, endDate, moduleDates, groups, ...other} = this.course;
+      if (moduleDates) {
+        moduleDates[0].course = {id: moduleDates[0].course.id || moduleDates[0].course};
       }
-      weekDates = weekDates.map(({week, startDate, endDate, ...other}) => ({
+      moduleDates = moduleDates.map(({module, startDate, endDate, ...other}) => ({
         ...other, 
         startDate: new Date(startDate).toISOString().substr(0, 10),
         endDate: new Date(endDate).toISOString().substr(0, 10),
-        week: {id: week.id}
+        module: {id: module.id}
       }));
       const ret = {
         ...other,
         template: {id: template.id},
-        startDate: this.weekDates[0].startDate,
-        endDate: this.weekDates[this.weekDates.length - 1].endDate,
-        weekDates: weekDates,
+        startDate: this.moduleDates[0].startDate,
+        endDate: this.moduleDates[this.moduleDates.length - 1].endDate,
+        moduleDates: moduleDates,
         groups: groups.map(g => ({id: g}))
       };
 
       this.updateCourse(ret).then(x => {
-        x.weekDates = x.weekDates.map(({startDate, endDate, ...o}) => ({
+        x.moduleDates = x.moduleDates.map(({startDate, endDate, ...o}) => ({
           ...o,
           startDate: new Date(startDate).toISOString().substr(0, 10),
           endDate: new Date(endDate).toISOString().substr(0, 10)

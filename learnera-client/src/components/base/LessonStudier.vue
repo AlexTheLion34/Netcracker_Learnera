@@ -102,7 +102,7 @@ export default {
     prop: 'lesson',
     event: 'lesson-changed'
   },
-  props: ['lesson', 'courseId', 'weekId', 'hasPrev', 'hasNext', 'notAvailable'],
+  props: ['lesson', 'courseId', 'moduleId', 'hasPrev', 'hasNext', 'notAvailable'],
   data() {
     return {
       panels: [],
@@ -120,19 +120,16 @@ export default {
   beforeMount() {
     if (this.lesson.questions) {
       this.panels = this.questions.map(_ => true);
-      this.questions = this.lesson.questions.map(q => ({
-        ...q,
-        userAttempt: {answer: '', score: 0.0, submitted: false}
-      }));
-
-      this.getLatestUserWeekAttempts({userId: this.currentUser.id, weekId: this.weekId})
-        .then(qas => {
-          qas.forEach(qa => {
-            const idx = this.questions.findIndex(q => q.id === qa.question);
-            this.questions[idx].userAttempt = {...qa, submitted: true};
-          });
-        });
-
+      this.questions = this.lesson.questions.map(q => {
+        if (q.id) {
+          return q;
+        } else {
+          return {
+            ...q,
+            userAttempt: {answer: '', score: 0.0, submitted: false}
+          }
+        }
+      });
       this.answers = this.questions.map(_ => ({}));
     }
   },
@@ -143,7 +140,7 @@ export default {
     }),
     ...mapActions('questionAttempts', {
       scoreAttempts: 'scoreAttempts',
-      getLatestUserWeekAttempts: 'getLatestUserWeekAttempts'
+      getLatestUserModuleAttempts: 'getLatestUserModuleAttempts'
     }),
     doPrev() {
       this.$emit('go-prev');

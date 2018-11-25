@@ -61,8 +61,8 @@ public class QuestionAttemptServiceImpl extends CrudServiceImpl<QuestionAttempt,
     }
 
     @Override
-    public Iterable<QuestionAttempt> findFirstByUserIdWeekId(Long userId, Long weekId) {
-        return questionAttemptRepository.findFirstByUserIdWeekId(userId, weekId);
+    public Iterable<QuestionAttempt> findFirstByUserIdModuleId(Long userId, Long moduleId) {
+        return questionAttemptRepository.findFirstByUserIdModuleId(userId, moduleId);
     }
 
     public QuestionAttemptServiceImpl(QuestionAttemptRepository questionAttemptRepository) {

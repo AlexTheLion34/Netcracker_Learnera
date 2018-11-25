@@ -8,7 +8,7 @@ export const questionAttemptService = {
   ...crudService(apiUrl),
   getByQuestionId,
   scoreAttempts,
-  findLatestUserWeekAttempts,
+  findLatestUserModuleAttempts,
   findAllCourseAttempts
 }
 
@@ -28,12 +28,12 @@ function scoreAttempts(attempts) {
   return axios.post(`${apiUrl}/batch`, attempts, requestOptions).then(handleResponse);
 }
 
-function findLatestUserWeekAttempts(userId, weekId) {
+function findLatestUserModuleAttempts(userId, moduleId) {
   const requestOptions = {
     headers: authHeader()
   };
 
-  return axios.get(`${apiUrl}/user/${userId}/week/${weekId}/latest`, requestOptions).then(handleResponse);
+  return axios.get(`${apiUrl}/user/${userId}/module/${moduleId}/latest`, requestOptions).then(handleResponse);
 }
 
 function findAllCourseAttempts(courseId) {

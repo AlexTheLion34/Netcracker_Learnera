@@ -10,11 +10,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "course_week_dates")
-public class CourseWeekDate implements IdentifiableEntity<CourseWeekDateId> {
+@Table(name = "course_module_dates")
+public class CourseModuleDate implements IdentifiableEntity<CourseModuleDateId> {
 
     @EmbeddedId
-    private CourseWeekDateId id;
+    private CourseModuleDateId id;
 
     @ManyToOne
     @MapsId(value = "course_id")
@@ -24,9 +24,9 @@ public class CourseWeekDate implements IdentifiableEntity<CourseWeekDateId> {
     private Course course;
 
     @ManyToOne
-    @MapsId(value = "week_id")
-    @JoinColumn(name = "week_id")
-    private Week week;
+    @MapsId(value = "module_id")
+    @JoinColumn(name = "module_id")
+    private Module module;
 
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
@@ -36,14 +36,14 @@ public class CourseWeekDate implements IdentifiableEntity<CourseWeekDateId> {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    public CourseWeekDate() {
+    public CourseModuleDate() {
     }
 
-    public CourseWeekDateId getId() {
+    public CourseModuleDateId getId() {
         return id;
     }
 
-    public void setId(CourseWeekDateId id) {
+    public void setId(CourseModuleDateId id) {
         this.id = id;
     }
 
@@ -55,12 +55,12 @@ public class CourseWeekDate implements IdentifiableEntity<CourseWeekDateId> {
         this.course = course;
     }
 
-    public Week getWeek() {
-        return week;
+    public Module getModule() {
+        return module;
     }
 
-    public void setWeek(Week week) {
-        this.week = week;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     public Date getStartDate() {

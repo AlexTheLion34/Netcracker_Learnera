@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.netcracker.learnera.entity.media.Image;
-import com.netcracker.learnera.entity.template.CourseWeekDate;
+import com.netcracker.learnera.entity.template.CourseModuleDate;
 import com.netcracker.learnera.entity.template.Template;
 
 import javax.persistence.*;
@@ -66,7 +66,7 @@ public class Course implements IdentifiableEntity<Long> {
     @OneToMany(mappedBy = "course", fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,
             CascadeType.PERSIST},
             orphanRemoval = true)
-    private List<CourseWeekDate> weekDates = new ArrayList<>();
+    private List<CourseModuleDate> moduleDates = new ArrayList<>();
 
     public Course() {
     }
@@ -160,12 +160,12 @@ public class Course implements IdentifiableEntity<Long> {
         this.groups = groups;
     }
 
-    public List<CourseWeekDate> getWeekDates() {
-        return weekDates;
+    public List<CourseModuleDate> getModuleDates() {
+        return moduleDates;
     }
 
-    public void setWeekDates(List<CourseWeekDate> weekDates) {
-        this.weekDates = weekDates;
+    public void setModuleDates(List<CourseModuleDate> moduleDates) {
+        this.moduleDates = moduleDates;
     }
 
 }

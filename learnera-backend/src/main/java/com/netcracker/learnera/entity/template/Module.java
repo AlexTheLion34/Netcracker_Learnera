@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "weeks")
-public class Week implements IdentifiableEntity<Long> {
+@Table(name = "modules")
+public class Module implements IdentifiableEntity<Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -23,19 +23,19 @@ public class Week implements IdentifiableEntity<Long> {
     @JsonIdentityReference(alwaysAsId=true)
     private Template template;
 
-    @Column(name = "week_number")
-    private Integer weekNumber;
+    @Column(name = "module_number")
+    private Integer moduleNumber;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "week", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "module", orphanRemoval = true, cascade = CascadeType.ALL)
     @OrderBy("ordering asc")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private List<Lesson> lessons;
 
-    public Week() {
+    public Module() {
     }
 
     public Long getId() {
@@ -54,12 +54,12 @@ public class Week implements IdentifiableEntity<Long> {
         this.template = template;
     }
 
-    public Integer getWeekNumber() {
-        return weekNumber;
+    public Integer getModuleNumber() {
+        return moduleNumber;
     }
 
-    public void setWeekNumber(Integer weekNumber) {
-        this.weekNumber = weekNumber;
+    public void setModuleNumber(Integer moduleNumber) {
+        this.moduleNumber = moduleNumber;
     }
 
     public String getName() {

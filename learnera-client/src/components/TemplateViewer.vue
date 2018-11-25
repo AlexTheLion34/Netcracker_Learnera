@@ -47,21 +47,23 @@
         </v-flex>
         <v-flex xs12>
           <v-card>
-            <v-card-title><h3 class="headline mb-0">Weeks</h3></v-card-title>
+            <v-card-title><h3 class="headline mb-0">Modules</h3></v-card-title>
             <v-responsive>
-              <v-tabs color="cyan" dark slider-color="yellow">
-                <template v-for="(week, i) in weeks">
+              <v-tabs v-model="currentModule" color="cyan" dark slider-color="yellow">
+                <template v-for="(module, i) in modules">
                   <v-tab :key="`tab-w-${i}`" ripple>
                     <v-layout row fill-height>
                       <v-flex d-flex align-center="">
-                        <div>
-                          {{ week.name ? week.name : 'Week ' + (week.weekNumber + 1) }}
+                        <v-text-field v-if="!readOnly && !template.completed" v-model="template.modules[i].name"
+                                      :rules="nameRules" style="margin: 0 0 0 0"/>
+                        <div v-else>
+                          {{ module.name ? module.name : 'Module ' + (module.moduleNumber + 1) }}
                         </div>
                       </v-flex>
                       <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
                         <div>
                           <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon 
-                                 @click.stop="removeWeek(i)">
+                                 @click.stop="removeModule(i)">
                             <v-icon color="red darken-4">remove</v-icon>
                           </v-btn>
                         </div>
@@ -72,16 +74,17 @@
                 </template>
                 
                 <v-tooltip v-if="!template.completed && !readOnly" bottom>
-                  <v-btn slot="activator" icon ripple @click.stop="addWeek">
+                  <v-btn slot="activator" icon ripple @click.stop="addModule">
                     <v-icon color="grey lighten-3">add</v-icon>
                   </v-btn>
-                  <span>Add week</span>
+                  <span>Add module</span>
                 </v-tooltip>
 
-                <v-tab-item v-for="(week, i) in weeks" :key="`tab-item-${i}`">
+                <v-tab-item v-for="(module, i) in modules" :key="`tab-item-${i}`">
                   <v-card>
+                    
                     <v-tabs color="teal lighten-1" dark slider-color="yellow">
-                      <template v-for="(lesson, j) in week.lessons">
+                      <template v-for="(lesson, j) in module.lessons">
                         <v-tab :key="`tab-w-${i}-l-${j}`" ripple>
                           <v-layout row fill-height>
                             <v-flex d-flex align-center="">
@@ -92,7 +95,7 @@
                             <v-flex v-if="!template.completed && !readOnly" d-flex align-center>
                               <div>
                                 <v-btn style="margin-right: -5px; margin-left: 5px;" small flat icon
-                                       @click.stop="removeLesson({weekIndex: i, lessonIndex: j})">
+                                       @click.stop="removeLesson({moduleIndex: i, lessonIndex: j})">
                                   <v-icon color="red darken-4">remove</v-icon>
                                 </v-btn>
                               </div>
@@ -110,11 +113,11 @@
                         <span>Add lesson</span>
                       </v-tooltip>
 
-                      <v-tab-item v-for="(lesson, j) in week.lessons"
+                      <v-tab-item v-for="(lesson, j) in module.lessons"
                                   :key="`tab-item-w-${i}-l-${j}`">
                         <v-card flat>
-                          <lesson-editor v-model="template.weeks[i].lessons[j]" :editable="!template.completed && !readOnly" 
-                                         @update:valid="$set(weekValids[i], j, $event)"/>
+                          <lesson-editor v-model="template.modules[i].lessons[j]" :editable="!template.completed && !readOnly"
+                                         @update:valid="$set(moduleValids[i], j, $event)"/>
                         </v-card>
                       </v-tab-item>
                     </v-tabs>
@@ -172,12 +175,13 @@ export default {
   data() {
     return {
       formValid: false,
-      weekValids: [],
+      moduleValids: [],
       nameRules: [
         v => !!v || 'Name is required',
-        v => !!v && v.length <= 25 || 'Name must be less than 25 characters'
+        v => !!v && v.length <= 30 || 'Name must be less than 30 characters'
       ],
       showError: true,
+      currentModule: null,
       template: {
         id: null,
         teacher: null,
@@ -185,7 +189,7 @@ export default {
         description: '',
         completed: false,
         avatar: null,
-        weeks: []
+        modules: []
       },
     };
   },
@@ -204,11 +208,11 @@ export default {
     userId: function() {
       return this.currentUser.id;
     },
-    weeks: function() {
+    modules: function() {
       if (!this.template) {
         return undefined;
       }
-      return this.template.weeks;
+      return this.template.modules;
     },
     teacherName: function() {
       if (!this.teacher) { return ''; }
@@ -218,31 +222,31 @@ export default {
       return this.teacher.email;
     },
     hasError: function() {
-      if (!this.weeks || this.weeks.length === 0) {
-        return 'There should be at least one week';
+      if (!this.modules || this.modules.length === 0) {
+        return 'There should be at least one module';
       }
       if (!this.formValid) {
         return 'Fix all fields';
       }
-      const lessonsPresent = this.weeks.reduce((acc, x) => acc && x.lessons && x.lessons.length > 0, true);
+      const lessonsPresent = this.modules.reduce((acc, x) => acc && x.lessons && x.lessons.length > 0, true);
       if (!lessonsPresent) {
-        return 'There should be at least one lesson in all weeks';
+        return 'There should be at least one lesson in all modules';
       }
 
-      const allWeeksValid = this.weekValids.reduce((acc, x) => acc && x.reduce((acc, y) => acc && y, true), true);
-      if (!allWeeksValid) {
-        return 'One of the weeks is invalid';
+      const allModulesValid = this.moduleValids.reduce((acc, x) => acc && x.reduce((acc, y) => acc && y, true), true);
+      if (!allModulesValid) {
+        return 'One of the modules is invalid';
       }
 
       return '';
     }
   },
   watch: {
-    weeks(val) {
+    modules(val) {
       if (!val) {
         return;
       }
-      this.weekValids = val.map(w => {
+      this.moduleValids = val.map(w => {
         if (!w.lessons) {
           return [];
         }
@@ -274,7 +278,7 @@ export default {
       getTemplate: 'get'
     }),
     ...mapActions('lessons', {
-      getLessonsByWeekId: 'getByWeekId'
+      getLessonsByModuleId: 'getByModuleId'
     }),
     ...mapActions('users', {
       getUser: 'get'
@@ -284,12 +288,12 @@ export default {
       alertSuccess: 'success'
     }),
     transformTemplate() {
-      if (this.template.weeks) {
-        this.template.weeks[0].template = {id: this.template.id};
-        this.template.weeks = this.template.weeks.map(w => {
-          this.getLessonsByWeekId(w.id).then(ls => {
+      if (this.template.modules) {
+        this.template.modules[0].template = {id: this.template.id};
+        this.template.modules = this.template.modules.map(w => {
+          this.getLessonsByModuleId(w.id).then(ls => {
             if (ls) {
-              ls[0].week = {id: w.id}
+              ls[0].module = {id: w.id}
             }
             w.lessons = ls;
           });
@@ -299,13 +303,13 @@ export default {
     },
     transformForPost() {
       this.template.teacher = {id: this.currentUser.id};
-      if (this.template.weeks) {
-        this.template.weeks = this.template.weeks.map(w => {
+      if (this.template.modules) {
+        this.template.modules = this.template.modules.map(w => {
           w.template = null;
 
           if (w.lessons) {
             w.lessons = w.lessons.map(l => {
-              l.week = null;
+              l.module = null;
               l.messages = null;
 
               if (l.questions) {
@@ -363,30 +367,30 @@ export default {
         this.transformTemplate();
       }).catch(e => this.alertError(`Template failed to finalize: ${e.data.message}`));
     },
-    addWeek() {
-      this.template.weeks.push({
+    addModule() {
+      this.template.modules.push({
         template: this.template.id ? {id: this.template.id} : null,
-        weekNumber: this.weeks.length,
-        name: '',
+        moduleNumber: this.modules.length,
+        name: `Module ${this.modules.length + 1}`,
         lessons: []
       });
     },
-    removeWeek(index) {
-      this.template.weeks.splice(index, 1);
+    removeModule(index) {
+      this.template.modules.splice(index, 1);
       let i = 0;
-      this.template.weeks.forEach(w => w.weekNumber = (i++));
+      this.template.modules.forEach(w => w.moduleNumber = (i++));
     },
-    addLesson(weekIndex) {
-      this.weeks[weekIndex].lessons.push({
-        ordering: this.weeks[weekIndex].lessons.length,
+    addLesson(moduleIndex) {
+      this.modules[moduleIndex].lessons.push({
+        ordering: this.modules[moduleIndex].lessons.length,
         lectureText: 'HELLO!',
         type: 'lecture'
       });
     },
-    removeLesson({weekIndex, lessonIndex}) {
-      this.weeks[weekIndex].lessons.splice(lessonIndex, 1);
+    removeLesson({moduleIndex, lessonIndex}) {
+      this.modules[moduleIndex].lessons.splice(lessonIndex, 1);
       let i = 0;
-      this.weeks[weekIndex].lessons.forEach(l => l.ordering = (i++));
+      this.modules[moduleIndex].lessons.forEach(l => l.ordering = (i++));
     }
   },
 }

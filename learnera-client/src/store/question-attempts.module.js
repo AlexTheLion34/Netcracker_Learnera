@@ -36,17 +36,17 @@ const actions = {
         });
     });
   },
-  getLatestUserWeekAttempts({commit}, {userId, weekId}) {
+  getLatestUserModuleAttempts({commit}, {userId, moduleId}) {
     return new Promise((resolve, reject) => {
-      commit('getLatestUserWeekAttemptsRequest', {weekId, userId});
+      commit('getLatestUserModuleAttemptsRequest', {moduleId, userId});
 
-      questionAttemptService.findLatestUserWeekAttempts(userId, weekId)
+      questionAttemptService.findLatestUserModuleAttempts(userId, moduleId)
         .then(questionAttempts => {
-          commit('getLatestUserWeekAttemptsSuccess', questionAttempts);
+          commit('getLatestUserModuleAttemptsSuccess', questionAttempts);
           resolve(questionAttempts);
         })
         .catch(e => {
-          commit('getLatestUserWeekAttemptsFailure', e);
+          commit('getLatestUserModuleAttemptsFailure', e);
           reject(e);
         });
     });
@@ -99,10 +99,10 @@ const mutations = {
   },
   scoreAttemptsFailure(state, e) {
   },
-  getLatestUserWeekAttemptsRequest(state, {weekId, userId}) {
+  getLatestUserModuleAttemptsRequest(state, {moduleId, userId}) {
 
   },
-  getLatestUserWeekAttemptsSuccess(state, questionAttempts) {
+  getLatestUserModuleAttemptsSuccess(state, questionAttempts) {
     questionAttempts.forEach(questionAttempt => {
       const idx = state.items.findIndex(i => i.id === i.id);
       if (idx === -1) {
@@ -112,7 +112,7 @@ const mutations = {
       }
     });
   },
-  getLatestUserWeekAttemptsFailure(state, e) {
+  getLatestUserModuleAttemptsFailure(state, e) {
 
   },
   getAllCourseAttemptsRequest(state, courseId) {

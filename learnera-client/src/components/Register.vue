@@ -23,6 +23,7 @@
               <v-text-field
                 id="name"
                 v-model="name"
+                :rules="nameRules"
                 name="name"
                 label="Name"
                 required
@@ -32,6 +33,7 @@
               <v-text-field
                 id="surname"
                 v-model="surname"
+                :rules="nameRules"
                 name="surname"
                 label="Surname"
                 required
@@ -41,6 +43,7 @@
               <v-text-field
                 id="email"
                 v-model="email"
+                :rules="emailRules"
                 name="email"
                 label="E-mail"
                 type="email"
@@ -95,7 +98,15 @@ export default {
       surname: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => !!v && v.length <= 20 || 'Name must be less than 30 characters'
+      ],
+      emailRules: [
+        v => !!v || 'Email is required',
+        v => !!v && v.length <= 50 || 'Email must be less than 50 characters'
+      ]
     }
   },
   computed: {

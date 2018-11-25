@@ -6,26 +6,26 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class CourseWeekDateId implements Serializable {
+public class CourseModuleDateId implements Serializable {
 
     @Column(name = "course_id")
     private Long courseId;
 
-    @Column(name = "week_id")
-    private Long weekId;
+    @Column(name = "module_id")
+    private Long moduleId;
 
-    public CourseWeekDateId() {
+    public CourseModuleDateId() {
     }
 
-    public CourseWeekDateId(Long courseId, Long weekId) {
+    public CourseModuleDateId(Long courseId, Long moduleId) {
         this.courseId = courseId;
-        this.weekId = weekId;
+        this.moduleId = moduleId;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseId, weekId);
+        return Objects.hash(courseId, moduleId);
     }
 
     @Override
@@ -35,9 +35,9 @@ public class CourseWeekDateId implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        CourseWeekDateId that = (CourseWeekDateId) o;
+        CourseModuleDateId that = (CourseModuleDateId) o;
         return Objects.equals(courseId, that.courseId) &&
-                Objects.equals(weekId, that.weekId);
+                Objects.equals(moduleId, that.moduleId);
     }
 
     public Long getCourseId() {
@@ -48,11 +48,11 @@ public class CourseWeekDateId implements Serializable {
         this.courseId = courseId;
     }
 
-    public Long getWeekId() {
-        return weekId;
+    public Long getModuleId() {
+        return moduleId;
     }
 
-    public void setWeekId(Long weekId) {
-        this.weekId = weekId;
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
     }
 }

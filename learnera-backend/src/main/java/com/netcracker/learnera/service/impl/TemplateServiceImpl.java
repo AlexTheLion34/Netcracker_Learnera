@@ -2,13 +2,11 @@ package com.netcracker.learnera.service.impl;
 
 import com.netcracker.learnera.entity.template.Lesson;
 import com.netcracker.learnera.entity.template.Template;
-import com.netcracker.learnera.entity.template.Week;
+import com.netcracker.learnera.entity.template.Module;
 import com.netcracker.learnera.entity.template.lesson.Assignment;
 import com.netcracker.learnera.entity.template.lesson.MultipleChoiceQuestion;
 import com.netcracker.learnera.entity.template.lesson.MultipleChoiceVariant;
 import com.netcracker.learnera.entity.template.lesson.Question;
-import com.netcracker.learnera.exception.EntityAlreadyExistsException;
-import com.netcracker.learnera.exception.EntityNotFoundException;
 import com.netcracker.learnera.repository.*;
 import com.netcracker.learnera.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class TemplateServiceImpl extends CrudServiceImpl<Template, Long> impleme
     private TemplateRepository templateRepository;
 
     @Autowired
-    private WeekRepository weekRepository;
+    private ModuleRepository moduleRepository;
     @Autowired
     private LessonRepository lessonRepository;
     @Autowired
@@ -37,12 +35,12 @@ public class TemplateServiceImpl extends CrudServiceImpl<Template, Long> impleme
 
     @Override
     protected void forwardReferences(Template template) {
-        if (template.getWeeks() != null) {
-            for (Week week : template.getWeeks()) {
-                week.setTemplate(template);
+        if (template.getModules() != null) {
+            for (Module module : template.getModules()) {
+                module.setTemplate(template);
 
-                for (Lesson lesson : week.getLessons()) {
-                    lesson.setWeek(week);
+                for (Lesson lesson : module.getLessons()) {
+                    lesson.setModule(module);
 
                     if (lesson instanceof Assignment) {
                         Assignment assignment = (Assignment) lesson;

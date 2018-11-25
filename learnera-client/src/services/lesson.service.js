@@ -6,13 +6,13 @@ const apiUrl = '/api/lessons'
 
 export const lessonService = {
   ...crudService(apiUrl),
-  getByWeekId,
+  getByModuleId,
 }
 
-function getByWeekId(id) {
+function getByModuleId(id) {
   const requestOptions = {
     headers: authHeader()
   };
 
-  return axios.get(`${apiUrl}/week/${id}`, requestOptions).then(handleResponse);
+  return axios.get(`${apiUrl}/module/${id}`, requestOptions).then(handleResponse);
 }

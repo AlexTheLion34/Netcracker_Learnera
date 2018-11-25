@@ -40,8 +40,8 @@ public class Template implements IdentifiableEntity<Long> {
     private Image avatar;
 
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("week_number asc")
-    private List<Week> weeks = new ArrayList<>();
+    @OrderBy("module_number asc")
+    private List<Module> modules = new ArrayList<>();
 
     public Template() {
     }
@@ -95,11 +95,11 @@ public class Template implements IdentifiableEntity<Long> {
         this.avatar = avatar;
     }
 
-    public List<Week> getWeeks() {
-        return weeks;
+    public List<Module> getModules() {
+        return modules;
     }
 
-    public void setWeeks(List<Week> weeks) {
-        this.weeks = weeks;
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
     }
 }

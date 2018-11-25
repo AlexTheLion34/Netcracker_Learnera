@@ -20,9 +20,9 @@ public class LessonController extends BasicController<Lesson, Long> {
         this.lessonService = lessonService;
     }
 
-    @GetMapping("/week/{id}")
-    public ResponseEntity<Iterable<Lesson>> findAllByWeekId(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(lessonService.findAllByWeekId(id), HttpStatus.OK);
+    @GetMapping("/module/{id}")
+    public ResponseEntity<Iterable<Lesson>> findAllByModuleId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(lessonService.findAllByModuleId(id), HttpStatus.OK);
     }
 
 }

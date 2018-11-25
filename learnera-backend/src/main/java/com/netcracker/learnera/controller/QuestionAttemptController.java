@@ -27,11 +27,11 @@ public class QuestionAttemptController extends BasicController<QuestionAttempt, 
         return new ResponseEntity<>(questionAttemptService.scoreAllAttempts(attempts), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{userId}/week/{weekId}/latest")
-    public ResponseEntity<Iterable<QuestionAttempt>> findLatestUserWeekAttempts(
-            @PathVariable("userId") Long userId, @PathVariable("weekId") Long weekId
+    @GetMapping("/user/{userId}/module/{moduleId}/latest")
+    public ResponseEntity<Iterable<QuestionAttempt>> findLatestUserModuleAttempts(
+            @PathVariable("userId") Long userId, @PathVariable("moduleId") Long moduleId
     ) {
-        return new ResponseEntity<>(questionAttemptService.findFirstByUserIdWeekId(userId, weekId), HttpStatus.OK);
+        return new ResponseEntity<>(questionAttemptService.findFirstByUserIdModuleId(userId, moduleId), HttpStatus.OK);
     }
 
     @GetMapping("/course/{courseId}")

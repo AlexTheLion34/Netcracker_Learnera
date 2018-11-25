@@ -21,15 +21,15 @@
             <v-card-title><h3 class="headline mb-0">Deadlines</h3></v-card-title>
             <v-responsive>
               <v-layout column>
-                <template v-for="weekDateElem in weekDateElems">
-                  <v-layout :key="weekDateElem.week.id" row>
+                <template v-for="moduleDateElem in moduleDateElems">
+                  <v-layout :key="moduleDateElem.module.id" row>
                     <v-flex d-flex justify-center align-center xs2 style="margin: 0 0 0 0.5em">
-                      <v-chip disabled>{{ weekDateElem.week.name || 'Week ' + weekDateElem.week.weekNumber }}</v-chip>
+                      <v-chip disabled>{{ moduleDateElem.module.name || 'Module ' + moduleDateElem.module.moduleNumber }}</v-chip>
                     </v-flex>
                     <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                       <v-menu
                         :close-on-content-click="false"
-                        v-model="weekDateElem.startMenu"
+                        v-model="moduleDateElem.startMenu"
                         :nudge-right="40"
                         lazy
                         transition="scale-transition"
@@ -38,17 +38,17 @@
                       >
                         <v-text-field
                           slot="activator"
-                          v-model="weekDateElem.startDate"
+                          v-model="moduleDateElem.startDate"
                           label="Start date"
                           readonly/>
-                        <v-date-picker v-model="weekDateElem.startDate" :first-day-of-week="1"
-                                       @input="weekDateElem.startMenu = false"/>
+                        <v-date-picker v-model="moduleDateElem.startDate" :first-day-of-module="1"
+                                       @input="moduleDateElem.startMenu = false"/>
                       </v-menu>
                     </v-flex>
                     <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                       <v-menu
                         :close-on-content-click="false"
-                        v-model="weekDateElem.endMenu"
+                        v-model="moduleDateElem.endMenu"
                         :nudge-right="40"
                         lazy
                         transition="scale-transition"
@@ -57,11 +57,11 @@
                       >
                         <v-text-field
                           slot="activator"
-                          v-model="weekDateElem.endDate"
+                          v-model="moduleDateElem.endDate"
                           label="End date"
                           readonly/>
-                        <v-date-picker v-model="weekDateElem.endDate" :first-day-of-week="1" 
-                                       @input="weekDateElem.endMenu = false"/>
+                        <v-date-picker v-model="moduleDateElem.endDate" :first-day-of-module="1"
+                                       @input="moduleDateElem.endMenu = false"/>
                       </v-menu>
                     </v-flex>
                   </v-layout>
@@ -123,13 +123,13 @@ export default {
       formValid: false,
       nameRules: [
         v => !!v || 'Name is required',
-        v => !!v && v.length < 15 || 'Name must be less than 15 characters'
+        v => !!v && v.length < 30 || 'Name must be less than 30 characters'
       ],
       showError: true,
       selectedTemplate: null,
       courseName: '',
       courseDescription: '',
-      weekDateElems: [],
+      moduleDateElems: [],
       selectedGroups: [],
       GroupList
     };
@@ -157,11 +157,11 @@ export default {
     currentTemplate: function() {
       return this.userTemplates.find(t => t.id === this.selectedTemplate);
     },
-    weeks: function() {
+    modules: function() {
       if (!this.currentTemplate) {
         return undefined;
       }
-      return this.currentTemplate.weeks;
+      return this.currentTemplate.modules;
     },
     hasError: function() {
       if (!this.formValid) {
@@ -176,23 +176,23 @@ export default {
         return 'Select at least one group';
       }
 
-      return this.validateWeekDates();
+      return this.validateModuleDates();
     }
   },
   watch: {                                                                 
-    weeks: function(val) {
+    modules: function(val) {
       if (!val) {
-        this.weekDateElems = [];
+        this.moduleDateElems = [];
         return;
       }
 
       let i = -1;
-      this.weekDateElems = val.map(w => { 
+      this.moduleDateElems = val.map(w => {
         i++;
         return {
-          week: w,
-          startDate: this.weekStart(i).toISOString().substr(0, 10), 
-          endDate: this.weekEnd(i).toISOString().substr(0, 10),
+          module: w,
+          startDate: this.moduleStart(i).toISOString().substr(0, 10),
+          endDate: this.moduleEnd(i).toISOString().substr(0, 10),
           startMenu: false,
           endMenu: false
         };
@@ -224,16 +224,16 @@ export default {
         template: {id: this.currentTemplate.id},
         name: this.courseName,
         description: this.courseDescription,
-        startDate: this.weekDateElems[0].startDate,
-        endDate: this.weekDateElems[this.weekDateElems.length - 1].endDate,
-        weekDates: this.weekDateElems.map(wde => {
-          const {week, startDate, endDate} = wde;
+        startDate: this.moduleDateElems[0].startDate,
+        endDate: this.moduleDateElems[this.moduleDateElems.length - 1].endDate,
+        moduleDates: this.moduleDateElems.map(wde => {
+          const {module, startDate, endDate} = wde;
           return {
             id: {
-              weekId: week.id
+              moduleId: module.id
             },
-            week: {
-              id: week.id
+            module: {
+              id: module.id
             },
             startDate,
             endDate
@@ -256,36 +256,36 @@ export default {
       result.setDate(result.getDate() + days);
       return result;
     },
-    weekStart(index) {
+    moduleStart(index) {
       let currDate = Date.now();
       
       currDate = this.addDays(currDate, 7 * index);
       currDate = this.addDays(currDate, 8 - currDate.getDay());
       return currDate;
     },
-    weekEnd(index) {
+    moduleEnd(index) {
       let currDate = Date.now();
 
       currDate = this.addDays(currDate, 7 * index);
       currDate = this.addDays(currDate, 14 - currDate.getDay());
       return currDate;
     },
-    validateWeekDates() {
-      for (let i = 0; i < this.weekDateElems.length; ++i) {
-        const currWeekDate = this.weekDateElems[i];
+    validateModuleDates() {
+      for (let i = 0; i < this.moduleDateElems.length; ++i) {
+        const currModuleDate = this.moduleDateElems[i];
 
-        if (currWeekDate.startDate >= currWeekDate.endDate) {
-          return `Week #${i + 1} range is incorrect`;
+        if (currModuleDate.startDate >= currModuleDate.endDate) {
+          return `Module #${i + 1} range is incorrect`;
         }
 
         if (i === 0) {
           continue;
         }
 
-        const prevWeekDate = this.weekDateElems[i - 1];
+        const prevModuleDate = this.moduleDateElems[i - 1];
 
-        if (currWeekDate.startDate < prevWeekDate.endDate) {
-          return `Week #${i + 1} cannot start before week #${i} ends`;
+        if (currModuleDate.startDate < prevModuleDate.endDate) {
+          return `Module #${i + 1} cannot start before module #${i} ends`;
         }
       }
       return '';

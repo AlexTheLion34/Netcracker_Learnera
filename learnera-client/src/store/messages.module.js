@@ -11,15 +11,15 @@ export const messages = function(apiUrl) {
     ...crudActions,
     getByDestinationId({commit}, id) {
       return new Promise((resolve, reject) => {
-        commit('getByWeekIdRequest');
+        commit('getByModuleIdRequest');
 
         messageServiceActual.getByDestinationId(id)
           .then(messages => {
-            commit('getByWeekIdSuccess', messages);
+            commit('getByModuleIdSuccess', messages);
             resolve(messages);
           })
           .catch(e => {
-            commit('getByWeekIdFailure', e);
+            commit('getByModuleIdFailure', e);
             reject(e);
           });
       });

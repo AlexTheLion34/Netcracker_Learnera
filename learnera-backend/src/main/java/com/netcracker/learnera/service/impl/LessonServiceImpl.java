@@ -13,8 +13,8 @@ public class LessonServiceImpl extends CrudServiceImpl<Lesson, Long> implements 
     private LessonRepository lessonRepository;
 
     @Override
-    public Iterable<Lesson> findAllByWeekId(Long id) {
-        return lessonRepository.findAllByWeekId(id);
+    public Iterable<Lesson> findAllByModuleId(Long id) {
+        return lessonRepository.findAllByModuleId(id);
     }
 
     public LessonServiceImpl(LessonRepository lessonRepository) {

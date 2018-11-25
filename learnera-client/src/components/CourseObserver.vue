@@ -1,13 +1,13 @@
 <template>
-  <v-tabs v-model="activeWeek" color="cyan" dark slider-color="yellow">
-    <template v-for="(weekDate, i) in weekDates">
-      <v-tab :key="`tab-w-${i}`" :disabled="weekDate.dates.startDate > new Date()" ripple>
+  <v-tabs v-model="activeModule" color="cyan" dark slider-color="yellow">
+    <template v-for="(moduleDate, i) in moduleDates">
+      <v-tab :key="`tab-w-${i}`" :disabled="moduleDate.dates.startDate > new Date()" ripple>
         <v-layout row fill-height>
           <v-flex d-flex align-center>
             <div>
-              {{ weekDate.name ? weekDate.name : 'Week ' + (weekDate.weekNumber + 1) }}
+              {{ moduleDate.name ? moduleDate.name : 'Module ' + (moduleDate.moduleNumber + 1) }}
             </div>
-            <v-chip v-if="isCurrentWeek(weekDate)" disabled small color="blue darken-3" text-color="white">
+            <v-chip v-if="isCurrentModule(moduleDate)" disabled small color="blue darken-3" text-color="white">
               ACTIVE
             </v-chip>
           </v-flex>
@@ -16,10 +16,10 @@
       <v-divider :key="`div-w-${i}`" class="cyan lighten-4" inset vertical/>
     </template>
 
-    <v-tab-item v-for="(weekDate, i) in weekDates" :key="`tab-item-${i}`">
+    <v-tab-item v-for="(moduleDate, i) in moduleDates" :key="`tab-item-${i}`">
       <v-card>
         <v-tabs v-model="activeLessons[i]" color="teal lighten-1" dark slider-color="yellow">
-          <template v-for="(lesson, j) in weekDate.lessons">
+          <template v-for="(lesson, j) in moduleDate.lessons">
             <v-tab v-if="lesson.id" :key="`tab-w-${i}-l-${j}`" ripple>
               <v-layout row fill-height>
                 <v-flex d-flex align-center="">
@@ -33,10 +33,10 @@
                        class="teal lighten-4" inset vertical/>
           </template>
 
-          <v-tab-item v-for="(lesson, j) in weekDate.lessons"
+          <v-tab-item v-for="(lesson, j) in moduleDate.lessons"
                       :key="`tab-item-w-${i}-l-${j}`">
             <v-card v-if="lesson.id" flat>
-              <lesson-observer v-model="course.template.weeks[i].lessons[j]"
+              <lesson-observer v-model="course.template.modules[i].lessons[j]"
                                :students="students"
                                :has-prev="hasPrev(i, j)" :has-next="hasNext(i, j)"
                                @go-prev="goPrev()" @go-next="goNext()"/>
@@ -63,36 +63,36 @@ export default {
   props: ['course'],
   data() {
     return {
-      activeWeek: null,
+      activeModule: null,
       activeLessons: [],
       students: []
     };
   },
   computed: {
     ...mapState('account', ['user']),
-    weeks: function() {
-      if (!this.course || !this.course.template || !this.course.template.weeks) {
+    modules: function() {
+      if (!this.course || !this.course.template || !this.course.template.modules) {
         return [];
       }
-      return this.course.template.weeks;
+      return this.course.template.modules;
     },
-    weekDates: function() {
-      if (!this.course || !this.course.weekDates || !this.weeks) {
+    moduleDates: function() {
+      if (!this.course || !this.course.moduleDates || !this.modules) {
         return [];
       }
-      const ret = this.weeks.map(w => 
+      const ret = this.modules.map(w =>
         ({
           ...w, 
-          dates: this.course.weekDates.find(wd => w.id === wd.id.weekId)
+          dates: this.course.moduleDates.find(wd => w.id === wd.id.moduleId)
         })
       );
       return ret;
     }
   },
   beforeMount() {
-    if (this.weeks) {
-      Promise.all(this.course.template.weeks.map(w => {
-        return this.getLessonsByWeekId(w.id).then(ls => {
+    if (this.modules) {
+      Promise.all(this.course.template.modules.map(w => {
+        return this.getLessonsByModuleId(w.id).then(ls => {
           w.lessons = ls;
           return ls;
         });
@@ -101,7 +101,7 @@ export default {
         .then(students => this.students = students)
         .then(_ => this.getCourseAttempts(this.course.id))
         .then(attempts => {
-          this.course.template.weeks.forEach(w => w.lessons.forEach(l => {
+          this.course.template.modules.forEach(w => w.lessons.forEach(l => {
             if (l.type === 'assignment') {
               l.questions.forEach(q => q.attempts = q.attempts.map(qAttempt => {
                 return attempts.find(attempt => attempt.id === qAttempt);
@@ -110,7 +110,7 @@ export default {
           }));
         }).catch(e => this.alertError(`Failed to fetch course: ${e.data.message}`));
       
-      this.activeLessons = this.weeks.map(_ => 0);
+      this.activeLessons = this.modules.map(_ => 0);
     }
   },
   methods: {
@@ -122,7 +122,7 @@ export default {
       getCourse: 'get',
     }),
     ...mapActions('lessons', {
-      getLessonsByWeekId: 'getByWeekId'
+      getLessonsByModuleId: 'getByModuleId'
     }),
     ...mapActions('users', {
       getUsersByCourseId: 'getByCourseId',
@@ -130,40 +130,40 @@ export default {
     ...mapActions('questionAttempts', {
       getCourseAttempts: 'getAllCourseAttempts'
     }),
-    hasPrev(weekIndex, lessonIndex) {
-      return !(weekIndex === 0 & lessonIndex === 0);
+    hasPrev(moduleIndex, lessonIndex) {
+      return !(moduleIndex === 0 & lessonIndex === 0);
     },
-    hasNext(weekIndex, lessonIndex) {
-      return !(weekIndex === this.weeks.length - 1 && lessonIndex === this.weeks[weekIndex].lessons.length - 1);
+    hasNext(moduleIndex, lessonIndex) {
+      return !(moduleIndex === this.modules.length - 1 && lessonIndex === this.modules[moduleIndex].lessons.length - 1);
     },
     goPrev() {
-      const activeWeek = parseInt(this.activeWeek);
-      const activeLesson = parseInt(this.activeLessons[activeWeek]);
+      const activeModule = parseInt(this.activeModule);
+      const activeLesson = parseInt(this.activeLessons[activeModule]);
       if (activeLesson === 0) {
-        this.activeWeek = activeWeek - 1;
-        this.$set(this.activeLessons, activeWeek - 1, this.weeks[activeWeek - 1].lessons.length - 1); 
+        this.activeModule = activeModule - 1;
+        this.$set(this.activeLessons, activeModule - 1, this.modules[activeModule - 1].lessons.length - 1);
       } else {
-        this.$set(this.activeLessons, activeWeek, activeLesson - 1);
+        this.$set(this.activeLessons, activeModule, activeLesson - 1);
       }
     },
     goNext() {
-      const activeWeek = parseInt(this.activeWeek);
-      const activeLesson = parseInt(this.activeLessons[activeWeek]);
-      if (activeLesson === this.weeks[activeWeek].lessons.length - 1) {
-        this.activeWeek = activeWeek + 1;
-        this.$set(this.activeLessons, activeWeek, 0);
+      const activeModule = parseInt(this.activeModule);
+      const activeLesson = parseInt(this.activeLessons[activeModule]);
+      if (activeLesson === this.modules[activeModule].lessons.length - 1) {
+        this.activeModule = activeModule + 1;
+        this.$set(this.activeLessons, activeModule, 0);
       } else {
-        this.$set(this.activeLessons, activeWeek, activeLesson + 1);
+        this.$set(this.activeLessons, activeModule, activeLesson + 1);
       }
     },
-    isCurrentWeek(weekDate) {
-      return new Date(weekDate.dates.startDate) <= Date.now() && new Date(weekDate.dates.endDate) >= Date.now();
+    isCurrentModule(moduleDate) {
+      return new Date(moduleDate.dates.startDate) <= Date.now() && new Date(moduleDate.dates.endDate) >= Date.now();
     },
-    isLessonDisabled(lesson, weekDate) {
+    isLessonDisabled(lesson, moduleDate) {
       if (lesson.type === "lecture") {
         return false;
       }
-      return !this.isCurrentWeek;
+      return !this.isCurrentModule;
     }
   },
 }

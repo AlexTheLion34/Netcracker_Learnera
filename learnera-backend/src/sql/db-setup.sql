@@ -13,8 +13,8 @@ DROP TABLE IF EXISTS question_attempts;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS lesson_messages;
 DROP TABLE IF EXISTS lessons;
-DROP TABLE IF EXISTS course_week_dates;
-DROP TABLE IF EXISTS weeks;
+DROP TABLE IF EXISTS course_module_dates;
+DROP TABLE IF EXISTS modules;
 
 DROP TABLE IF EXISTS course_groups;
 DROP TABLE IF EXISTS courses;
@@ -128,27 +128,27 @@ CREATE TABLE course_groups (
 );
 --- // COURSES ---
 
---- WEEKS ---
-CREATE TABLE weeks (
+--- MODULES ---
+CREATE TABLE modules (
   id          BIGINT PRIMARY KEY,
   template_id BIGINT  NOT NULL REFERENCES templates (id) ON DELETE CASCADE,
-  week_number INTEGER NOT NULL,
-  name        VARCHAR(15)
+  module_number INTEGER NOT NULL,
+  name        VARCHAR(30)
 );
 
-CREATE TABLE course_week_dates (
+CREATE TABLE course_module_dates (
   course_id  BIGINT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-  week_id    BIGINT NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
+  module_id    BIGINT NOT NULL REFERENCES modules (id) ON DELETE CASCADE,
   start_date DATE   NOT NULL,
   end_date   DATE   NOT NULL,
-  PRIMARY KEY (course_id, week_id)
+  PRIMARY KEY (course_id, module_id)
 );
---- // WEEKS ---
+--- // MODULES ---
 
 --- LESSONS ---
 CREATE TABLE lessons (
   id           BIGINT PRIMARY KEY,
-  week_id      BIGINT      NOT NULL REFERENCES weeks (id) ON DELETE CASCADE,
+  module_id      BIGINT      NOT NULL REFERENCES modules (id) ON DELETE CASCADE,
   name         VARCHAR(30),
   ordering     INTEGER     NOT NULL,
   lecture_text TEXT                 DEFAULT NULL,
@@ -198,9 +198,9 @@ CREATE TABLE question_attempts (
 
 --- VIEWS ---
 -- CREATE VIEW template_lessons AS
---   SELECT l.id, l.week_id, w.template_id, l.lesson_text, l.file_id
+--   SELECT l.id, l.module_id, w.template_id, l.lesson_text, l.file_id
 --   FROM lessons l
---          INNER JOIN weeks w ON l.week_id = w.id;
+--          INNER JOIN modules w ON l.module_id = w.id;
 --
 --
 -- CREATE VIEW certificates AS

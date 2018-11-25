@@ -14,16 +14,16 @@
           <v-responsive>
             <v-data-table
               :headers="[
-                {text: 'Week', value: 'weekName'}, 
+                {text: 'Module', value: 'moduleName'},
                 {text: 'Start Date', value: 'startDate'}, 
                 {text: 'End Date', value: 'endDate'}
               ]"
-              :items="weekDates"
+              :items="moduleDates"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.weekName }}</td>
+                <td>{{ props.item.moduleName }}</td>
                 <td>{{ props.item.startDate }}</td>
                 <td>{{ props.item.endDate }}</td>
               </template>
@@ -55,14 +55,14 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex v-if="isCurrentUserStudent" xs12>
-        <v-btn v-if="course.template.weeks[0]" 
-               :to="{path: `/course/${course.id}/study`, query: {week: currentWeek.id}}" block color="primary" dark>
+        <v-btn v-if="course.template.modules[0]"
+               :to="{path: `/course/${course.id}/study`, query: {module: currentModule.id}}" block color="primary" dark>
           <strong>Continue studying!</strong>
         </v-btn>
       </v-flex>
       <v-flex v-else-if="user.role === 'TEACHER'" xs12>
-        <v-btn v-if="course.template.weeks[0]" 
-               :to="{path: `/course/${course.id}/observe`, query: {week: currentWeek.id}}" block color="primary" dark>
+        <v-btn v-if="course.template.modules[0]"
+               :to="{path: `/course/${course.id}/observe`, query: {module: currentModule.id}}" block color="primary" dark>
           <strong>Take a look at the course!</strong>
         </v-btn>
       </v-flex>
@@ -110,27 +110,27 @@ export default {
       }
       return this.teacher.email;
     },
-    weekDates: function() {
-      if (!this.course || !this.course.weekDates) {
+    moduleDates: function() {
+      if (!this.course || !this.course.moduleDates) {
         return [];
       }
-      const ret = this.course.weekDates.map(wd => {
-        const week = wd.week;
+      const ret = this.course.moduleDates.map(wd => {
+        const module = wd.module;
         return {
-          weekName: week.name || ('Week ' + week.weekNumber),
+          moduleName: module.name || ('Module ' + module.moduleNumber),
           startDate: wd.startDate,
           endDate: wd.endDate
         }
       });
       return ret; 
     },
-    currentWeek: function() {
-      if (!this.course || !this.course.weekDates) {
+    currentModule: function() {
+      if (!this.course || !this.course.moduleDates) {
         return [];
       }
-      const wd = this.course.weekDates.find(wd => new Date(wd.startDate) >= Date.now() && new Date(wd.endDate) <= Date.now());
+      const wd = this.course.moduleDates.find(wd => new Date(wd.startDate) >= Date.now() && new Date(wd.endDate) <= Date.now());
 
-      return wd ? wd.week : this.course.template.weeks[0];
+      return wd ? wd.module : this.course.template.modules[0];
 
     },
     isCurrentUserStudent: function() {

@@ -83,14 +83,14 @@ export default {
       }
       return this.teacher.email;
     },
-    weekDates: function() {
-      if (!this.course || !this.course.weekDates) {
+    moduleDates: function() {
+      if (!this.course || !this.course.moduleDates) {
         return [];
       }
-      const ret = this.course.weekDates.map(wd => {
-        const week = wd.week;
+      const ret = this.course.moduleDates.map(wd => {
+        const module = wd.module;
         return {
-          weekName: week.name || ('Week ' + week.weekNumber),
+          moduleName: module.name || ('Module ' + module.moduleNumber),
           startDate: wd.startDate,
           endDate: wd.endDate
         }

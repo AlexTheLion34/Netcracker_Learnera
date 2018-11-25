@@ -30,10 +30,10 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "week_id")
+    @JoinColumn(name = "module_id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
-    private Week week;
+    private Module module;
 
     @Column(name = "name")
     private String name;
@@ -59,12 +59,12 @@ public abstract class Lesson implements IdentifiableEntity<Long> {
         this.id = id;
     }
 
-    public Week getWeek() {
-        return week;
+    public Module getModule() {
+        return module;
     }
 
-    public void setWeek(Week week) {
-        this.week = week;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     public List<LessonMessage> getMessages() {
