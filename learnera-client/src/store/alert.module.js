@@ -1,4 +1,7 @@
+let id = 2;
+
 const state = {
+  id: 1,
   type: null,
   message: null
 };
@@ -10,21 +13,24 @@ const actions = {
   error({commit}, message) {
     commit('error', message);
   },
-  clear({commit}, message) {
-    commit('success', message);
+  clear({commit}) {
+    commit('clear');
   }
 };
 
 const mutations = {
   success(state, message) {
-    state.type = 'alert-success';
+    state.id = id++;
+    state.type = 'success';
     state.message = message;
   },
   error(state, message) {
-    state.type = 'alert-danger';
+    state.id = id++;
+    state.type = 'error';
     state.message = message;
   },
   clear(state) {
+    state.id = id++;
     state.type = null;
     state.message = null;
   }

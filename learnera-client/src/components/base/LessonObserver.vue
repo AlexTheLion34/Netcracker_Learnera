@@ -69,7 +69,7 @@
                   {{ props.item.finished }}
                 </td>
                 <td>
-                  {{ props.item.points }}
+                  {{ '' + props.item.points + ' / ' + totalPoints }}
                 </td>
               </template>
             </v-data-table>   
@@ -111,6 +111,13 @@ export default {
     questions: function() {
       return this.lesson.questions;
     },
+    totalPoints: function() {
+      if (this.questions && this.questions.length > 0) {
+        return this.questions.reduce((acc, q) => q.points + acc, 0);
+      } else {
+        return 0;
+      }
+    },
     studentsMapped: function() {
       if (!this.questions) { 
         return [] 
@@ -126,7 +133,7 @@ export default {
           finished = !!this.questions[0].attempts.find(a => a.student === student.id);
 
           if (finished) {
-            studentAttempts = this.lesson.questions.map(q => q.attempts.find(attempt => attempt.student === student.id))
+            studentAttempts = this.lesson.questions.map(q => q.attempts.find(attempt => attempt.student === student.id));
           }
         }
 
@@ -134,7 +141,7 @@ export default {
           name,
           email,
           finished: finished,
-          points: studentAttempts.reduce((acc, attempt) => acc + attempt.score, 0)
+          points: studentAttempts.reduce((acc, attempt) => acc + attempt.score, 0),
         };
       });
     }

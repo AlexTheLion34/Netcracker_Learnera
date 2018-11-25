@@ -20,13 +20,13 @@
                 </span>
               </v-flex>
               <div v-if="user.role === 'TEACHER'">
-                <v-chip small color="orange" text-color="white">
+                <v-chip disabled small color="orange" text-color="white">
                   Teacher
                   <v-icon right>star</v-icon>
                 </v-chip>
               </div>
               <div v-else-if="user.role === 'STUDENT'">
-                <v-chip small color="blue" text-color="white">
+                <v-chip disabled small color="blue" text-color="white">
                   Student
                   <v-icon right>person</v-icon>
                 </v-chip>

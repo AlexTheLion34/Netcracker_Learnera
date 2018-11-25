@@ -137,6 +137,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('questionAttempts', {
       scoreAttempts: 'scoreAttempts',
       getLatestUserWeekAttempts: 'getLatestUserWeekAttempts'
@@ -162,11 +166,12 @@ export default {
       }
 
       this.scoreAttempts(ret).then(attempts => {
+        this.alertSuccess('Attempt scored successfully');
         attempts.forEach(attempt => {
           const idx = this.questions.findIndex(q => q.id === attempt.question);
           this.questions[idx].userAttempt = {...attempt, submitted: true};
         });
-      })
+      }).catch(e => this.alertError(`Attempt failed to be scored: ${e.data.message}`));
     },
     questionPassed(question) {
       if (!question.userAttempt.submitted) {

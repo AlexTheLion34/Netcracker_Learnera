@@ -15,7 +15,7 @@
               <template v-for="(weekDate, i) in weekDates">
                 <v-layout :key="weekDate.week.id" row>
                   <v-flex d-flex justify-center align-center xs2 style="margin: 0 0 0 0.5em">
-                    <v-chip>{{ weekDate.week.name || 'Week ' + weekDate.week.weekNumber }}</v-chip>
+                    <v-chip disabled>{{ weekDate.week.name || 'Week ' + weekDate.week.weekNumber }}</v-chip>
                   </v-flex>
                   <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                     <v-menu
@@ -61,7 +61,7 @@
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex xs12>
-        <v-btn v-if="course.template.weeks[0]" @click="saveCourse" block color="primary" dark>
+        <v-btn v-if="course.template.weeks[0]" block color="primary" dark @click="saveCourse">
           <strong v-if="teacher && teacher.id === user.id">Save course</strong>
         </v-btn>
       </v-flex>
@@ -139,6 +139,10 @@ export default {
     ...mapActions('users', {
       getUser: 'get'
     }),
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     saveCourse() {
       let {template, startDate, endDate, weekDates, groups, ...other} = this.course;
       if (weekDates) {
@@ -165,8 +169,9 @@ export default {
           startDate: new Date(startDate).toISOString().substr(0, 10),
           endDate: new Date(endDate).toISOString().substr(0, 10)
         }));
+        this.alertSuccess('Course updated successfully');
         this.$emit('course-changed', x);
-      });
+      }).catch(e => `Course failed to be updated: ${e.data.message}`);
     }
   },
 }

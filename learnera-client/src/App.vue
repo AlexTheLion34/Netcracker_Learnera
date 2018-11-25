@@ -18,7 +18,6 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-
     <v-toolbar app>
       <span class="hidden-sm-and-up">
         <v-toolbar-side-icon @click="sidebar = !sidebar" />
@@ -50,10 +49,23 @@
       </v-toolbar-items>
     </v-toolbar>
 
+    <v-snackbar v-model="alertShown" :timeout="0" style="margin: 0px" top>
+      <v-icon :color="alert.type === 'success' ? 'blue' : 'red darken-3'">
+        {{ alert.type === 'success' ? 'info' : 'error' }}
+      </v-icon>
+      <span style="margin: 0 0 0 1em">{{ alert.message }}</span>
+      <v-btn
+        color="pink"
+        flat
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
+
     <v-content>
       <router-view/>
     </v-content>
-
   </v-app>
 </template>
 
@@ -64,7 +76,9 @@ export default {
   data() {
     return {
       appTitle: "LEARNERA",
-      sidebar: false
+      sidebar: false,
+      alertShown: false,
+      prevTimeout: 0
     };
   },
   computed: {
@@ -86,6 +100,26 @@ export default {
         baseItems.splice(1, 0, {title: "Add student", path: "/create", icon: "add"})
       } 
       return baseItems  
+    },
+    alertId: function() {
+      return this.alert.id;
+    }
+  },
+  watch: {
+    alertId: function(id) {
+      let val = this.alert.message;
+      if (!val) {
+        return;
+      }
+      this.alertShown = true;
+
+      if (this.prevTimeout) {
+        clearTimeout(this.prevTimeout);
+      }
+      this.prevTimeout = setTimeout(_ => {
+        this.clearAlert();
+        this.alertShown = false;
+      }, 6000);
     }
   },
   methods: {

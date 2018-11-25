@@ -11,11 +11,10 @@
             <v-layout justify-space-between column fill-height>
               <v-flex d-flex justify-center align-center class="head">{{ course.name ? course.name : '' }}</v-flex>
               <v-flex d-flex justify-center align-center>
-                <v-chip align color="green" text-color="white">
+                <v-chip align color="green" text-color="white" disabled>
                   <v-avatar class="green darken-4">{{ course.groups.length }}</v-avatar>
                   Group{{ course.groups.length > 1 ? 's' : '' }}
                 </v-chip>
-                <!-- TODO: ADD MENU POPUP TO SELECT GROUP TO GO TO -->
               </v-flex>
             </v-layout>
           </div>
@@ -110,9 +109,14 @@ export default {
     }
   },
   beforeMount() {
-    this.getCourse(this.courseId).then(c => this.course = c);
+    this.getCourse(this.courseId).then(c => this.course = c)
+      .catch(e => this.alertError(`Failed to get course: ${e.data.message}`));
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('courses', {
       getCourse: 'get'
     }),

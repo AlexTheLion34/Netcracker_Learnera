@@ -6,7 +6,7 @@ export default function(service) {
       items: []
     },
     actions: {
-      create({commit}, item) {
+      create({commit, dispatch}, item) {
         return new Promise((resolve, reject) => {
           commit('createRequest', item);
     

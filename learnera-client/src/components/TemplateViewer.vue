@@ -30,17 +30,12 @@
                 </v-layout>
                 <v-flex>
                   <v-layout justify-space-between row>
-                    <v-flex fill-height="" xs2>
-                      <v-btn v-if="!readOnly" small>
-                        Update avatar
-                      </v-btn>
-                    </v-flex>
-                    <v-spacer/>
-                    <v-flex fill-height xs2 justify-end>
-                      <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" small text-color="white">
+                    <v-flex fill-height xs2>
+                      <v-chip :color="(template.completed ? 'orange' : 'green') + ' darken-3'" small text-color="white" disabled>
                         {{ template.completed ? 'FINAL' : 'EDITABLE' }}
                       </v-chip>
                     </v-flex>
+                    <v-spacer/>
                   </v-layout>
                 </v-flex>
               </v-layout>
@@ -284,6 +279,10 @@ export default {
     ...mapActions('users', {
       getUser: 'get'
     }),
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     transformTemplate() {
       if (this.template.weeks) {
         this.template.weeks[0].template = {id: this.template.id};
@@ -337,19 +336,20 @@ export default {
 
         this.updateTemplate(this.template).then(template => {
           this.$emit('template-updated', template);
-
+          this.alertSuccess('Template updated successfully');
           this.template = template;
           this.transformTemplate();
-        }).catch(e => console.error);
+        }).catch(e => this.alertError(`Template failed to update: ${e.data.message}`));
       } else {
         this.createTemplate(this.template).then(template => {
           this.$emit('template-created', template);
-          // TODO: IMPLEMENT NOTIFICATION
+         
+          this.alertSuccess('Template created successfully');
 
           this.template = template;
           this.transformTemplate();
           this.$router.push(`/template/${template.id}/edit`);
-        }).catch(e => console.error);
+        }).catch(e => this.alertError(`Template failed to create: ${e.data.message}`));
       }
     },
     onFinalize() {
@@ -357,10 +357,11 @@ export default {
       this.template.completed = true;
       this.updateTemplate(this.template).then(template => {
         this.$emit('template-finalized', template);
+        this.alertSuccess('Template finalized successfully');
 
         this.template = template;
         this.transformTemplate();
-      })
+      }).catch(e => this.alertError(`Template failed to finalize: ${e.data.message}`));
     },
     addWeek() {
       this.template.weeks.push({

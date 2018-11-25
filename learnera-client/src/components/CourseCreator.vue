@@ -13,16 +13,6 @@
         <v-flex xs12>
           <v-text-field v-model="courseName" :rules="nameRules" label="Course name" required/>
         </v-flex>
-        <v-flex xs12>
-          <v-layout row>
-            <v-flex>
-              <v-avatar size="100" color="teal">
-                <span>TODO</span>
-              </v-avatar>
-              <v-btn>Load avatar</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-flex>
         <v-flex style="margin: 15px 0 0 0">
           <v-textarea v-model="courseDescription" box label="Description" auto-grow/>
         </v-flex>
@@ -34,7 +24,7 @@
                 <template v-for="weekDateElem in weekDateElems">
                   <v-layout :key="weekDateElem.week.id" row>
                     <v-flex d-flex justify-center align-center xs2 style="margin: 0 0 0 0.5em">
-                      <v-chip>{{ weekDateElem.week.name || 'Week ' + weekDateElem.week.weekNumber }}</v-chip>
+                      <v-chip disabled>{{ weekDateElem.week.name || 'Week ' + weekDateElem.week.weekNumber }}</v-chip>
                     </v-flex>
                     <v-flex d-flex justify-center align-center style="margin: 0 1em 0 1em">
                       <v-menu
@@ -225,6 +215,10 @@ export default {
     ...mapActions('users', {
       getUser: 'get'
     }),
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     onCourseCreate() {
       const course = {
         template: {id: this.currentTemplate.id},
@@ -253,9 +247,9 @@ export default {
       };
 
       this.createCourse(course).then(course => {
-        // TODO: IMPLEMENT NOTIFICATION
+        this.alertSuccess('Course created');
         router.push(`/course/${course.id}`);
-      }).catch(e => console.error);
+      }).catch(e => this.alertError(`Course failed to create: ${e.data.message}`));
     },
     addDays(date, days) {
       var result = new Date(date);

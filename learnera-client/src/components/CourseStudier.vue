@@ -97,13 +97,17 @@ export default {
             ls[0].week = {id: w.id}
           }
           w.lessons = ls;
-        });
+        }).catch(e => this.alertError(`Failed to get lessons: ${e.data.message}`));
         return w;
       });
       this.activeLessons = this.weeks.map(_ => 0);
     }
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('courses', {
       getCourse: 'get',
     }),
@@ -143,7 +147,7 @@ export default {
       if (lesson.type === "lecture") {
         return false;
       }
-      return !this.isCurrentWeek;
+      return !this.isCurrentWeek(weekDate);
     }
   },
 }

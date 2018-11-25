@@ -22,7 +22,8 @@ const actions = {
           router.push('/');
         })
       .catch(error => {
-
+        dispatch('alert/error', error.response.status === 500 ? 'Could not connect' : 'Invalid email or password', 
+          {root: true});
       });
   },
   logout({commit}) {
@@ -44,7 +45,7 @@ const actions = {
         },
         error => {
           commit('registerFailure', error);
-          dispatch('alert/error', error, {root: true});
+          dispatch('alert/error', error.response.status === 500 ? 'Could not connect' : error.response.data.message, {root: true});
         }
       );
   },

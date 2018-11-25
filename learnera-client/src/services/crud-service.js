@@ -28,8 +28,6 @@ export default function(apiUrl) {
       const requestOptions = {
         headers: authHeader()
       };
-
-      console.log('Header: ', requestOptions.headers);
     
       return axios.get(`${apiUrl}/${id}`, requestOptions).then(handleResponse);
     },

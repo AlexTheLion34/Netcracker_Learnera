@@ -108,12 +108,16 @@ export default {
               }));
             }
           }));
-        });
+        }).catch(e => this.alertError(`Failed to fetch course: ${e.data.message}`));
       
       this.activeLessons = this.weeks.map(_ => 0);
     }
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('courses', {
       getCourse: 'get',
     }),

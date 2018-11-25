@@ -52,13 +52,17 @@ export default {
   },
   watch: {
     userIdStr: function() { 
-      this.getUser(this.userId);
+      this.getUser(this.userId).catch(e => this.alertError(`Failed to fetch current user: ${e.data.message}`));
     }
   },
   created() {
-    this.getUser(this.userId);
+    this.getUser(this.userId).catch(e => this.alertError(`Failed to fetch current user: ${e.data.message}`));
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('users', {
       getUser: 'get'
     }),

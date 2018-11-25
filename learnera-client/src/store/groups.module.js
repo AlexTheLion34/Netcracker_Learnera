@@ -23,7 +23,7 @@ const actions = {
   },
   getByCourseId({commit}, id) {
     return new Promise((resolve, reject) => {
-      commit('getByCourseIdRequest');
+      commit('getByCourseIdRequest', id);
 
       groupService.getByCourseId(id)
         .then(groups => {

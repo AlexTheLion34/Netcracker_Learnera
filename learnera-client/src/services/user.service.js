@@ -11,7 +11,6 @@ export const userService = {
   getByStudyGroupId,
   getByCourseId,
   getAllStudents,
-  create,
   ...crudService(apiUrl)
 };
 
@@ -46,9 +45,6 @@ function login(email, password) {
       data.password = password;
       localStorage.setItem('user', JSON.stringify(data));
       return data;
-    })
-    .catch(error => {
-      this.errors.push(error);
     });
 }
 
@@ -57,17 +53,7 @@ function logout() {
   localStorage.removeItem('user');
 }
 
-function create(user) {
-  console.log(user)
-  return axios.post('/api/auth', user, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then(handleResponse);
-}
-
 function register(user) {
-  console.log(user)
   return axios.post('/api/auth', user, {
     headers: {
       'Content-Type': 'application/json'

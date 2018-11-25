@@ -32,6 +32,28 @@
         </v-card>
       </v-flex>
       <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
+      <v-flex xs12>
+        <v-card>
+          <v-card-title><h3 class="headline mb-0">Groups</h3></v-card-title>
+          <v-responsive>
+            <v-data-table
+              :headers="[
+                {text: 'Name', value: 'name'}, 
+                {text: 'Students', value: 'studentCount'}, 
+              ]"
+              :items="groupsMapped"
+              hide-actions
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.name }}</td>
+                <td>{{ props.item.studentCount }}</td>
+              </template>
+            </v-data-table>
+          </v-responsive>
+        </v-card>
+      </v-flex>
+      <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex v-if="isCurrentUserStudent" xs12>
         <v-btn v-if="course.template.weeks[0]" 
                :to="{path: `/course/${course.id}/study`, query: {week: currentWeek.id}}" block color="primary" dark>
@@ -43,13 +65,6 @@
                :to="{path: `/course/${course.id}/observe`, query: {week: currentWeek.id}}" block color="primary" dark>
           <strong>Take a look at the course!</strong>
         </v-btn>
-      </v-flex>
-      <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title><h3 class="headline mb-0">Messages</h3></v-card-title>
-          TODO
-        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -128,24 +143,44 @@ export default {
       }
       
       return this.currentUser.studyGroups.find(x => x.id === this.course.id) !== null;
+    },
+    groupsMapped: function() {
+      if (!this.course || !this.course.groups || !this.course.groups[0] || !this.course.groups[0].id) {
+        return [];
+      }
+
+      return this.course.groups.map(g => ({name: g.name, studentCount: g.students.length}));
     }
   },
   watch: {
     course: function(val) {
-      if (val) {
-        this.getUser(val.template.teacher);
+      if (val && val.id) {
+        this.getUser(val.template.teacher).catch(e => this.alertError(`Failed to fetch teacher: ${e.data.message}`));
+        this.getGroupsByCourseId(val.id).catch(e => this.alertError(`Failed to fetch groups: ${e.data.message}`));
       }
     }
   },
   beforeMount() {
-    this.getUser(this.user.id);
+    this.getUser(this.user.id).catch(e => this.alertError(`Failed to fetch current user: ${e.data.message}`));
+    if (this.course && this.course.id) {
+      this.getGroupsByCourseId(this.course.id).then(groups => {
+        this.course.groups = groups;
+      }).catch(e => this.alertError(`Failed to fetch groups: ${e.data.message}`));
+    }
   },
   methods: {
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     ...mapActions('courses', {
       getCourse: 'get'
     }),
     ...mapActions('users', {
       getUser: 'get'
+    }),
+    ...mapActions('groups', {
+      getGroupsByCourseId: 'getByCourseId'
     })
   },
 }
