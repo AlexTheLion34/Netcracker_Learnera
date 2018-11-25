@@ -53,7 +53,7 @@
           </v-responsive>
         </v-card>
       </v-flex>
-      <v-flex xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
+      <v-flex v-if="isCurrentUserStudent || user.role === 'TEACHER'" xs12><v-divider style="margin: 1em 0 1em 0;"/></v-flex>
       <v-flex v-if="isCurrentUserStudent" xs12>
         <v-btn v-if="course.template.modules[0]"
                :to="{path: `/course/${course.id}/study`, query: {module: currentModule.id}}" block color="primary" dark>
@@ -142,7 +142,7 @@ export default {
         return false;
       }
       
-      return this.currentUser.studyGroups.find(x => x.id === this.course.id) !== null;
+      return this.currentUser.studyGroups.findIndex(group => group.courses.findIndex(c => c.id === this.course.id) !== -1) !== -1;
     },
     groupsMapped: function() {
       if (!this.course || !this.course.groups || !this.course.groups[0] || !this.course.groups[0].id) {
