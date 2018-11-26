@@ -97,7 +97,7 @@ export default {
           {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
         ]
       if (this.loggedIn && this.user.role == "TEACHER") {
-        baseItems.splice(1, 0, {title: "Add student", path: "/create", icon: "add"})
+        baseItems.splice(1, 0, {title: "Students", path: "/create", icon: "edit"})
       } 
       return baseItems  
     },

@@ -52,11 +52,10 @@ const actions = {
   create({dispatch, commit}, user, creatorId) {
     commit('registerRequest', user);
     
-    userService.create(user)
+    userService.register(user)
       .then(
         user => {
           commit('createSuccess', user);
-          router.push('/create');
           setTimeout(() => {
             // display success message after route change completes
             dispatch('alert/success', 'Creation successful', {root: true});
@@ -100,8 +99,9 @@ const mutations = {
     console.log(error);
   },
   createSuccess(state) {
+    let currentUser = JSON.parse(localStorage.getItem('user'));
     state.status = {loggedIn: true};
-    state.user = user;
+    state.user = currentUser;
   },
   createFailure(state, error) {
     state.status = {};

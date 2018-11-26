@@ -89,9 +89,13 @@ const mutations = {
   },
   getAllStudentsSuccess(state, students) {
     console.log('Got students: ', students);
-    state.items = []
     students.forEach(student => {
-      state.items.push(student);
+      const idx = state.items.findIndex(i => i.id === student.id);
+      if (idx === -1) {
+        state.items.push(student);
+      } else {
+        Vue.set(state.items, idx, student);
+      }
     });
   },
   getAllStudentsFailure(state, id) {
