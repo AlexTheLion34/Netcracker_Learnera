@@ -1,62 +1,52 @@
 <template>
-  <v-container fluid>
-    <v-layout 
-      row 
-      wrap
-    >
-    <v-alert
-      v-model="alert"
-      dismissible
-      :outline="true"
-      type="success"
-      transition="scale-transition"
-    >
-      Successfully added a new student.
-    </v-alert>
-      <v-flex 
-        xs12 
-        class="text-xs-center" 
-        mt-5
-      >
-        <h1>New Student</h1>
-      </v-flex>
-      <v-flex 
-        xs12 
-        sm6
-        offset-sm3 
-        mt-3
-      >
-        <form @submit.prevent="onSignup">
+  <v-container>
+    <v-layout row>
+      <v-flex xs6 mt-5>
+        <v-layout column>
+          <v-flex xs12 class="text-xs-center">
+            <h6 class="title">New Student</h6>
+          </v-flex>
+          <v-flex mt-2>
+            <form @submit.prevent="onSignup">
           <v-layout column>
             <v-flex>
               <v-text-field
                 id="name"
                 v-model="name"
-                :rules="nameRules"
                 name="name"
                 label="Name"
-                required
+                required 
+                oninvalid="this.setCustomValidity('Enter name!')"
+                oninput="setCustomValidity('')"
+                height = 40
+                outline
               />
             </v-flex>
             <v-flex>
               <v-text-field
                 id="surname"
                 v-model="surname"
-                :rules="nameRules"
                 name="surname"
                 label="Surname"
-                required
+                required 
+                oninvalid="this.setCustomValidity('Enter surname!')"
+                oninput="setCustomValidity('')"
+                height = 40
+                outline
               />
             </v-flex>
             <v-flex>
               <v-text-field
                 id="email"
                 v-model="email"
-                :rules="emailRules"
                 name="email"
                 label="E-mail"
                 type="email"
-                required
+                required 
+                oninvalid="this.setCustomValidity('Enter email!')"
+                oninput="setCustomValidity('')"
+                height = 40
+                outline
               />
             </v-flex>
             <v-flex>
@@ -66,35 +56,76 @@
                 name="password"
                 label="Password"
                 type="password"
-                required
+                required 
+                oninvalid="this.setCustomValidity('Enter password!')"
+                oninput="setCustomValidity('')"
+                height = 40
+                outline
               />
             </v-flex>
             <v-flex>
               <v-text-field
                 id="confirmPassword"
                 v-model="confirmPassword"
-                :rules="[comparePasswords]"
                 name="confirmPassword"
                 label="Confirm Password"
+                :rules="[comparePasswords]"
                 type="password"
                 required 
+                oninvalid="this.setCustomValidity('Enter password again!')"
+                oninput="setCustomValidity('')"
+                height = 40
+                outline
               />
             </v-flex>
             <v-flex 
               class="text-xs-center" 
-              mt-5
             >
-              <v-btn 
-                color="primary" 
+              <v-btn  
                 type="submit"
               >Add</v-btn>
             </v-flex>
           </v-layout>
         </form>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-divider class="mx-3" vertical/>
+      <v-flex xs6 mt-5>
+        <v-layout column="">
+          <v-flex xs12 class="text-xs-center">
+            <h6 class="title">Students</h6>
+          </v-flex>
+          <v-flex mt-2>
+            <v-data-table 
+              :headers="[
+                {text: 'Name', value: 'info.firstName'}, 
+                {text: 'Email', value: 'email'},
+                
+              ]"
+              :light="true"
+              :items="students"
+              hide-actions
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td>
+                  <v-avatar color="teal"  size="36px">
+                    <img v-if="props.item.avatar" :src="props.item.avatar">
+                    <span v-else class="white--text headline">{{props.item.info.firstName[0]}}</span>
+                  </v-avatar>
+                  {{props.item.info.firstName + ' ' + props.item.info.lastName}}
+                  </td>
+                  <td>{{props.item.email}}</td>
+              </template>
+            </v-data-table>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
+
 
 <script>
 import {mapActions, mapState} from 'vuex'
@@ -108,15 +139,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => !!v && v.length <= 20 || 'Name must be less than 30 characters'
-      ],
-      emailRules: [
-        v => !!v || 'Email is required',
-        v => !!v && v.length <= 50 || 'Email must be less than 50 characters'
-      ],
-      alert: false
+      created: Boolean,
     }
   },
   computed: {
@@ -126,9 +149,30 @@ export default {
     ...mapState('account', {
       currentUser: state => state.user
     }),
+    ...mapState('users', {
+      students: function(state) {
+        const ret = state.items.filter(s => s.role === 'STUDENT')
+        return ret
+    },
+    }),
+  },
+  watch: {
+    created: function(val) {
+      if (val) {
+        this.getAllStudents();
+      }
+      this.created = false
+    }
+  },
+  beforeMount() {
+    this.getAllStudents()
+    this.created = false
   },
   methods: {
     ...mapActions('account', ['create']),
+    ...mapActions('users', {
+      getAllStudents: 'getAllStudents',
+    }),
     onSignup() {
       const user = {
         email: this.email,
@@ -140,7 +184,7 @@ export default {
         }
       }
       this.create(user, this.currentUser.id);
-      this.alert = true
+      this.created = true
       this.name = ""
       this.surname = ""
       this.email = ""
