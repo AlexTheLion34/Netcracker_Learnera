@@ -1,44 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties" line="0" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="86da49a9-0135-407e-9cae-c8001889f5ab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/LessonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/LessonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/QuestionAttemptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/QuestionAttemptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/CourseWeekDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/CourseModuleDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/CourseWeekDateId.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/CourseModuleDateId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Lesson.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Lesson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Template.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Template.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Week.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/entity/template/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/CourseWeekDateRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/LessonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/LessonRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/QuestionAttemptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/QuestionAttemptRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/WeekRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/repository/ModuleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/LessonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/LessonService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/QuestionAttemptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/QuestionAttemptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/CourseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/LessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/LessonServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/QuestionAttemptServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/QuestionAttemptServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/TemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/service/impl/TemplateServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/sql/db-setup.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/src/sql/gen_test.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/Course.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/Course.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseCreator.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseCreator.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseEditor.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseEditor.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseHome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseHome.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseObserver.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseObserver.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/CourseStudier.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/CourseStudier.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/TemplateViewer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/TemplateViewer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/components/base/LessonStudier.vue" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/components/base/LessonStudier.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/services/lesson.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/services/lesson.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/services/question-attempt.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/services/question-attempt.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/lessons.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/lessons.module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/messages.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/messages.module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnera-client/src/store/question-attempts.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-client/src/store/question-attempts.module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnera-backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/learnera-backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnera-backend/src/test/java/com/netcracker/learnera/LearneraApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/learnera-backend/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -133,6 +100,7 @@
     <session id="1991365074">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -142,15 +110,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -802,16 +761,15 @@
       <workItem from="1542277933977" duration="1516000" />
       <workItem from="1542536958861" duration="730000" />
       <workItem from="1542543925350" duration="2595000" />
-      <workItem from="1543158336024" duration="710000" />
+      <workItem from="1543158336024" duration="1888000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36377000" />
+    <option name="totallyTimeSpent" value="37555000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27078238" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -1033,13 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1058,6 +1009,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnera-backend/src/main/java/com/netcracker/learnera/controller/GroupController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
         </state>
       </provider>
     </entry>
