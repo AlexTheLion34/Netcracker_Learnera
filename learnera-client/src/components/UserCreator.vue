@@ -97,13 +97,28 @@
             <h6 class="title">Students</h6>
           </v-flex>
           <v-flex mt-2>
+            <v-card>
+              <v-card-title>
+                Student
+                  <v-spacer></v-spacer>
+                    <v-text-field
+                      v-model="search"
+                      append-icon="search"
+                      label="Search"
+                      single-line
+                      hide-details
+                    ></v-text-field>
+                </v-card-title>
+            </v-card>
             <v-data-table 
               :headers="[
                 {text: 'Name', value: 'info.firstName'}, 
                 {text: 'Email', value: 'email'},
                 
               ]"
+              :pagination.sync="pagination"
               :light="true"
+              :search="search"
               :items="students"
               hide-actions
               class="elevation-1"
@@ -118,7 +133,13 @@
                   </td>
                   <td>{{props.item.email}}</td>
               </template>
+              <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                  Your search for "{{ search }}" found no results.
+              </v-alert>
             </v-data-table>
+            <div class="text-xs-center pt-2">
+              <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -134,6 +155,10 @@ export default {
   name: 'UserCreator',
   data() {
     return {
+      search: '',
+      pagination: {
+        rowsPerPage: 5,
+      },
       name: '',
       surname: '',
       email: '',
@@ -155,6 +180,9 @@ export default {
         return ret
     },
     }),
+    pages () {
+      return Math.ceil(this.students.length / this.pagination.rowsPerPage)
+    }
   },
   watch: {
     created: function(val) {
@@ -165,6 +193,7 @@ export default {
     }
   },
   beforeMount() {
+    console.log(this.pagination.totalItems)
     this.getAllStudents()
     this.created = false
   },
