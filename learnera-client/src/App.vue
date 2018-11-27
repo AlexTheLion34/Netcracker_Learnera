@@ -94,7 +94,7 @@ export default {
       var baseItems = [
           {title: "Home", path: this.loggedIn ? this.userPrefix : '', icon: 'face'},
           {title: 'Logout', path: '/logout', icon: 'accessible_forward'},
-          {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
+          // {title: "Login", path: "/login", icon: "lock_open", isPublic: true},
         ]
       if (this.loggedIn && this.user.role == "TEACHER") {
         baseItems.splice(1, 0, {title: "Students", path: "/create", icon: "edit"})
