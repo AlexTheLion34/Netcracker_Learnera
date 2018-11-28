@@ -152,10 +152,10 @@ VALUES (31, 30, 'for (initialization; termination; increment) {
 }', FALSE);
 
 INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
-VALUES (33, 8, 'JAVA COURSE FTW', 'The perfect JAVA course.', NULL, '31/12/2018');
+VALUES (33, 8, 'JAVA COURSE FTW', 'The perfect JAVA course.', NULL, NOW() + INTERVAL '15 DAYS');
 
 INSERT INTO courses (id, template_id, name, description, avatar_id, end_date)
-VALUES (34, 8, 'Java course 2', 'THe other Java course', NULL, '31/12/2018');
+VALUES (34, 8, 'Java course 2', 'THe other Java course', NULL, NOW() + INTERVAL '15 DAYS');
 
 INSERT INTO group_users (user_id, group_id)
 VALUES (2, 6),

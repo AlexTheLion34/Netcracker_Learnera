@@ -37,21 +37,16 @@ export default {
   props: ['groupIdStr'],
   data() {
     return {
+      group: null
     };
   },
   computed: {
-    ...mapState('groups', {
-      group: function(state) {
-        const ret = state.items.find(i => i.id === this.groupId && !i.loading);
-        return ret;
-      }
-    }),
     ...mapState('account', ['user']),
     ...mapState('users', {
       students: function(state) {
         const ret = state.items.filter(s => s.role === 'STUDENT')
         return ret
-    },
+      },
       curator: function(state) {
         if (!this.group) {
           return undefined;
@@ -66,7 +61,7 @@ export default {
   },
   watch: {
     groupId: function(val) {
-      this.getGroup(val);
+      this.getGroup(val).then(g => this.group = g);
     },
     group: function(val) {
       if (val) {
@@ -75,7 +70,7 @@ export default {
     }
   },
   beforeMount() {
-    this.getGroup(this.groupId);
+    this.getGroup(this.groupId).then(g => this.group = g);
     this.getStudents(this.groupId);
   },
   methods: {

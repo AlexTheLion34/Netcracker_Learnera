@@ -79,6 +79,9 @@
                 color="primary" 
                 type="submit"
               >Sign up</v-btn>
+              <v-btn 
+                :to="'/login'"
+              >Back</v-btn>
             </v-flex>
           </v-layout>
         </form>
