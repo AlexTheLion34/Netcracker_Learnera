@@ -80,9 +80,11 @@ const routes = [
 Vue.use(Router)
 
 console.log('Base URL:', process.env.BASE_URL)
+console.log(process.env);
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const router = new Router({
-  base: process.env.baseUrl || '/backend',
+  base: isProduction ? process.env.BASE_URL + 'front' : null,
   mode: 'history',
   routes
 })

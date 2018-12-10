@@ -16,7 +16,7 @@ module.exports = {
   // see https://cli.vuejs.org/config/
   outputDir: 'target/dist',
   baseUrl: process.env.NODE_ENV === 'production'
-    ? './'
+    ? '/backend'
     : '/',
   assetsDir: 'static',
   configureWebpack: {
