@@ -27,7 +27,7 @@ const logoutComponent = {
   functional: true,
   render: (createElement, context) => {
     store.dispatch('account/logout');
-    router.replace('/');
+    router.replace('login');
     return createElement('p', 'wait');
   }
 }
@@ -79,7 +79,10 @@ const routes = [
 
 Vue.use(Router)
 
+console.log('Base URL:', process.env.BASE_URL)
+
 export const router = new Router({
+  base: process.env.baseUrl || '/backend',
   mode: 'history',
   routes
 })
