@@ -8,14 +8,6 @@
         <v-text-field v-model="groupName" label="Group name"/>
       </v-flex>
       <v-flex xs12>
-        <v-layout row>
-          <v-flex>
-            <v-avatar size="100" color="teal">
-              <span>TODO</span>
-            </v-avatar>
-            <v-btn>Load avatar</v-btn>
-          </v-flex>
-        </v-layout>
       </v-flex>
       <v-flex style="margin: 15px 0 0 0">
         <v-textarea v-model="groupDescription" box label="Group description" auto-grow/>
@@ -101,6 +93,10 @@ export default {
       getUser: 'get',
       getAllStudents: 'getAllStudents',
     }),
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     onGroupCreate() {
       const group = {
         curator: {id: this.currentUser.id},
@@ -110,8 +106,9 @@ export default {
         students: this.studentsId,
       };
       this.createGroup(group).then(group => {
+        this.alertSuccess('Group created');
         router.push(`/group/${group.id}`);
-      }).catch(e => console.error);
+      }).catch(e => this.alertError(`Group failed to create: ${e.data.message}`));
     }
   },
 }

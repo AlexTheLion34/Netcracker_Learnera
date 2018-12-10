@@ -58,6 +58,10 @@ export default {
     ...mapActions('users', {
       getUser: 'get'
     }),
+    ...mapActions('alert', {
+      alertError: 'error',
+      alertSuccess: 'success'
+    }),
     saveGroup() {
       let {curator, students, courses, ...other} = this.group
 
@@ -70,8 +74,9 @@ export default {
 
       console.log('Group: ', JSON.stringify(ret));
       this.updateGroup(ret).then(x => {
+        this.alertSuccess('Group updated successfully');
         this.$emit('group-changed', x)
-      })
+      }).catch(e => `Group failed to be updated: ${e.data.message}`);
     }
   },
 }
