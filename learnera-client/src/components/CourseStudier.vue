@@ -61,7 +61,7 @@ export default {
     prop: 'course',
     event: 'course-changed'
   },
-  props: ['course'],
+  props: ['course', 'moduleId'],
   data() {
     return {
       activeModule: null,
@@ -87,6 +87,16 @@ export default {
         })
       );
       return ret;
+    }
+  },
+  watch: {
+    modules(val) {
+      if (!val) {
+        return;
+      } 
+      if (!this.activeModule) {
+        this.activeModule = val.findIndex(m => m.id === this.moduleId);
+      }
     }
   },
   beforeMount() {

@@ -54,7 +54,7 @@ const routes = [
       {path: 'edit', component: CourseEditor, props: true},
       // {path: 'observe', } TODO,
       {path: 'study', component: CourseStudier, props: (route) => ({
-        moduleIdStr: route.query.module,
+        moduleId: parseInt(route.query.module),
         lessonIdStr: route.query.lesson
       })},
       {path: 'observe', component: CourseObserver, props: (route) => ({

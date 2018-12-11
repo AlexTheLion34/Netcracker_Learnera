@@ -128,7 +128,7 @@ export default {
       if (!this.course || !this.course.moduleDates) {
         return [];
       }
-      const wd = this.course.moduleDates.find(wd => new Date(wd.startDate) >= Date.now() && new Date(wd.endDate) <= Date.now());
+      const wd = this.course.moduleDates.find(wd => new Date(wd.startDate) <= Date.now() && new Date(wd.endDate) >= Date.now());
 
       return wd ? wd.module : this.course.template.modules[0];
 
