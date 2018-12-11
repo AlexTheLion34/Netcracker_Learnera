@@ -33,48 +33,45 @@ const logoutComponent = {
 }
 
 const routes = [
-  {path: '/logout', component: logoutComponent},
-  {path: '/login', component: Login, meta: {isPublic: true}},
-  {path: '/register', component: Register, meta: {isPublic: true}},
-  {path: '/create', component: UserCreator},
+  {path: '/logout', component: logoutComponent, meta: {title: 'Welcome | Learnera'}},
+  {path: '/login', component: Login, meta: {title: 'Welcome | Learnera', isPublic: true}},
+  {path: '/register', component: Register, meta: {title: 'Register', isPublic: true}},
+  {path: '/create', component: UserCreator, meta: {title: 'Students Management'}},
   {path: '/user/:userIdStr', component: User, props: true,
     children: [
-      {path: '', alias: '/home', component: UserHome, props: true},
-      {path: 'courses', component: Courses, props: true},
-      {path: 'groups', component: Groups, props: true},
-      {path: 'templates', component: Templates, props:true},
+      {path: '', alias: '/home', component: UserHome, props: true, meta: {title: 'Home'}},
+      {path: 'courses', component: Courses, props: true, meta: {title: 'Courses'}},
+      {path: 'groups', component: Groups, props: true, meta: {title: 'Groups'}},
+      {path: 'templates', component: Templates, props:true, meta: {title: 'Templates'}},
     ]
   },
-  {path: '/create-course', component: CourseCreator},
-  {path: '/create-group', component: GroupCreator},
-  {path: '/create-template', component: TemplateViewer},
+  {path: '/create-course', component: CourseCreator, meta: {title: 'Course Management'}},
+  {path: '/create-group', component: GroupCreator, meta: {title: 'Group Management'}},
+  {path: '/create-template', component: TemplateViewer, meta: {title: 'Template Management'}},
   {path: '/course/:courseIdStr', component: Course, props: true, 
     children: [
-      {path: '', component: CourseHome, props: true},
-      {path: 'edit', component: CourseEditor, props: true},
-      // {path: 'observe', } TODO,
+      {path: '', component: CourseHome, props: true, meta: {title: 'Course Home'}},
+      {path: 'edit', component: CourseEditor, props: true, meta: {title: 'Course Editor'}},
       {path: 'study', component: CourseStudier, props: (route) => ({
         moduleId: parseInt(route.query.module),
         lessonIdStr: route.query.lesson
-      })},
+      }), meta: {title: 'Studying'}},
       {path: 'observe', component: CourseObserver, props: (route) => ({
         moduleIdStr: route.query.module,
         lessonIdStr: route.query.lesson
-      })}
+      }), meta: {title: 'Course Obesrvation'}}
     ]
   },
-  //{path: '/course/:courseIdStr/edit', component: CourseEditor, props:true},
   {path: '/group/:groupIdStr', component: Group, props: true,
     children: [
-      {path: '', component: GroupHome, props: true},
-      {path: 'edit', component: GroupEditor, props: true}
+      {path: '', component: GroupHome, props: true, meta: {title: 'Group Home'}},
+      {path: 'edit', component: GroupEditor, props: true, meta: {title: 'Group Editor'}}
     ]},
   {path: '/template/:templateIdStr', component: TemplateViewer, props: (route) => ({
     templateIdStr: route.params.templateIdStr,
     readOnly: true
-  })},
-  {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true},
-  //{path: '/test', component: Test},
+  }), meta: {title: 'Template Home'}},
+  {path: '/template/:templateIdStr/edit', component: TemplateViewer, props: true, meta: {title: 'Template Editor'}},
 ]
 
 Vue.use(Router)
@@ -90,6 +87,7 @@ export const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
   if (to.fullPath === '/')
   {
     const loggedIn = store.state.account.status.loggedIn;
