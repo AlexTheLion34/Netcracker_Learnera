@@ -25,7 +25,7 @@
       </v-layout>
       <v-flex><v-divider style="margin: -0.5em 0 1em 0;"/></v-flex>
       <v-flex v-if="lesson.type === 'lecture'">
-        <v-textarea v-model="lesson.lectureText" box label="Lecture text" auto-grow/>
+        <v-textarea v-model="lesson.lectureText" box label="Lecture text" readonly rows="20"/>
       </v-flex>
       <v-flex v-else-if="lesson.type === 'assignment'">
         <v-expansion-panel v-model="panels" expand>

@@ -20,7 +20,7 @@
               </v-flex>
               <v-flex xs12><v-divider style="margin: -0.5em 0 1em 0;"/></v-flex>
               <v-flex v-if="lesson.type === 'lecture'" xs12>
-                <v-textarea v-model="lesson.lectureText" box label="Lecture text" auto-grow readonly/>
+                <v-textarea v-model="lesson.lectureText" box label="Lecture text" readonly rows="20" />
               </v-flex>
               <v-flex v-else-if="lesson.type === 'assignment'" xs12>
                 <v-expansion-panel>
