@@ -1,6 +1,5 @@
 # Learnera
 Prototype of online platform for studying
-***
 # Review
  1. Roles
     * Teachers/Curators
@@ -15,19 +14,20 @@ Prototype of online platform for studying
     * Participate in courses
     * Read lectures and pass tests
     * Score points for each question
-***
 # How it looks
 * Login<br/>
-![Login page](https://drive.google.com/file/d/1Ug8Bkmhew78cCASqgcCwByxgfCdtGHBy/view?usp=sharing)
+![Login page](/screenshots/login.png)
 * Register<br/>
-![Register page](https://drive.google.com/file/d/1ko2YxV6Pi7MCpFH701i78inObRweLbNz/view?usp=sharing)
+![Register page](/screenshots/register.png)
 * Main page<br/>
-![Main page](https://drive.google.com/file/d/19J21RU0WfefJAzmUOJJC0CQL8vcqS9s9/view?usp=sharing)
-***
+![Main page](/screenshots/home.png)
 # Stack
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Vue.js](https://vuejs.org)
 * [Vuetify.js](https://vuetifyjs.com/)
-***
 # Useful links
  * [Try our platform](https://learnera01.herokuapp.com)
+ * teacher login: example@google.com, 
+ * teacher password: qwerty
+ * student login: example1@google.com
+ * student password: qwerty
