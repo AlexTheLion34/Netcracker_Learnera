@@ -27,7 +27,10 @@ Prototype of online platform for studying
 * [Vuetify.js](https://vuetifyjs.com/)
 # Useful links
  * [Try our platform](https://learnera01.herokuapp.com)
+# Profiles for testing
  * teacher login: example@google.com, 
  * teacher password: qwerty
  * student login: example1@google.com
  * student password: qwerty
+# P.S.
+You may register and create your own students, groups and courses. Enjoy it:)
